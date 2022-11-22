@@ -558,8 +558,6 @@ v
 Fruoyi-admin/src/main/java/com/ruoyi/web/core/config/SwaggerConfig.java,9\c\9ca85340abbab778448e2a0baf11e530fe49ae80
 c
 3ruoyi-admin/src/main/java/com/ruoyi/web/HhTest.java,0\f\0f5ae5b96f6fe548a3d89f2c2cee0bc75efa234f
-i
-9ruoyi-admin/src/main/java/com/ruoyi/RuoYiApplication.java,9\b\9b6514937ab0fda63872f7d6eb32c4ed620cb919
 C
 ruoyi-admin/pom.xml,f\0\f06d4560fbe5a32dbb7d90624868a56cd009dffb
 u
