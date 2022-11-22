@@ -11,7 +11,7 @@ public class HhTest {
     private static  final String AES_KEY = "WHWU123KOBEHCWWCH1P@SSW0RDWCH123";
     public static void main(String[] args) throws Exception {
 
-        String str = "你好张三";
+        String str = "你好伍峻涵";
         System.out.println("原文:" + str);
         System.out.println("密钥:" + AES_KEY);
 
