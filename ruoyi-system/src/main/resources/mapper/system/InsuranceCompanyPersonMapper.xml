@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.InsuranceCompanyPersonMapper">
+    
+    <resultMap type="InsuranceCompanyPerson" id="InsuranceCompanyPersonResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <!--<result property="companyId"    column="company_id"    />-->
+        <result property="personName"    column="person_name"    />
+        <result property="personPhone"    column="person_phone"    />
+        <result property="personSex"    column="person_sex"    />
+        <result property="sort"    column="sort"    />
+        <result property="state"    column="state"    />
+        <result property="remark"    column="remark"    />
+        <association property="insuranceCompany"     column="company_id" javaType="InsuranceCompany" resultMap="InsuranceCompanyResult" />
+    </resultMap>
+
+    <resultMap id="InsuranceCompanyPersonInsuranceCompanyResult" type="InsuranceCompanyPerson" extends="InsuranceCompanyPersonResult">
+        <collection property="insuranceCompanyList" notNullColumn="sub_id" javaType="java.util.List" resultMap="InsuranceCompanyResult" />
+    </resultMap>
+
+    <resultMap type="InsuranceCompany" id="InsuranceCompanyResult">
+        <result property="id"    column="sub_id"    />
+        <result property="createBy"    column="sub_create_by"    />
+        <result property="createTime"    column="sub_create_time"    />
+        <result property="updateBy"    column="sub_update_by"    />
+        <result property="updateTime"    column="sub_update_time"    />
+        <result property="companyName"    column="sub_company_name"    />
+        <result property="companyType"    column="sub_company_type"    />
+        <result property="sort"    column="sub_sort"    />
+        <result property="state"    column="sub_state"    />
+        <result property="remark"    column="sub_remark"    />
+    </resultMap>
+
+    <sql id="selectInsuranceCompanyPersonVo">
+        select id, create_by, create_time, update_by, update_time, company_id, person_name, person_phone, person_sex, sort, state, remark from insurance_company_person
+    </sql>
+
+    <select id="selectInsuranceCompanyPersonList" parameterType="InsuranceCompanyPerson" resultMap="InsuranceCompanyPersonResult">
+        select a.id, a.create_by, a.create_time, a.update_by, a.update_time, a.company_id, a.person_name, a.person_phone, a.person_sex, a.sort, a.state, a.remark,
+        b.id as sub_id, b.create_by as sub_create_by, b.create_time as sub_create_time, b.update_by as sub_update_by, b.update_time as sub_update_time, b.company_name as sub_company_name, b.company_type as sub_company_type, b.sort as sub_sort, b.state as sub_state, b.remark as sub_remark
+        from insurance_company_person a
+        left join insurance_company b on b.id = a.company_id
+        <where>  
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and a.create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="companyId != null "> and a.company_id = #{companyId}</if>
+            <if test="personName != null  and personName != ''"> and a.person_name like concat('%', #{personName}, '%')</if>
+            <if test="personPhone != null  and personPhone != ''"> and a.person_phone = #{personPhone}</if>
+            <if test="personSex != null "> and a.person_sex = #{personSex}</if>
+            <if test="sort != null "> and a.sort = #{sort}</if>
+            <if test="state != null "> and a.state = #{state}</if>
+        </where>
+    </select>
+    
+    <select id="selectInsuranceCompanyPersonById" parameterType="Long" resultMap="InsuranceCompanyPersonResult">
+        select a.id, a.create_by, a.create_time, a.update_by, a.update_time, a.company_id, a.person_name, a.person_phone, a.person_sex, a.sort, a.state, a.remark,
+ b.id as sub_id, b.create_by as sub_create_by, b.create_time as sub_create_time, b.update_by as sub_update_by, b.update_time as sub_update_time, b.company_name as sub_company_name, b.company_type as sub_company_type, b.sort as sub_sort, b.state as sub_state, b.remark as sub_remark
+        from insurance_company_person a
+        left join insurance_company b on b.id = a.company_id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertInsuranceCompanyPerson" parameterType="InsuranceCompanyPerson" useGeneratedKeys="true" keyProperty="id">
+        insert into insurance_company_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="personName != null">person_name,</if>
+            <if test="personPhone != null">person_phone,</if>
+            <if test="personSex != null">person_sex,</if>
+            <if test="sort != null">sort,</if>
+            <if test="state != null">state,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="companyId != null">#{companyId},</if>
+            <if test="personName != null">#{personName},</if>
+            <if test="personPhone != null">#{personPhone},</if>
+            <if test="personSex != null">#{personSex},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="state != null">#{state},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInsuranceCompanyPerson" parameterType="InsuranceCompanyPerson">
+        update insurance_company_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="personName != null">person_name = #{personName},</if>
+            <if test="personPhone != null">person_phone = #{personPhone},</if>
+            <if test="personSex != null">person_sex = #{personSex},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteInsuranceCompanyPersonById" parameterType="Long">
+        delete from insurance_company_person where id = #{id}
+    </delete>
+
+    <delete id="deleteInsuranceCompanyPersonByIds" parameterType="String">
+        delete from insurance_company_person where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteInsuranceCompanyByIds" parameterType="String">
+        delete from insurance_company where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteInsuranceCompanyById" parameterType="Long">
+        delete from insurance_company where id = #{id}
+    </delete>
+
+    <insert id="batchInsuranceCompany">
+        insert into insurance_company( id, create_by, create_time, update_by, update_time, company_name, company_type, sort, state, remark) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}, #{item.companyName}, #{item.companyType}, #{item.sort}, #{item.state}, #{item.remark})
+        </foreach>
+    </insert>
+
+</mapper>

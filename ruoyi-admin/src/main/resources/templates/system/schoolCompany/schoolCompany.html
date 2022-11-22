@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('学校承保公司列表')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                       <li>
+                            <label>区县名称：</label>
+                            <input id="treeId" type="text" name="countyDeptId" style="display: none;"/>
+                            <input type="text" onclick="selectCountDeptTree()" id="treeName" placeholder="请选择要查询的区县部门名称">
+                        </li>
+                        <li>
+                            承保公司名称：
+                            <input type="text" name="insuranceCompanyName"/>
+
+                        </li>
+                        <li>
+                            联系人名称：
+                            <input type="text" name="insuranceCompanyPerson"/>
+                        </li>
+                        <li>
+                            联系人电话：
+                            <input type="text" name="insuranceCompanyPhone"/>
+                        </li>
+                        <li>
+                            性别：
+                            <select name="insuranceCompanySex" th:with="type=${@dict.getType('sys_user_sex')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <!--<li>
+                            <label>学校ID：</label>
+                            <input type="text" name="schoolId"/>
+                        </li>-->
+                        <li>
+                            <label>学校名称：</label>
+                            <input type="text" name="schoolName"/>
+                        </li>
+
+                        <li>
+                            <label>收费标记：</label>
+                            <input type="text" name="chargeCode"/>
+                        </li>
+                        <li>
+                            <label>险种类型：</label>
+                            <select name="riskCode" th:with="type=${@dict.getType('risk_code')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>状态：</label>
+                            <select name="state" th:with="type=${@dict.getType('data_state')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:schoolCompany:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>-->
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:schoolCompany:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:schoolCompany:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:schoolCompany:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-success" onclick="synConfiguration();">
+                <i class="fa fa-exchange"></i>同步配置
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:schoolCompany:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:schoolCompany:remove')}]];
+    var stateDatas = [[${@dict.getType('data_state')}]];
+    var insuranceCompanySexDatas = [[${@dict.getType('sys_user_sex')}]];
+    var riskCodeDatas = [[${@dict.getType('risk_code')}]];
+    var prefix = ctx + "system/schoolCompany";
+    var prefix2 = ctx + "system/school";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "学校承保公司",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'countyDeptId',
+                    title: '区县名称',
+                    formatter: function(value, row, index) {
+                        if(row.countyDeptId == 440){
+                            return "市辖区";
+                        }else if(row.countyDeptId == 428){
+                            return "鹤城区";
+                        }else if(row.countyDeptId == 430){
+                            return "沅陵县";
+                        }
+                    }
+                },
+                {
+                    field: 'schoolId',
+                    title: '学校ID',
+                    visible: false
+                },
+                {
+                    field: 'schoolName',
+                    title: '学校名称',
+                    sortable: true
+                },
+                {
+                    field: 'insuranceCompanyName',
+                    title: '承保公司名称'
+                },
+                {
+                    field: 'insuranceCompanyPerson',
+                    title: '联系人名称',
+                    sortable: true
+                },
+                {
+                    field: 'insuranceCompanySex',
+                    title: '性别',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(insuranceCompanySexDatas, value);
+                    }
+                },
+                {
+                    field: 'insuranceCompanyPhone',
+                    title: '联系人电话'
+                },
+
+                {
+                    field: 'chargeCode',
+                    title: '收费标记',
+                    sortable: true
+                },
+                {
+                    field: 'riskCode',
+                    title: '险种类型',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(riskCodeDatas, value);
+                    },
+                    sortable: true
+                },
+                {
+                    field: 'state',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(stateDatas, value);
+                    }
+                },
+                /*{
+                    field: 'remark',
+                    title: '备注'
+                },*/
+
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>修改</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /*保险公司管理树*/
+    function selectCountDeptTree() {
+        var options = {
+            title: '区县部门选择',
+            width: "380",
+            url: prefix2 + "/selectCountDeptTree",
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmit(index, layero){
+        var body = $.modal.getChildFrame(index);
+        $("#treeId").val(body.find('#treeId').val());
+        $("#treeName").val(body.find('#treeName').val());
+        $.modal.close(index);
+    }
+
+    function synConfiguration() {
+        var url = prefix + '/sync';
+        $.modal.open("同步配置", url, '800', '450');
+    }
+</script>
+</body>
+</html>

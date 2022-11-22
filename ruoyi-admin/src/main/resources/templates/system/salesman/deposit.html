@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('存钱管理')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-salesman-deposit" th:object="${hbdSalesman}">
+        <input name="id" th:field="*{id}" type="hidden">
+        <h4 class="form-header h4">存钱信息</h4>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">存入时间：</label>
+            <div class="col-sm-8">
+                <div class="input-group date">
+                    <!--<input name="depositTime" class="form-control" placeholder="yyyy-MM-dd" type="text">-->
+                    <input type="text" class="form-control"  name="depositTime"  id="depositTime" placeholder="yyyy-MM-dd" >
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">存钱金额：</label>
+            <div class="col-sm-8">
+                <input name="depositMoney"  class="form-control" type="text" placeholder="填写存入到银行卡的金额">
+            </div>
+        </div>
+        <h4 class="form-header h4">营销员信息</h4>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">姓名：</label>
+            <div class="col-sm-8">
+                <input name="sName" th:field="*{sName}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">银行卡号：</label>
+            <div class="col-sm-8">
+                <input name="bankCard" th:field="*{bankCard}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">开户行：</label>
+            <div class="col-sm-8">
+                <input name="openingBank" th:field="*{openingBank}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">卡内余额：</label>
+            <div class="col-sm-8">
+                <input name="balance" th:field="*{balance}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">推荐人：</label>
+            <div class="col-sm-8">
+                <input name="referrer" th:field="*{referrer}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<th:block th:include="include :: select2-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/salesman";
+    $("#form-salesman-deposit").validate({
+        focusCleanup: true
+    });
+    $("input[name='depositTime']").datetimepicker({
+        minView:"month",
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn:true
+    });
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/deposit", $('#form-salesman-deposit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

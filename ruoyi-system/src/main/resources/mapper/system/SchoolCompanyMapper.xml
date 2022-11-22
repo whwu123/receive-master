@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SchoolCompanyMapper">
+
+    <resultMap type="SchoolCompany" id="SchoolCompanyResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="state"    column="state"    />
+        <result property="insuranceCompanyName"    column="insurance_company_name"    />
+        <result property="insuranceCompanyPerson"    column="insurance_company_person"    />
+        <result property="insuranceCompanyPhone"    column="insurance_company_phone"    />
+        <result property="insuranceCompanySex"    column="insurance_company_sex"    />
+        <result property="schoolId"    column="school_id"    />
+        <result property="schoolName"    column="school_name"    />
+        <result property="countyDeptId"    column="county_dept_id"    />
+        <result property="chargeCode"    column="charge_code"    />
+        <result property="riskCode"    column="risk_code"    />
+        <result property="insuranceCompanyId"    column="insurance_company_id"    />
+        <result property="insuranceCompanyPersonId"    column="insurance_company_person_id"    />
+    </resultMap>
+
+    <sql id="selectSchoolCompanyVo">
+        select id, create_by, create_time, update_by, update_time, remark, state, insurance_company_name, insurance_company_person, insurance_company_phone, insurance_company_sex, school_id, school_name, county_dept_id, charge_code, risk_code, insurance_company_id, insurance_company_person_id from school_company
+    </sql>
+
+    <select id="selectSchoolCompanyList" parameterType="SchoolCompany" resultMap="SchoolCompanyResult">
+        <include refid="selectSchoolCompanyVo"/>
+        <where>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="insuranceCompanyName != null  and insuranceCompanyName != ''"> and insurance_company_name like concat('%', #{insuranceCompanyName}, '%')</if>
+            <if test="insuranceCompanyPerson != null  and insuranceCompanyPerson != ''"> and insurance_company_person = #{insuranceCompanyPerson}</if>
+            <if test="insuranceCompanyPhone != null  and insuranceCompanyPhone != ''"> and insurance_company_phone = #{insuranceCompanyPhone}</if>
+            <if test="insuranceCompanySex != null "> and insurance_company_sex = #{insuranceCompanySex}</if>
+            <if test="schoolId != null "> and school_id = #{schoolId}</if>
+            <if test="schoolName != null  and schoolName != ''"> and school_name like concat('%', #{schoolName}, '%')</if>
+            <if test="countyDeptId != null "> and county_dept_id = #{countyDeptId}</if>
+            <if test="chargeCode != null  and chargeCode != ''"> and charge_code = #{chargeCode}</if>
+            <if test="riskCode != null  and riskCode != ''"> and risk_code = #{riskCode}</if>
+            <if test="insuranceCompanyId != null "> and insurance_company_id = #{insuranceCompanyId}</if>
+            <if test="insuranceCompanyPersonId != null "> and insurance_company_person_id = #{insuranceCompanyPersonId}</if>
+        </where>
+    </select>
+
+    <select id="selectSchoolCompanyById" parameterType="Long" resultMap="SchoolCompanyResult">
+        <include refid="selectSchoolCompanyVo"/>
+        where id = #{id}
+    </select>
+
+
+
+    <insert id="insertSchoolCompany" parameterType="SchoolCompany">
+        insert into school_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="state != null">state,</if>
+            <if test="insuranceCompanyName != null">insurance_company_name,</if>
+            <if test="insuranceCompanyPerson != null">insurance_company_person,</if>
+            <if test="insuranceCompanyPhone != null">insurance_company_phone,</if>
+            <if test="insuranceCompanySex != null">insurance_company_sex,</if>
+            <if test="schoolId != null">school_id,</if>
+            <if test="schoolName != null">school_name,</if>
+            <if test="countyDeptId != null">county_dept_id,</if>
+            <if test="chargeCode != null">charge_code,</if>
+            <if test="riskCode != null">risk_code,</if>
+            <if test="insuranceCompanyId != null">insurance_company_id,</if>
+            <if test="insuranceCompanyPersonId != null">insurance_company_person_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="state != null">#{state},</if>
+            <if test="insuranceCompanyName != null">#{insuranceCompanyName},</if>
+            <if test="insuranceCompanyPerson != null">#{insuranceCompanyPerson},</if>
+            <if test="insuranceCompanyPhone != null">#{insuranceCompanyPhone},</if>
+            <if test="insuranceCompanySex != null">#{insuranceCompanySex},</if>
+            <if test="schoolId != null">#{schoolId},</if>
+            <if test="schoolName != null">#{schoolName},</if>
+            <if test="countyDeptId != null">#{countyDeptId},</if>
+            <if test="chargeCode != null">#{chargeCode},</if>
+            <if test="riskCode != null">#{riskCode},</if>
+            <if test="insuranceCompanyId != null">#{insuranceCompanyId},</if>
+            <if test="insuranceCompanyPersonId != null">#{insuranceCompanyPersonId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSchoolCompany" parameterType="SchoolCompany">
+        update school_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="insuranceCompanyName != null">insurance_company_name = #{insuranceCompanyName},</if>
+            <if test="insuranceCompanyPerson != null">insurance_company_person = #{insuranceCompanyPerson},</if>
+            <if test="insuranceCompanyPhone != null">insurance_company_phone = #{insuranceCompanyPhone},</if>
+            <if test="insuranceCompanySex != null">insurance_company_sex = #{insuranceCompanySex},</if>
+            <if test="schoolId != null">school_id = #{schoolId},</if>
+            <if test="schoolName != null">school_name = #{schoolName},</if>
+            <if test="countyDeptId != null">county_dept_id = #{countyDeptId},</if>
+            <if test="chargeCode != null">charge_code = #{chargeCode},</if>
+            <if test="riskCode != null">risk_code = #{riskCode},</if>
+            <if test="insuranceCompanyId != null">insurance_company_id = #{insuranceCompanyId},</if>
+            <if test="insuranceCompanyPersonId != null">insurance_company_person_id = #{insuranceCompanyPersonId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSchoolCompanyById" parameterType="Long">
+        delete from school_company where id = #{id}
+    </delete>
+
+    <delete id="deleteSchoolCompanyByIds" parameterType="String">
+        delete from school_company where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectSchoolCompanyListToWeb" resultMap="SchoolCompanyResult">
+        <include refid="selectSchoolCompanyVo"/>
+        <where>
+            <if test="state != null "> and state = #{state}</if>
+
+            <if test="schoolId != null "> and school_id = #{schoolId}</if>
+
+            <if test="chargeCode != null  and chargeCode != ''"> and charge_code = #{chargeCode}</if>
+
+            <if test="ids != null " >
+                <foreach item="id" collection="ids" open="and risk_code in (" separator="," close=")">
+                    #{id}
+                </foreach>
+
+            </if>
+        </where>
+
+
+    </select>
+</mapper>

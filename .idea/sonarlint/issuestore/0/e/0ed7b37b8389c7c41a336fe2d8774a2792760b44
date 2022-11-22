@@ -1,0 +1,42 @@
+
+c
+java:S1192"HDefine a constant instead of duplicating this literal "unknown" 7 times.(ğÁÂìıÿÿÿÿ
+`
+java:S11921"JDefine a constant instead of duplicating this literal "127.0.0.1" 3 times.(Äì“Å
+a
+java:S1301a"KReplace this "switch" statement by "if" statements to increase readability.(è¦­‚
+e
+java:S2259="J"NullPointerException" will be thrown when invoking method "internalIp()".(¹·Ø‰ûÿÿÿÿ
+U
+java:S1118":Add a private constructor to hide the implicit public one.(¿Şèåúÿÿÿÿ
+a	java:S128`"LEnd this switch case with an unconditional break, return or throw statement.(ØŸš
+f	java:S128["LEnd this switch case with an unconditional break, return or throw statement.(Ú²Âåşÿÿÿÿ
+7	java:S131a""Add a default case to this switch.(è¦­‚
+h
+java:S3776q"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(‹²”Ü
+<
+java:S1168u"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168„"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168•"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168¡"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168¨"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168³"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168¹"&Return an empty array instead of null.(¥¹ï
+=
+java:S1168¾"&Return an empty array instead of null.(¥¹ï
+D	java:S108Ï")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+D	java:S108à")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+H
+java:S2692î"10 is a valid index, but is ignored by this check.(Çò”¢
+C
+java:S1125ó"'Remove the unnecessary boolean literal.(»ëÒ·ùÿÿÿÿ
+h
+java:S3252…"LUse static access with "org.apache.commons.lang3.StringUtils" for "isBlank".(çëŸŠÿÿÿÿÿ

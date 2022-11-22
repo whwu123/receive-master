@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改保险公司人员管理')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-person-edit" th:object="${insuranceCompanyPerson}">
+        <input name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">公司名称：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input id="treeId" name="companyId" type="hidden" th:field="*{insuranceCompany.id}" />
+                    <input class="form-control" type="text" onclick="selectCompanyTree()" id="treeName" readonly="true" th:field="*{insuranceCompany.companyName}">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">人员姓名：</label>
+            <div class="col-sm-8">
+                <input name="personName" th:field="*{personName}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">人员电话：</label>
+            <div class="col-sm-8">
+                <input name="personPhone" th:field="*{personPhone}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">人员性别：</label>
+            <div class="col-sm-8">
+                <select name="personSex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{personSex}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">排序：</label>
+            <div class="col-sm-8">
+                <input name="sort" th:field="*{sort}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态：</label>
+            <div class="col-sm-8">
+                <div class="radio-box" th:each="dict : ${@dict.getType('data_state')}">
+                    <input type="radio" th:id="${'state_' + dict.dictCode}" name="state" th:value="${dict.dictValue}" th:field="*{state}">
+                    <label th:for="${'state_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/person";
+    $("#form-person-edit").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-person-edit').serialize());
+        }
+    }
+
+    /*保险公司管理树*/
+    function selectCompanyTree() {
+        var options = {
+            title: '保险公司选择',
+            width: "380",
+            url: prefix + "/selectCompanyTree",
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmit(index, layero){
+        var body = $.modal.getChildFrame(index);
+        $("#treeId").val(body.find('#treeId').val());
+        $("#treeName").val(body.find('#treeName').val());
+        $.modal.close(index);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+
+P
+java:S1118":Add a private constructor to hide the implicit public one.(§Î³ƒ
+Z
+java:S4719"?Replace Charset.forName() call with StandardCharsets.ISO_8859_1(óÄÕöýÿÿÿÿ
+P
+java:S4719":Replace Charset.forName() call with StandardCharsets.UTF_8(Ôß¼„

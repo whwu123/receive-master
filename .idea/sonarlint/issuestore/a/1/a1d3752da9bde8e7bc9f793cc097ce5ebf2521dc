@@ -1,0 +1,25 @@
+
+t
+java:S22931"YReplace the type specification in this constructor call with the diamond operator ("<>").(µ¹†ıÿÿÿÿ
+o
+java:S2293†"YReplace the type specification in this constructor call with the diamond operator ("<>").(Šş€?
+o
+java:S2293Ê"YReplace the type specification in this constructor call with the diamond operator ("<>").(Šş€?
+u
+java:S2293Ê"YReplace the type specification in this constructor call with the diamond operator ("<>").(¯¬­ÿÿÿÿÿ
+p
+java:S2293ñ"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò åÛ
+z
+java:S1488"^Immediately return this expression instead of assigning it to the temporary variable "ztrees".(…¢öÏıÿÿÿÿ
+v
+java:S1149Ş"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰
+T
+java:S18541"9Remove this useless assignment to local variable "menus".(µ¹†ıÿÿÿÿ
+P
+java:S1854†":Remove this useless assignment to local variable "ztrees".(Šş€?
+A
+java:S1905Í"*Remove this unnecessary cast to "SysMenu".(·€ÄÓ
+A
+java:S1905õ"*Remove this unnecessary cast to "SysMenu".(ßª‘ÿ
+Z
+java:S1155ƒ">Use isEmpty() to check whether the collection is empty or not.(Ó¦İ³ıÿÿÿÿ

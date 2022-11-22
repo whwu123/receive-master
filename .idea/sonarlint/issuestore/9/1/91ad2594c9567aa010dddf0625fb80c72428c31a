@@ -1,0 +1,25 @@
+
+v
+java:S1149â"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰
+k
+java:S3252"OUse static access with "org.apache.commons.lang3.StringUtils" for "capitalize".(ğÍø¥úÿÿÿÿ
+g
+java:S3252£"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(Ù·èŞüÿÿÿÿ
+b
+java:S3252·"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(ŸŞÖ¿
+g
+java:S3252Ë"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(Š¤•óûÿÿÿÿ
+g
+java:S3252ß"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(…¨À¤üÿÿÿÿ
+g
+java:S3252ó"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(ëüø˜ûÿÿÿÿ
+g
+java:S3252‡"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(×ßŞæúÿÿÿÿ
+a
+java:S3252›"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(ôŠÈ9
+n
+java:S3252Í"XUse static access with "org.apache.commons.lang3.StringUtils" for "equalsAnyIgnoreCase".(¨•êD
+o
+java:S3252Ü"XUse static access with "org.apache.commons.lang3.StringUtils" for "equalsAnyIgnoreCase".(éÀ•Ñ
+q
+java:S3252á"UUse static access with "org.apache.commons.lang3.StringUtils" for "substringBetween".(İ–Ÿßÿÿÿÿÿ

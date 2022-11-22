@@ -1,0 +1,11 @@
+
+y
+java:S1488>"^Immediately return this expression instead of assigning it to the temporary variable "result".(ô§­éûÿÿÿÿ
+L
+java:S2696"6Make the enclosing method "static" or remove this set.(²öÁ³
+Q
+java:S2696#"6Make the enclosing method "static" or remove this set.(ª—ÿêÿÿÿÿÿ
+D
+java:S1905>")Remove this unnecessary cast to "Object".(ô§­éûÿÿÿÿ
+D
+java:S1172y".Remove this unused method parameter "invoker".(¢ÈÎ

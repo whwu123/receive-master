@@ -1,0 +1,15 @@
+
+p
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ì¿õ
+u
+java:S2293«"YReplace the type specification in this constructor call with the diamond operator ("<>").(çâîÀıÿÿÿÿ
+-
+java:S2176"Rename this class.(êšşÿÿÿÿ
+i
+java:S3252‘"RUse static access with "org.apache.commons.lang3.StringUtils" for "startsWithAny".(Åàä
+c
+java:S3252²"LUse static access with "org.apache.commons.lang3.StringUtils" for "isBlank".(¤ƒíÁ
+c
+java:S3252¹"LUse static access with "org.apache.commons.lang3.StringUtils" for "isBlank".(Î£×Ğ
+i
+java:S1871†"MThis branch's code block is the same as the block for the branch on line 386.(ÒÌâ–øÿÿÿÿ

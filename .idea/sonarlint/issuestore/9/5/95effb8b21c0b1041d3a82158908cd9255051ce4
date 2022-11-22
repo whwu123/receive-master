@@ -1,0 +1,21 @@
+
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ëÑÖˆÿÿÿÿÿ
+o
+java:S2293×"YReplace the type specification in this constructor call with the diamond operator ("<>").(¼Ñ…t
+o
+java:S2293å"YReplace the type specification in this constructor call with the diamond operator ("<>").(¹´Î
+p
+java:S2293ê"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ğë«®
+g
+java:S1192 "LDefine a constant instead of duplicating this literal "15666666666" 4 times.(ŒÁ¥”ıÿÿÿÿ
+x
+java:S1488£"\Immediately return this expression instead of assigning it to the temporary variable "data".(Ï‚÷’şÿÿÿÿ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ëÑÖˆÿÿÿÿÿ
+t
+java:S1171"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+c	java:S100i"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€ƒêÊ
+h	java:S100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìµÖÙøÿÿÿÿ
+o
+java:S3252"SUse static access with "org.apache.commons.lang3.StringUtils" for "defaultIfBlank".(ú›ºÂıÿÿÿÿ

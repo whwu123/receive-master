@@ -1,0 +1,17 @@
+
+n
+java:S2293="YReplace the type specification in this constructor call with the diamond operator ("<>").(«ÃÎP
+o
+java:S2293?"YReplace the type specification in this constructor call with the diamond operator ("<>").(šÄ Ù
+s
+java:S1488ƒ"\Immediately return this expression instead of assigning it to the temporary variable "info".(ı•ø³
+O
+java:S1854?"9Remove this useless assignment to local variable "menus".(šÄ Ù
+N
+java:S1854="9Remove this useless assignment to local variable "roles".(«ÃÎP
+`
+java:S2147z"ECombine this catch with the one at line 118, which has the same body.(æİ’Íúÿÿÿÿ
+s
+java:S2139~"XEither log this exception and handle it, or rethrow it with some contextual information.(¼Ôîàùÿÿÿÿ
+]
+java:S3457€"AFormat specifiers should be used instead of string concatenation.(’Å¸ıÿÿÿÿ

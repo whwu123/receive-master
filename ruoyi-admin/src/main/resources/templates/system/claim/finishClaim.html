@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('理赔信息完成')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-claim-finish" th:object="${claim}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <h4 class="form-header h4">理赔信息</h4>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">承保公司：</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input id="treeId" name="companyId" type="hidden"  required th:field="*{insuranceCompanyPerson.insuranceCompany.id}"/>
+                        <input class="form-control" type="text" onclick="selectCompanyTree()" id="treeName" readonly="true" required th:field="*{insuranceCompanyPerson.insuranceCompany.companyName}" disabled>
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔负责人：</label>
+                <div class="col-sm-8">
+                   <!-- <input name="claimPersonId" th:field="*{claimPersonId}" class="form-control" type="text">-->
+                    <div class="input-group">
+                        <input id="treeId2" name="claimPersonId" type="hidden"  required th:field="*{insuranceCompanyPerson.id}"/>
+                        <input class="form-control" type="text" onclick="selectCompanyPersonTree()" id="treeName2" readonly="true" th:field="*{insuranceCompanyPerson.personName}" required disabled>
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔进展情况：</label>
+                <div class="col-sm-8">
+                    <select name="evolevState" class="form-control m-b" th:with="type=${@dict.getType('evolve_state')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{evolevState}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔类型：</label>
+                <div class="col-sm-8">
+                    <select name="claimType" class="form-control m-b" th:with="type=${@dict.getType('claim_type')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{claimType}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔金额：</label>
+                <div class="col-sm-8">
+                    <input name="claimMoney" th:field="*{claimMoney}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔完成时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="finishTime" th:value="${#dates.format(claim.finishTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+                </div>
+            </div>
+            <h4 class="form-header h4">学生信息</h4>
+
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">区县名称：</label>
+                <div class="col-sm-8">
+                    <input name="areaName" th:field="*{areaName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学校名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolName" th:field="*{schoolName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">年级名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolGradeName" th:field="*{schoolGradeName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">班级名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolClassName" th:field="*{schoolClassName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学生身份证：</label>
+                <div class="col-sm-8">
+                    <input name="stuCard" th:field="*{stuCard}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学生姓名：</label>
+                <div class="col-sm-8">
+                    <input name="stuName" th:field="*{stuName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: select2-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/claim";
+        var prefix2 = ctx + "system/person"
+        $("#form-claim-finish").validate({
+            focusCleanup: true
+        });
+        $("input[name='finishTime']").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            autoclose: true
+        });
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/finishClaim", $('#form-claim-finish').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

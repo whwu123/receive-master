@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ClaimMapper">
+    
+    <resultMap type="Claim" id="ClaimResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="sort"    column="sort"    />
+        <result property="state"    column="state"    />
+        <result property="remark"    column="remark"    />
+        <result property="cityId"    column="city_id"    />
+        <result property="cityName"    column="city_name"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="schoolId"    column="school_id"    />
+        <result property="schoolName"    column="school_name"    />
+        <result property="schoolGrade"    column="school_grade"    />
+        <result property="schoolGradeName"    column="school_grade_name"    />
+        <result property="schoolClass"    column="school_class"    />
+        <result property="schoolClassName"    column="school_class_name"    />
+        <result property="stuCard"    column="stu_card"    />
+        <result property="stuName"    column="stu_name"    />
+        <result property="stuSex"    column="stu_sex"    />
+        <result property="parentsName"    column="parents_name"    />
+        <result property="parentsCard"    column="parents_card"    />
+        <result property="parentsCall"    column="parents_call"    />
+        <result property="payMoney"    column="pay_money"    />
+        <result property="paySerial"    column="pay_serial"    />
+        <result property="claimType"    column="claim_type"    />
+        <result property="claimMoney"    column="claim_money"    />
+        <result property="claimPersonId"    column="claim_person_id"    />
+        <result property="evolevState"    column="evolev_state"    />
+        <result property="finishTime"    column="finish_time"    />
+    </resultMap>
+
+    <resultMap type="Claim" id="ClaimResult2">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="sort"    column="sort"    />
+        <result property="state"    column="state"    />
+        <result property="remark"    column="remark"    />
+        <result property="cityId"    column="city_id"    />
+        <result property="cityName"    column="city_name"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="schoolId"    column="school_id"    />
+        <result property="schoolName"    column="school_name"    />
+        <result property="schoolGrade"    column="school_grade"    />
+        <result property="schoolGradeName"    column="school_grade_name"    />
+        <result property="schoolClass"    column="school_class"    />
+        <result property="schoolClassName"    column="school_class_name"    />
+        <result property="stuCard"    column="stu_card"    />
+        <result property="stuName"    column="stu_name"    />
+        <result property="stuSex"    column="stu_sex"    />
+        <result property="parentsName"    column="parents_name"    />
+        <result property="parentsCard"    column="parents_card"    />
+        <result property="parentsCall"    column="parents_call"    />
+        <result property="payMoney"    column="pay_money"    />
+        <result property="paySerial"    column="pay_serial"    />
+        <result property="claimType"    column="claim_type"    />
+        <result property="claimMoney"    column="claim_money"    />
+        <result property="evolevState"    column="evolev_state"    />
+        <result property="finishTime"    column="finish_time"    />
+        <association property="insuranceCompanyPerson"     column="claim_person_id" javaType="InsuranceCompanyPerson" resultMap="InsuranceCompanyPersonResult" />
+    </resultMap>
+    <resultMap  type="InsuranceCompanyPerson" id="InsuranceCompanyPersonResult">
+        <result property="id"    column="person_id"    />
+        <result property="personName"    column="person_name"    />
+        <result property="personPhone"    column="person_phone"    />
+        <result property="personSex"    column="person_sex"    />
+        <association property="insuranceCompany"     column="companyId" javaType="InsuranceCompany" resultMap="InsuranceCompanyResult" />
+    </resultMap>
+    <resultMap type="InsuranceCompany" id="InsuranceCompanyResult">
+        <result property="id"    column="companyId"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="companyType"    column="company_type"    />
+    </resultMap>
+
+    <sql id="selectClaimVo">
+        select id, create_by, create_time, update_by, update_time, sort, state, remark, city_id, city_name, area_id, area_name, school_id, school_name, school_grade, school_grade_name, school_class, school_class_name, stu_card, stu_name, stu_sex, parents_name, parents_card, parents_call, pay_money, pay_serial, claim_type, claim_money, claim_person_id, evolev_state, finish_time from claim
+    </sql>
+
+    <select id="selectClaimList" parameterType="Claim" resultMap="ClaimResult2">
+            SELECT
+            a.id,
+            a.create_by,
+            a.create_time,
+            a.update_by,
+            a.update_time,
+            a.sort,
+            a.state,
+            a.remark,
+            a.city_id,
+            a.city_name,
+            a.area_id,
+            a.area_name,
+            a.school_id,
+            a.school_name,
+            a.school_grade,
+            a.school_grade_name,
+            a.school_class,
+            a.school_class_name,
+            a.stu_card,
+            a.stu_name,
+            a.stu_sex,
+            a.parents_name,
+            a.parents_card,
+            a.parents_call,
+            a.pay_money,
+            a.pay_serial,
+            a.claim_type,
+            a.claim_money,
+            a.claim_person_id,
+            a.evolev_state,
+            a.finish_time,
+            p.id person_id,
+            p.person_name,
+            p.person_phone,
+            p.person_sex,
+            p.company_id companyId,
+            c.company_name,
+            c.company_type
+            FROM
+            claim a
+        LEFT JOIN  insurance_company_person p ON a.claim_person_id = p.id
+        LEFT JOIN  insurance_company c ON p.company_id = c.id
+        <where>  
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="areaName != null  and areaName != ''"> and area_name like concat('%', #{areaName}, '%')</if>
+            <if test="schoolName != null  and schoolName != ''"> and school_name like concat('%', #{schoolName}, '%')</if>
+            <if test="schoolGradeName != null  and schoolGradeName != ''"> and school_grade_name like concat('%', #{schoolGradeName}, '%')</if>
+            <if test="schoolClassName != null  and schoolClassName != ''"> and school_class_name like concat('%', #{schoolClassName}, '%')</if>
+            <if test="stuCard != null  and stuCard != ''"> and stu_card = #{stuCard}</if>
+            <if test="stuName != null  and stuName != ''"> and stu_name like concat('%', #{stuName}, '%')</if>
+            <if test="stuSex != null "> and stu_sex = #{stuSex}</if>
+            <if test="parentsName != null  and parentsName != ''"> and parents_name like concat('%', #{parentsName}, '%')</if>
+            <if test="parentsCard != null  and parentsCard != ''"> and parents_card = #{parentsCard}</if>
+            <if test="parentsCall != null  and parentsCall != ''"> and parents_call = #{parentsCall}</if>
+            <if test="paySerial != null  and paySerial != ''"> and pay_serial = #{paySerial}</if>
+            <if test="claimType != null "> and claim_type = #{claimType}</if>
+            <if test="claimMoney != null "> and claim_money = #{claimMoney}</if>
+            <if test="claimPersonId != null "> and claim_person_id = #{claimPersonId}</if>
+            <if test="evolevState != null "> and evolev_state = #{evolevState}</if>
+            <if test="params.beginFinishTime != null and params.beginFinishTime != '' and params.endFinishTime != null and params.endFinishTime != ''"> and finish_time between #{params.beginFinishTime} and #{params.endFinishTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectClaimById" parameterType="Long" resultMap="ClaimResult2">
+        SELECT
+            a.id,
+            a.create_by,
+            a.create_time,
+            a.update_by,
+            a.update_time,
+            a.sort,
+            a.state,
+            a.remark,
+            a.city_id,
+            a.city_name,
+            a.area_id,
+            a.area_name,
+            a.school_id,
+            a.school_name,
+            a.school_grade,
+            a.school_grade_name,
+            a.school_class,
+            a.school_class_name,
+            a.stu_card,
+            a.stu_name,
+            a.stu_sex,
+            a.parents_name,
+            a.parents_card,
+            a.parents_call,
+            a.pay_money,
+            a.pay_serial,
+            a.claim_type,
+            a.claim_money,
+            a.claim_person_id,
+            a.evolev_state,
+            a.finish_time,
+            p.id person_id,
+            p.person_name,
+            p.person_phone,
+            p.person_sex,
+            p.company_id companyId,
+            c.company_name,
+            c.company_type
+            FROM
+                claim a
+            LEFT  JOIN insurance_company_person p ON a.claim_person_id = p.id
+            LEFT JOIN insurance_company c ON p.company_id = c.id
+            where a.id = #{id}
+    </select>
+        
+    <insert id="insertClaim" parameterType="Claim" useGeneratedKeys="true" keyProperty="id">
+        insert into claim
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="sort != null">sort,</if>
+            <if test="state != null">state,</if>
+            <if test="remark != null">remark,</if>
+            <if test="cityId != null">city_id,</if>
+            <if test="cityName != null">city_name,</if>
+            <if test="areaId != null">area_id,</if>
+            <if test="areaName != null">area_name,</if>
+            <if test="schoolId != null">school_id,</if>
+            <if test="schoolName != null">school_name,</if>
+            <if test="schoolGrade != null">school_grade,</if>
+            <if test="schoolGradeName != null">school_grade_name,</if>
+            <if test="schoolClass != null">school_class,</if>
+            <if test="schoolClassName != null">school_class_name,</if>
+            <if test="stuCard != null">stu_card,</if>
+            <if test="stuName != null">stu_name,</if>
+            <if test="stuSex != null">stu_sex,</if>
+            <if test="parentsName != null">parents_name,</if>
+            <if test="parentsCard != null">parents_card,</if>
+            <if test="parentsCall != null">parents_call,</if>
+            <if test="payMoney != null">pay_money,</if>
+            <if test="paySerial != null">pay_serial,</if>
+            <if test="claimType != null">claim_type,</if>
+            <if test="claimMoney != null">claim_money,</if>
+            <if test="claimPersonId != null">claim_person_id,</if>
+            <if test="evolevState != null">evolev_state,</if>
+            <if test="finishTime != null">finish_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="state != null">#{state},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="cityId != null">#{cityId},</if>
+            <if test="cityName != null">#{cityName},</if>
+            <if test="areaId != null">#{areaId},</if>
+            <if test="areaName != null">#{areaName},</if>
+            <if test="schoolId != null">#{schoolId},</if>
+            <if test="schoolName != null">#{schoolName},</if>
+            <if test="schoolGrade != null">#{schoolGrade},</if>
+            <if test="schoolGradeName != null">#{schoolGradeName},</if>
+            <if test="schoolClass != null">#{schoolClass},</if>
+            <if test="schoolClassName != null">#{schoolClassName},</if>
+            <if test="stuCard != null">#{stuCard},</if>
+            <if test="stuName != null">#{stuName},</if>
+            <if test="stuSex != null">#{stuSex},</if>
+            <if test="parentsName != null">#{parentsName},</if>
+            <if test="parentsCard != null">#{parentsCard},</if>
+            <if test="parentsCall != null">#{parentsCall},</if>
+            <if test="payMoney != null">#{payMoney},</if>
+            <if test="paySerial != null">#{paySerial},</if>
+            <if test="claimType != null">#{claimType},</if>
+            <if test="claimMoney != null">#{claimMoney},</if>
+            <if test="claimPersonId != null">#{claimPersonId},</if>
+            <if test="evolevState != null">#{evolevState},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClaim" parameterType="Claim">
+        update claim
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+            <if test="cityName != null">city_name = #{cityName},</if>
+            <if test="areaId != null">area_id = #{areaId},</if>
+            <if test="areaName != null">area_name = #{areaName},</if>
+            <if test="schoolId != null">school_id = #{schoolId},</if>
+            <if test="schoolName != null">school_name = #{schoolName},</if>
+            <if test="schoolGrade != null">school_grade = #{schoolGrade},</if>
+            <if test="schoolGradeName != null">school_grade_name = #{schoolGradeName},</if>
+            <if test="schoolClass != null">school_class = #{schoolClass},</if>
+            <if test="schoolClassName != null">school_class_name = #{schoolClassName},</if>
+            <if test="stuCard != null">stu_card = #{stuCard},</if>
+            <if test="stuName != null">stu_name = #{stuName},</if>
+            <if test="stuSex != null">stu_sex = #{stuSex},</if>
+            <if test="parentsName != null">parents_name = #{parentsName},</if>
+            <if test="parentsCard != null">parents_card = #{parentsCard},</if>
+            <if test="parentsCall != null">parents_call = #{parentsCall},</if>
+            <if test="payMoney != null">pay_money = #{payMoney},</if>
+            <if test="paySerial != null">pay_serial = #{paySerial},</if>
+            <if test="claimType != null">claim_type = #{claimType},</if>
+            <if test="claimMoney != null">claim_money = #{claimMoney},</if>
+            <if test="claimPersonId != null">claim_person_id = #{claimPersonId},</if>
+            <if test="evolevState != null">evolev_state = #{evolevState},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClaimById" parameterType="Long">
+        delete from claim where id = #{id}
+    </delete>
+
+    <delete id="deleteClaimByIds" parameterType="String">
+        delete from claim where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,28 @@
+
+[	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(œ²âı
+[	java:S112N"FDefine and throw a dedicated exception instead of using a generic one.(ïšëí
+`	java:S112i"FDefine and throw a dedicated exception instead of using a generic one.(ıûôÔÿÿÿÿÿ
+\	java:S112•"FDefine and throw a dedicated exception instead of using a generic one.(™õ—ú
+a	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(°÷ÇÎÿÿÿÿÿ
+o
+java:S2293o"YReplace the type specification in this constructor call with the diamond operator ("<>").(Øÿ»¨
+o
+java:S2293p"YReplace the type specification in this constructor call with the diamond operator ("<>").(°Ã‰û
+t
+java:S2293q"YReplace the type specification in this constructor call with the diamond operator ("<>").(³ìş¢ÿÿÿÿÿ
+t
+java:S2293r"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷ôµ½ûÿÿÿÿ
+@
+java:S5411>"*Use the primitive boolean expression here.(·Ê¬×
+_
+java:S3252~"IUse static access with "org.apache.commons.lang3.StringUtils" for "join".(¼ñü©
+_
+java:S3252"IUse static access with "org.apache.commons.lang3.StringUtils" for "join".(‘Ì‰ƒ
+`
+java:S3252€"IUse static access with "org.apache.commons.lang3.StringUtils" for "join".(êíÁ
+e
+java:S3252"IUse static access with "org.apache.commons.lang3.StringUtils" for "join".(ïÃÀÎøÿÿÿÿ
+o
+java:S3252š"SUse static access with "org.apache.commons.lang3.StringUtils" for "substringAfter".(Şæ¬Úşÿÿÿÿ
+n
+java:S3252œ"WUse static access with "org.apache.commons.lang3.StringUtils" for "substringAfterLast".(ğ³±Ò

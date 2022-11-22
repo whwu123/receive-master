@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('学校管理列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>区县部门：</label>
+                                <input id="treeId" type="text" name="countyDeptId" style="display: none;"/>
+                                <input type="text" onclick="selectCountDeptTree()" id="treeName" placeholder="请选择要查询的区县部门名称">
+                            </li>
+
+                            <li>
+                                <label>学校名称：</label>
+                                <input type="text" name="schoolName"/>
+                            </li>
+                            <li>
+                                <label>是否公立：</label>
+                                <select name="isPublic" th:with="type=${@dict.getType('is_public')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <!--<li class="select-time">
+                                <label>创建时间：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCreateTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCreateTime]"/>
+                            </li>-->
+
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:school:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:school:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:school:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:school:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:school:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:school:remove')}]];
+        var isPublicDatas = [[${@dict.getType('is_public')}]];
+        var delFlagDatas = [[${@dict.getType('data_state')}]];
+        var prefix = ctx + "system/school";
+        var prefixCompany = ctx + "system/schoolCompany";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "学校管理",
+                columns: [{
+                    checkbox: true
+                },
+                /*{
+                    field: 'branchDeptId',
+                    title: '市部门',
+                    formatter: function(value, row, index) {
+                        return "怀化市分公司";
+                    }
+                },*/
+                {
+                    field: 'countyDeptId',
+                    title: '区县部门',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                       if(row.countyDeptId == 440){
+                           return "市辖区";
+                       }else if(row.countyDeptId == 428){
+                           return "鹤城区";
+                       }else if(row.countyDeptId == 430){
+                           return "沅陵县";
+                       }
+                    }
+                },
+
+                {
+                    field: 'id',
+                    title: '主键ID',
+                    visible: false
+                },
+                {
+                    field: 'schoolName',
+                    title: '学校名称',
+                    sortable: true
+                },
+
+                {
+                    field: 'isPublic',
+                    title: '是否公立',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(isPublicDatas, value);
+                    },
+                    sortable: true
+                },
+               /* {
+                    field: 'remark',
+                    title: '备注'
+                },*/
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="schoolCompany(\'' + row.id + '\')"><i class="fa fa-edit"></i>承保公司配置</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+
+        /*保险公司管理树*/
+        function selectCountDeptTree() {
+            var options = {
+                title: '区县部门选择',
+                width: "380",
+                url: prefix + "/selectCountDeptTree",
+                callBack: doSubmit
+            };
+            $.modal.openOptions(options);
+        }
+
+        function doSubmit(index, layero){
+            var body = $.modal.getChildFrame(index);
+            $("#treeId").val(body.find('#treeId').val());
+            $("#treeName").val(body.find('#treeName').val());
+            $.modal.close(index);
+        }
+
+        /* 新增承保公司配置 */
+        function schoolCompany(schoolId) {
+            var url = prefixCompany + '/addSchoolCompany/' + schoolId;
+            $.modal.open("承保公司配置", url, '800', '750');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改理赔信息')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-claim-edit" th:object="${claim}">
+        <input name="id" th:field="*{id}" type="hidden">
+        <h4 class="form-header h4">基本信息</h4>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">城市名称：</label>
+            <div class="col-sm-8">
+                <input name="cityName" th:field="*{cityName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">区县名称：</label>
+            <div class="col-sm-8">
+                <input name="areaName" th:field="*{areaName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学校名称：</label>
+            <div class="col-sm-8">
+                <input name="schoolName" th:field="*{schoolName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">年级名称：</label>
+            <div class="col-sm-8">
+                <input name="schoolGradeName" th:field="*{schoolGradeName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">班级名称：</label>
+            <div class="col-sm-8">
+                <input name="schoolClassName" th:field="*{schoolClassName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学生身份证：</label>
+            <div class="col-sm-8">
+                <input name="stuCard" th:field="*{stuCard}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学生姓名：</label>
+            <div class="col-sm-8">
+                <input name="stuName" th:field="*{stuName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">学生性别：</label>
+            <div class="col-sm-8">
+                <select name="stuSex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}" disabled>
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{stuSex}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">家长姓名：</label>
+            <div class="col-sm-8">
+                <input name="parentsName" th:field="*{parentsName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">家长身份证：</label>
+            <div class="col-sm-8">
+                <input name="parentsCard" th:field="*{parentsCard}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">家长电话：</label>
+            <div class="col-sm-8">
+                <input name="parentsCall" th:field="*{parentsCall}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">缴费金额：</label>
+            <div class="col-sm-8">
+                <input name="payMoney" th:field="*{payMoney}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">支付流水号：</label>
+            <div class="col-sm-8">
+                <input name="paySerial" th:field="*{paySerial}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+
+        <h4 class="form-header h4">理赔信息</h4>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">申请理赔时间：</label>
+            <div class="col-sm-8">
+                <div class="input-group date">
+                    <input name="createTime" th:value="${#dates.format(claim.createTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text" disabled>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔类型：</label>
+            <div class="col-sm-8">
+                <select name="claimType" class="form-control m-b" th:with="type=${@dict.getType('claim_type')}" disabled>
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{claimType}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔金额：</label>
+            <div class="col-sm-8">
+                <input name="claimMoney" th:field="*{claimMoney}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔承保公司：</label>
+            <div class="col-sm-8">
+                <input name="claimMoney" th:field="*{insuranceCompanyPerson.insuranceCompany.companyName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔负责人：</label>
+            <div class="col-sm-8">
+                <input name="claimPersonId" th:field="*{insuranceCompanyPerson.personName}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔负责人联系电话：</label>
+            <div class="col-sm-8">
+                <input name="claimPersonId" th:field="*{insuranceCompanyPerson.personPhone}" class="form-control" type="text" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔进展情况：</label>
+            <div class="col-sm-8">
+                <select name="evolevState" class="form-control m-b" th:with="type=${@dict.getType('evolve_state')}" disabled>
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{evolevState}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">理赔完成时间：</label>
+            <div class="col-sm-8">
+                <div class="input-group date">
+                    <input name="finishTime" th:value="${#dates.format(claim.finishTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text" disabled>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control" disabled>[[*{remark}]]</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态：</label>
+            <div class="col-sm-8">
+                <div class="radio-box" th:each="dict : ${@dict.getType('data_state')}">
+                    <input type="radio" th:id="${'state_' + dict.dictCode}" name="state" th:value="${dict.dictValue}" th:field="*{state}" disabled>
+                    <label th:for="${'state_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-sm-offset-5 col-sm-10">
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/claim";
+
+    $(function (){
+        $(".layui-layer-btn0").hide();
+    })
+</script>
+</body>
+</html>

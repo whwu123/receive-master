@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NPersonMapper">
+    
+    <resultMap type="NPerson" id="NPersonResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="nName"    column="n_name"    />
+        <result property="nAge"    column="n_age"    />
+        <result property="nPhone"    column="n_phone"    />
+        <result property="nNumber"    column="n_number"    />
+        <result property="nSex"    column="n_sex"    />
+        <result property="nWeight"    column="n_weight"    />
+        <result property="nHeight"    column="n_height"    />
+        <result property="nStatus"    column="n_status"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectNPersonVo">
+        select id, create_by, create_time, update_by, update_time, n_name, n_age, n_phone, n_number, n_sex, n_weight, n_height, n_status, remark from n_person
+    </sql>
+
+    <select id="selectNPersonList" parameterType="NPerson" resultMap="NPersonResult">
+        <include refid="selectNPersonVo"/>
+        <where>  
+            <if test="nName != null  and nName != ''"> and n_name like concat('%', #{nName}, '%')</if>
+            <if test="nAge != null  and nAge != ''"> and n_age = #{nAge}</if>
+            <if test="nPhone != null  and nPhone != ''"> and n_phone = #{nPhone}</if>
+            <if test="nNumber != null "> and n_number = #{nNumber}</if>
+            <if test="nSex != null "> and n_sex = #{nSex}</if>
+            <if test="nWeight != null "> and n_weight = #{nWeight}</if>
+            <if test="nHeight != null "> and n_height = #{nHeight}</if>
+            <if test="nStatus != null "> and n_status = #{nStatus}</if>
+        </where>
+        ORDER BY n_number asc
+    </select>
+    
+    <select id="selectNPersonById" parameterType="Long" resultMap="NPersonResult">
+        <include refid="selectNPersonVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertNPerson" parameterType="NPerson">
+        insert into n_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="nName != null">n_name,</if>
+            <if test="nAge != null">n_age,</if>
+            <if test="nPhone != null">n_phone,</if>
+            <if test="nNumber != null">n_number,</if>
+            <if test="nSex != null">n_sex,</if>
+            <if test="nWeight != null">n_weight,</if>
+            <if test="nHeight != null">n_height,</if>
+            <if test="nStatus != null">n_status,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="nName != null">#{nName},</if>
+            <if test="nAge != null">#{nAge},</if>
+            <if test="nPhone != null">#{nPhone},</if>
+            <if test="nNumber != null">#{nNumber},</if>
+            <if test="nSex != null">#{nSex},</if>
+            <if test="nWeight != null">#{nWeight},</if>
+            <if test="nHeight != null">#{nHeight},</if>
+            <if test="nStatus != null">#{nStatus},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNPerson" parameterType="NPerson">
+        update n_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="nName != null">n_name = #{nName},</if>
+            <if test="nAge != null">n_age = #{nAge},</if>
+            <if test="nPhone != null">n_phone = #{nPhone},</if>
+            <if test="nNumber != null">n_number = #{nNumber},</if>
+            <if test="nSex != null">n_sex = #{nSex},</if>
+            <if test="nWeight != null">n_weight = #{nWeight},</if>
+            <if test="nHeight != null">n_height = #{nHeight},</if>
+            <if test="nStatus != null">n_status = #{nStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNPersonById" parameterType="Long">
+        delete from n_person where id = #{id}
+    </delete>
+
+    <delete id="deleteNPersonByIds" parameterType="String">
+        delete from n_person where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

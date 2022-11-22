@@ -1,0 +1,16 @@
+
+o
+java:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(´È¦Ñ
+c
+java:S1192V"HDefine a constant instead of duplicating this literal "kickout" 4 times.(ÍŞôıÿÿÿÿ
+P
+java:S1141f"5Extract this nested try block into a separate method.(ç£êúÿÿÿÿ
+P	java:S110"<This class has 8 parents which is greater than 5 authorized.(¯‡È}
+E
+java:S5411b"*Use the primitive boolean expression here.(·İ²²şÿÿÿÿ
+`
+java:S1124!"EReorder the modifiers to comply with the Java Language Specification.(¤Òèºÿÿÿÿÿ
+m
+java:S3776="RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(…ªÒêøÿÿÿÿ
+=
+java:S1125w"'Remove the unnecessary boolean literal.(óïóĞ

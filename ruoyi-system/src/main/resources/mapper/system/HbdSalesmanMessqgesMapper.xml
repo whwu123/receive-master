@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HbdSalesmanMessqgesMapper">
+
+    <resultMap type="HbdSalesmanMessqges" id="HbdSalesmanMessqgesResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="smType"    column="sm_type"    />
+        <result property="smMoney"    column="sm_money"    />
+        <result property="state"    column="state"    />
+        <result property="salesmanName"    column="salesman_name"    />
+        <result property="salesmanId"    column="salesman_id"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectHbdSalesmanMessqgesVo">
+        select id, create_by, create_time, update_by, update_time, sm_type, sm_money, state, salesman_name, salesman_id, remark from hbd_salesman_messqges
+    </sql>
+
+    <select id="selectHbdSalesmanMessqgesList" parameterType="HbdSalesmanMessqges" resultMap="HbdSalesmanMessqgesResult">
+        <include refid="selectHbdSalesmanMessqgesVo"/>
+        <where>
+            <if test="smType != null "> and sm_type = #{smType}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="salesmanName != null  and salesmanName != ''"> and salesman_name like concat('%', #{salesmanName}, '%')</if>
+            <if test="salesmanId != null "> and salesman_id = #{salesmanId}</if>
+        </where>
+    </select>
+
+    <select id="selectHbdSalesmanMessqgesById" parameterType="Long" resultMap="HbdSalesmanMessqgesResult">
+        <include refid="selectHbdSalesmanMessqgesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHbdSalesmanMessqges" parameterType="HbdSalesmanMessqges" useGeneratedKeys="true" keyProperty="id">
+        insert into hbd_salesman_messqges
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="smType != null">sm_type,</if>
+            <if test="smMoney != null">sm_money,</if>
+            <if test="state != null">state,</if>
+            <if test="salesmanName != null">salesman_name,</if>
+            <if test="salesmanId != null">salesman_id,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="smType != null">#{smType},</if>
+            <if test="smMoney != null">#{smMoney},</if>
+            <if test="state != null">#{state},</if>
+            <if test="salesmanName != null">#{salesmanName},</if>
+            <if test="salesmanId != null">#{salesmanId},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHbdSalesmanMessqges" parameterType="HbdSalesmanMessqges">
+        update hbd_salesman_messqges
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="smType != null">sm_type = #{smType},</if>
+            <if test="smMoney != null">sm_money = #{smMoney},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="salesmanName != null">salesman_name = #{salesmanName},</if>
+            <if test="salesmanId != null">salesman_id = #{salesmanId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHbdSalesmanMessqgesById" parameterType="Long">
+        delete from hbd_salesman_messqges where id = #{id}
+    </delete>
+
+    <delete id="deleteHbdSalesmanMessqgesByIds" parameterType="String">
+        delete from hbd_salesman_messqges where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

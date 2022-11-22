@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('保险公司人员管理列表')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>公司名称：</label>
+                            <input id="treeId" name="companyId" type="text" style="display:none;"/>
+                            <input type="text" onclick="selectCompanyTree()" id="treeName" placeholder="请选择要查询的公司名称">
+                        </li>
+                        <li>
+                            <label>人员姓名：</label>
+                            <input type="text" name="personName"/>
+                        </li>
+                        <li>
+                            <label>人员电话：</label>
+                            <input type="text" name="personPhone"/>
+                        </li>
+                        <li>
+                            <label>人员性别：</label>
+                            <select name="personSex" th:with="type=${@dict.getType('sys_user_sex')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+
+                        <li>
+                            <label>状态：</label>
+                            <select name="state" th:with="type=${@dict.getType('data_state')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset('formId')"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:person:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+           <!-- <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:person:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>-->
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:person:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:person:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:person:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:person:remove')}]];
+    var personSexDatas = [[${@dict.getType('sys_user_sex')}]];
+    var stateDatas = [[${@dict.getType('data_state')}]];
+    var prefix = ctx + "system/person";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "保险公司人员管理",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '主键ID',
+                    visible: false
+                },
+                {
+                    field: 'insuranceCompany.companyName',
+                    title: '公司名称',
+                },
+                {
+                    field: 'personName',
+                    title: '人员姓名',
+                    sortable: true
+                },
+                {
+                    field: 'personPhone',
+                    title: '人员电话'
+                },
+                {
+                    field: 'personSex',
+                    title: '人员性别',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(personSexDatas, value);
+                    },
+                    sortable: true
+                },
+                /*{
+                    field: 'sort',
+                    title: '排序'
+                },*/
+                {
+                    field: 'state',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(stateDatas, value);
+                    },
+                    sortable: true
+                },
+               /* {
+                    field: 'remark',
+                    title: '备注'
+                },*/
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        /*actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');*/
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /*保险公司管理树*/
+    function selectCompanyTree() {
+        var options = {
+            title: '保险公司选择',
+            width: "380",
+            url: prefix + "/selectCompanyTree",
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmit(index, layero){
+        var body = $.modal.getChildFrame(index);
+        $("#treeId").val(body.find('#treeId').val());
+        $("#treeName").val(body.find('#treeName').val());
+        $.modal.close(index);
+    }
+</script>
+</body>
+</html>

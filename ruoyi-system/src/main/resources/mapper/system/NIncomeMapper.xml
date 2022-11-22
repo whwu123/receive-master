@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NIncomeMapper">
+
+    <resultMap type="NIncome" id="NIncomeResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="niTitle"    column="ni_title"    />
+        <result property="niSurplus"    column="ni_surplus"    />
+        <result property="niType"    column="ni_type"    />
+        <result property="niStatus"    column="ni_status"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+
+    <resultMap type="NIncome" id="NIncomeResult2">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="niTitle"    column="ni_title"    />
+        <result property="niSurplus"    column="ni_surplus"    />
+        <result property="niType"    column="ni_type"    />
+        <result property="niStatus"    column="ni_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="money"    column="money"    />
+    </resultMap>
+
+    <resultMap id="NIncomeNIncomeSourcesResult" type="NIncome" extends="NIncomeResult">
+        <collection property="nIncomeSourcesList" notNullColumn="sub_id" javaType="java.util.List" resultMap="NIncomeSourcesResult" />
+    </resultMap>
+
+    <resultMap type="NIncomeSources" id="NIncomeSourcesResult">
+        <result property="id"    column="sub_id"    />
+        <result property="createBy"    column="sub_create_by"    />
+        <result property="createTime"    column="sub_create_time"    />
+        <result property="updateBy"    column="sub_update_by"    />
+        <result property="updateTime"    column="sub_update_time"    />
+        <result property="nisName"    column="sub_nis_name"    />
+        <result property="nisMoney"    column="sub_nis_money"    />
+        <result property="nisType"    column="sub_nis_type"    />
+        <result property="nisStatus"    column="sub_nis_status"    />
+        <result property="remark"    column="sub_remark"    />
+        <result property="niId"    column="sub_ni_id"    />
+    </resultMap>
+
+    <sql id="selectNIncomeVo">
+        select id, create_by, create_time, update_by, update_time, ni_title, ni_surplus, ni_type, ni_status, remark from n_income
+    </sql>
+
+    <select id="selectNIncomeList" parameterType="NIncome" resultMap="NIncomeResult2">
+        SELECT
+        ni.*, (
+        SELECT
+        sum(nis_money)
+        FROM
+        n_income_sources nis where nis.ni_id = ni.id
+        ) as money
+        FROM
+        n_income ni where 1 =1
+        <if test="niTitle != null  and niTitle != ''"> and ni_title like concat('%',#{niTitle},'%')</if>
+        <if test="niSurplus != null "> and ni_surplus = #{niSurplus}</if>
+        <if test="niType != null  and niType != ''"> and ni_type = #{niType}</if>
+        <if test="niStatus != null "> and ni_status = #{niStatus}</if>
+        ORDER BY create_time desc
+    </select>
+
+    <select id="selectNIncomeById" parameterType="Long" resultMap="NIncomeNIncomeSourcesResult">
+        select a.id, a.create_by, a.create_time, a.update_by, a.update_time, a.ni_title, a.ni_surplus, a.ni_type, a.ni_status, a.remark,
+               b.id as sub_id, b.create_by as sub_create_by, b.create_time as sub_create_time, b.update_by as sub_update_by, b.update_time as sub_update_time, b.nis_name as sub_nis_name, b.nis_money as sub_nis_money, b.nis_type as sub_nis_type, b.nis_status as sub_nis_status, b.remark as sub_remark, b.ni_id as sub_ni_id
+        from n_income a
+                 left join n_income_sources b on b.ni_id = a.id
+        where a.id = #{id}
+    </select>
+
+    <insert id="insertNIncome" parameterType="NIncome" useGeneratedKeys="true" keyProperty="id">
+        insert into n_income
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="niTitle != null">ni_title,</if>
+            <if test="niSurplus != null">ni_surplus,</if>
+            <if test="niType != null">ni_type,</if>
+            <if test="niStatus != null">ni_status,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="niTitle != null">#{niTitle},</if>
+            <if test="niSurplus != null">#{niSurplus},</if>
+            <if test="niType != null">#{niType},</if>
+            <if test="niStatus != null">#{niStatus},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateNIncome" parameterType="NIncome">
+        update n_income
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="niTitle != null">ni_title = #{niTitle},</if>
+            <if test="niSurplus != null">ni_surplus = #{niSurplus},</if>
+            <if test="niType != null">ni_type = #{niType},</if>
+            <if test="niStatus != null">ni_status = #{niStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNIncomeById" parameterType="Long">
+        delete from n_income where id = #{id}
+    </delete>
+
+    <delete id="deleteNIncomeByIds" parameterType="String">
+        delete from n_income where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteNIncomeSourcesByNiIds" parameterType="String">
+        delete from n_income_sources where ni_id in
+        <foreach item="niId" collection="array" open="(" separator="," close=")">
+            #{niId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteNIncomeSourcesByNiId" parameterType="Long">
+        delete from n_income_sources where ni_id = #{niId}
+    </delete>
+
+    <insert id="batchNIncomeSources">
+        insert into n_income_sources( id, create_by, create_time, update_by, update_time, nis_name, nis_money, nis_type, nis_status, remark, ni_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}, #{item.nisName}, #{item.nisMoney}, #{item.nisType}, #{item.nisStatus}, #{item.remark}, #{item.niId})
+        </foreach>
+    </insert>
+
+</mapper>

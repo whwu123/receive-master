@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增学校承保公司')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-schoolCompany-add">
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">学校名称：</label>
+            <div class="col-sm-8">
+                <input name="schoolName" class="form-control" type="text" th:value="${school.schoolName}" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">承保险种类型：</label>
+            <div class="col-sm-8">
+                <select name="riskCode" class="form-control m-b" th:with="type=${@dict.getType('risk_code')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label class="col-sm-3 control-label">承保公司名称：</label>
+            <div class="col-sm-8">
+                <input name="insuranceCompanyName" class="form-control" type="text">
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">承保公司名称：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input id="treeId" name="insuranceCompanyId" class="form-control" type="hidden"  required >
+                    <input class="form-control" type="text" onclick="selectCompanyTree()" id="treeName" readonly="true" required >
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">联系人姓名：</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input id="treeId2" name="insuranceCompanyPersonId"  class="form-control" type="hidden"  required  />
+                    <input class="form-control" type="text" onclick="selectCompanyPersonTree()" id="treeName2" readonly="true"  required>
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-3 control-label">区域ID：</label>
+            <div class="col-sm-8">
+                <input name="countyDeptId" class="form-control" type="text" th:value="${school.countyDeptId}">
+            </div>
+        </div>
+
+        <div class="form-group" style="display: none">
+            <label class="col-sm-3 control-label">学校ID：</label>
+            <div class="col-sm-8">
+                <input name="schoolId" class="form-control" type="text" th:value="${school.id}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">收费标记：</label>
+            <div class="col-sm-8">
+                <input name="chargeCode" class="form-control" type="text" required value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态：</label>
+            <div class="col-sm-8">
+                <select name="state" class="form-control m-b" th:with="type=${@dict.getType('data_state')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/schoolCompany";
+    var prefix2 = ctx + "system/person";
+    $("#form-schoolCompany-add").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var personId = $("#treeId2").val();
+            if(personId == ""){
+                $.modal.alertError("保险公司联系人姓名不能为空");
+                return false;
+            }
+            $.operate.save(prefix + "/add", $('#form-schoolCompany-add').serialize());
+        }
+    }
+    /*保险公司管理树*/
+    function selectCompanyTree() {
+        var options = {
+            title: '保险公司选择',
+            width: "380",
+            url: prefix2 + "/selectCompanyTree",
+            callBack: doSubmit
+        };
+        $.modal.openOptions(options);
+    }
+    function doSubmit(index, layero){
+        var body = $.modal.getChildFrame(index);
+        $("#treeId").val(body.find('#treeId').val());
+        $("#treeName").val(body.find('#treeName').val());
+        $.modal.close(index);
+        $("#treeId2").val("");
+        $("#treeName2").val("");
+
+    }
+    /*保险公司人员管理树*/
+    function selectCompanyPersonTree() {
+        var companyId = $("#treeId").val();
+        if(companyId == ''){
+            $.modal.alertError("请先选择承保保险公司");
+            return;
+        }
+        var options = {
+            title: '保险公司人员选择',
+            width: "380",
+            url: prefix2 + "/selectCompanyPersonTree/"+companyId,
+            callBack: doSubmit2
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmit2(index, layero){
+        var body = $.modal.getChildFrame(index);
+        $("#treeId2").val(body.find('#treeId').val());
+        $("#treeName2").val(body.find('#treeName').val());
+        $.modal.close(index);
+    }
+</script>
+</body>
+</html>

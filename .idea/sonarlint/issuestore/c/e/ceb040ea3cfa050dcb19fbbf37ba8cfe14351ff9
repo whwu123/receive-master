@@ -1,0 +1,8 @@
+
+[	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(þŒ·ñ
+E
+java:S1066C"/Merge this if statement with the enclosing one.(æûùÁ
+e
+java:S3252q"OUse static access with "org.apache.commons.lang3.StringUtils" for "isNotBlank".(Àôð¾
+j
+java:S3252}"OUse static access with "org.apache.commons.lang3.StringUtils" for "isNotBlank".(‹‰äøýÿÿÿÿ

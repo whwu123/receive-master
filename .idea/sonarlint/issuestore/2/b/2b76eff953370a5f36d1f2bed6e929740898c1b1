@@ -1,0 +1,8 @@
+
+Q	java:S110"<This class has 8 parents which is greater than 5 authorized.(‹¢É²
+B
+java:S11255"'Remove the unnecessary boolean literal.(“ò¢ıÿÿÿÿ
+~
+java:S11575"cReplace these toUpperCase()/toLowerCase() and equals() calls with a single equalsIgnoreCase() call.(“ò¢ıÿÿÿÿ
+V
+java:S1126B"AReplace this if-then-else statement by a single return statement.(ÓÀÚ>

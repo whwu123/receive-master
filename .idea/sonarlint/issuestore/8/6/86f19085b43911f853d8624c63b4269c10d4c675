@@ -1,0 +1,17 @@
+
+z
+java:S1488"eImmediately return this expression instead of assigning it to the temporary variable "messageDigest".(…ÇÃ:
+_
+java:S2259;"DA "NullPointerException" could be thrown; "toHex()" can return null.(€©Åæûÿÿÿÿ
+u
+java:S1149)"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(± 
+P
+java:S1118":Add a private constructor to hide the implicit public one.(¯Ò§ì
+O
+java:S4719"9Replace charset name argument with StandardCharsets.UTF_8(Ç¯éâ
+<
+java:S1168 "&Return an empty array instead of null.(¥¹ï
+?
+java:S1197#"*Move the array designators [] to the type.(ä³ü}
++
+java:S3457?"Not enough arguments.(· ŒÒ

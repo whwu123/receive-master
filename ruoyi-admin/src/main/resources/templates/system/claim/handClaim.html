@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('理赔信息分发')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-claim-edit" th:object="${claim}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <h4 class="form-header h4">理赔信息</h4>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">承保公司：</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input id="treeId" name="companyId" type="hidden"  required th:field="*{insuranceCompanyPerson.insuranceCompany.id}"/>
+                        <input class="form-control" type="text" onclick="selectCompanyTree()" id="treeName" readonly="true" required th:field="*{insuranceCompanyPerson.insuranceCompany.companyName}">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔负责人：</label>
+                <div class="col-sm-8">
+                   <!-- <input name="claimPersonId" th:field="*{claimPersonId}" class="form-control" type="text">-->
+                    <div class="input-group">
+                        <input id="treeId2" name="claimPersonId" type="text"  required th:field="*{insuranceCompanyPerson.id}" style="display: none"/>
+                        <input class="form-control" type="text" onclick="selectCompanyPersonTree()" id="treeName2" readonly="true" th:field="*{insuranceCompanyPerson.personName}" required>
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">理赔进展情况：</label>
+                <div class="col-sm-8">
+                    <select name="evolevState" class="form-control m-b" th:with="type=${@dict.getType('evolve_state')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{evolevState}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+                </div>
+            </div>
+            <h4 class="form-header h4">学生信息</h4>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">区县名称：</label>
+                <div class="col-sm-8">
+                    <input name="areaName" th:field="*{areaName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学校名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolName" th:field="*{schoolName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">年级名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolGradeName" th:field="*{schoolGradeName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">班级名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolClassName" th:field="*{schoolClassName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学生身份证：</label>
+                <div class="col-sm-8">
+                    <input name="stuCard" th:field="*{stuCard}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学生姓名：</label>
+                <div class="col-sm-8">
+                    <input name="stuName" th:field="*{stuName}" class="form-control" type="text" disabled>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: select2-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/claim";
+        var prefix2 = ctx + "system/person";
+        $("#form-claim-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-claim-edit').serialize());
+            }
+        }
+
+        $("input[name='finishTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        /*保险公司管理树*/
+        function selectCompanyTree() {
+            var options = {
+                title: '保险公司选择',
+                width: "380",
+                url: prefix2 + "/selectCompanyTree",
+                callBack: doSubmit
+            };
+            $.modal.openOptions(options);
+        }
+
+        function doSubmit(index, layero){
+            var body = $.modal.getChildFrame(index);
+            $("#treeId").val(body.find('#treeId').val());
+            $("#treeName").val(body.find('#treeName').val());
+            $.modal.close(index);
+        }
+
+        /*保险公司人员管理树*/
+        function selectCompanyPersonTree() {
+            var companyId = $("#treeId").val();
+            var options = {
+                title: '保险公司人员选择',
+                width: "380",
+                url: prefix2 + "/selectCompanyPersonTree/"+companyId,
+                callBack: doSubmit2
+            };
+            $.modal.openOptions(options);
+        }
+
+        function doSubmit2(index, layero){
+            var body = $.modal.getChildFrame(index);
+            $("#treeId2").val(body.find('#treeId').val());
+            $("#treeName2").val(body.find('#treeName').val());
+            $.modal.close(index);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+t
+java:S2293&"YReplace the type specification in this constructor call with the diamond operator ("<>").(ãÂæŞüÿÿÿÿ
+o
+java:S2293^"YReplace the type specification in this constructor call with the diamond operator ("<>").(íÚ
+p
+java:S2293Ã"YReplace the type specification in this constructor call with the diamond operator ("<>").(ôüÈä
+p
+java:S2293Ä"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ê‹­Ó
+p
+java:S2293Ï"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ê‹­Ó
+p
+java:S2293Ú"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ê‹­Ó
+b
+java:S1192¦"FDefine a constant instead of duplicating this literal "<br/>" 4 times.(ÆŞ²€üÿÿÿÿ
+h
+java:S1192)"MDefine a constant instead of duplicating this literal "15666666666" 25 times.(ç§ÿøÿÿÿÿ
+f
+java:S1192("KDefine a constant instead of duplicating this literal "ry@qq.com" 26 times.(…§É·şÿÿÿÿ
+F
+java:S5411¨"*Use the primitive boolean expression here.(Š§é¦ùÿÿÿÿ
+`
+java:S1124&"EReorder the modifiers to comply with the Java Language Specification.(ãÂæŞüÿÿÿÿ
+t
+java:S1171'"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+T	java:S106¤"9Replace this use of System.out or System.err by a logger.(üúùÿÿÿÿ
+n
+java:S3776ˆ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(¸±ıûÿÿÿÿ
+U
+java:S1155Š">Use isEmpty() to check whether the collection is empty or not.(¥Â©

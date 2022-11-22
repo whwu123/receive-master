@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NExpendMapper">
+    
+    <resultMap type="NExpend" id="NExpendResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="neTitle"    column="ne_title"    />
+        <result property="neMoney"    column="ne_money"    />
+        <result property="neType"    column="ne_type"    />
+        <result property="neStatus"    column="ne_status"    />
+        <result property="neLastSurplus"    column="ne_last_surplus"    />
+        <result property="neContent"    column="ne_content"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectNExpendVo">
+        select id, create_by, create_time, update_by, update_time, ne_title, ne_money, ne_type, ne_status, ne_last_surplus, ne_content, remark from n_expend
+    </sql>
+
+    <select id="selectNExpendList" parameterType="NExpend" resultMap="NExpendResult">
+        <include refid="selectNExpendVo"/>
+        <where>  
+            <if test="neTitle != null  and neTitle != ''"> and ne_title = #{neTitle}</if>
+            <if test="neStatus != null "> and ne_status = #{neStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectNExpendById" parameterType="Long" resultMap="NExpendResult">
+        <include refid="selectNExpendVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertNExpend" parameterType="NExpend" useGeneratedKeys="true" keyProperty="id">
+        insert into n_expend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="neTitle != null">ne_title,</if>
+            <if test="neMoney != null">ne_money,</if>
+            <if test="neType != null">ne_type,</if>
+            <if test="neStatus != null">ne_status,</if>
+            <if test="neLastSurplus != null">ne_last_surplus,</if>
+            <if test="neContent != null">ne_content,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="neTitle != null">#{neTitle},</if>
+            <if test="neMoney != null">#{neMoney},</if>
+            <if test="neType != null">#{neType},</if>
+            <if test="neStatus != null">#{neStatus},</if>
+            <if test="neLastSurplus != null">#{neLastSurplus},</if>
+            <if test="neContent != null">#{neContent},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNExpend" parameterType="NExpend">
+        update n_expend
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="neTitle != null">ne_title = #{neTitle},</if>
+            <if test="neMoney != null">ne_money = #{neMoney},</if>
+            <if test="neType != null">ne_type = #{neType},</if>
+            <if test="neStatus != null">ne_status = #{neStatus},</if>
+            <if test="neLastSurplus != null">ne_last_surplus = #{neLastSurplus},</if>
+            <if test="neContent != null">ne_content = #{neContent},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNExpendById" parameterType="Long">
+        delete from n_expend where id = #{id}
+    </delete>
+
+    <delete id="deleteNExpendByIds" parameterType="String">
+        delete from n_expend where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

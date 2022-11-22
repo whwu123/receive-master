@@ -1,0 +1,19 @@
+
+o
+java:S2293D"YReplace the type specification in this constructor call with the diamond operator ("<>").(« ππ
+j
+java:S1192"NDefine a constant instead of duplicating this literal "ζ–°εΆδ»»ε΅'" 6 times.(βγ«μόÿÿÿÿ
+j
+java:S1192Ί"NDefine a constant instead of duplicating this literal "δΏ®ζ”Ήδ»»ε΅'" 6 times.(Θέκ½ώÿÿÿÿ
+s
+java:S3252"WUse static access with "org.apache.commons.lang3.StringUtils" for "containsIgnoreCase".(χώ¤φόÿÿÿÿ
+f
+java:S3878"ODisambiguate this call by either casting as "CharSequence" or "CharSequence[]".(§‹υς
+f
+java:S3878”"ODisambiguate this call by either casting as "CharSequence" or "CharSequence[]".(ΉγΔ
+s
+java:S3252Ό"WUse static access with "org.apache.commons.lang3.StringUtils" for "containsIgnoreCase".(χώ¤φόÿÿÿÿ
+f
+java:S3878ΐ"ODisambiguate this call by either casting as "CharSequence" or "CharSequence[]".(§‹υς
+f
+java:S3878Δ"ODisambiguate this call by either casting as "CharSequence" or "CharSequence[]".(ΉγΔ

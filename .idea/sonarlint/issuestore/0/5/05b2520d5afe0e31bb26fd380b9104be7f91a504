@@ -1,0 +1,28 @@
+
+`	java:S112T"FDefine and throw a dedicated exception instead of using a generic one.(èİšÙüÿÿÿÿ
+t
+java:S2293,"YReplace the type specification in this constructor call with the diamond operator ("<>").(Èûÿÿÿÿÿÿ
+o
+java:S22931"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ä„ƒ
+o
+java:S2293J"YReplace the type specification in this constructor call with the diamond operator ("<>").(ïµ¼û
+t
+java:S2293a"YReplace the type specification in this constructor call with the diamond operator ("<>").(µ¶Íúÿÿÿÿ
+P
+java:S1141="5Extract this nested try block into a separate method.(ç£êúÿÿÿÿ
+®
+java:S4449"‘Annotate the parameter with @javax.annotation.Nullable in method 'getResource' declaration, or make sure that null can not be passed as argument.( ì İùÿÿÿÿ
+n
+java:S3305$"XInject this field value directly into "sqlSessionFactory", the only method that uses it.(«ª“ø
+h
+java:S3776("RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(™”»
+P
+java:S1905*":Remove this unnecessary cast to "ResourcePatternResolver".(ºİÎ½
+S
+java:S1155H">Use isEmpty() to check whether the collection is empty or not.( ¤n
+Y
+java:S1155N">Use isEmpty() to check whether the collection is empty or not.(Ä‚Ò¹ıÿÿÿÿ
+F
+java:S1905P"+Remove this unnecessary cast to "String[]".(ğÏ³äúÿÿÿÿ
+f
+java:S3252€"JUse static access with "org.apache.commons.lang3.StringUtils" for "split".(†æŸşÿÿÿÿÿ

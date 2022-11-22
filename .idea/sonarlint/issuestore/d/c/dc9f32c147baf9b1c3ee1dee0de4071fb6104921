@@ -1,0 +1,36 @@
+
+[	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(‘ôÖ·
+b
+java:S2259&"L"NullPointerException" will be thrown when invoking method "invokeMethod()".(»Èê
+b
+java:S2259!"L"NullPointerException" will be thrown when invoking method "invokeMethod()".(»Èê
+P
+java:S1118":Add a private constructor to hide the implicit public one.(ïâª´
+Y
+java:S11555">Use isEmpty() to check whether the collection is empty or not.(ğ…–Æùÿÿÿÿ
+l
+java:S3252I"QUse static access with "org.apache.commons.lang3.StringUtils" for "countMatches".(ìÕı øÿÿÿÿ
+j
+java:S3252T"TUse static access with "org.apache.commons.lang3.StringUtils" for "substringBefore".(ØÂ–
+n
+java:S3252U"XUse static access with "org.apache.commons.lang3.StringUtils" for "substringBeforeLast".(Éõã‚
+o
+java:S3252`"TUse static access with "org.apache.commons.lang3.StringUtils" for "substringBefore".(š´¯‚úÿÿÿÿ
+r
+java:S3252a"WUse static access with "org.apache.commons.lang3.StringUtils" for "substringAfterLast".(‰í”¼ıÿÿÿÿ
+p
+java:S3252l"UUse static access with "org.apache.commons.lang3.StringUtils" for "substringBetween".(ıœ·øÿÿÿÿ
+A
+java:S1168o"+Return an empty collection instead of null.(¥¹ï
+g
+java:S5998q"LRefactor this repetition that can lead to a stack overflow for large inputs.(òàĞùÿÿÿÿ
+k
+java:S3252u"PUse static access with "org.apache.commons.lang3.StringUtils" for "trimToEmpty".(¿„Ôïÿÿÿÿÿ
+m
+java:S3252w"RUse static access with "org.apache.commons.lang3.StringUtils" for "startsWithAny".(Ï†‹†øÿÿÿÿ
+c
+java:S3252"MUse static access with "org.apache.commons.lang3.StringUtils" for "endsWith".(†óÜi
+i
+java:S3252†"MUse static access with "org.apache.commons.lang3.StringUtils" for "endsWith".(µşÖüÿÿÿÿ
+E
+java:S1905±")Remove this unnecessary cast to "Object".(„Æ¿Ïøÿÿÿÿ

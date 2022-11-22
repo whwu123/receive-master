@@ -1,0 +1,23 @@
+
+p
+java:S2293´"YReplace the type specification in this constructor call with the diamond operator ("<>").(í¡®
+p
+java:S2293Î"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ÇáØ
+]
+java:S1192÷"FDefine a constant instead of duplicating this literal "<br/>" 4 times.(ÎÖÃî
+F
+java:S5411ù"*Use the primitive boolean expression here.(Š§é¦ùÿÿÿÿ
+s
+java:S2229õ"W"insertUser's" @Transactional requirement is incompatible with the one for this method.(çŒ¹‰øÿÿÿÿ
+s
+java:S2229ı"W"updateUser's" @Transactional requirement is incompatible with the one for this method.(ÁŠ±Ùÿÿÿÿÿ
+Z
+java:S1155¼">Use isEmpty() to check whether the collection is empty or not.(©’Ú˜úÿÿÿÿ
+Z
+java:S1155Ö">Use isEmpty() to check whether the collection is empty or not.(©’Ú˜úÿÿÿÿ
+a
+java:S3252À"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(„›ÎÕ
+a
+java:S3252Ñ"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(„›ÎÕ
+U
+java:S1155á">Use isEmpty() to check whether the collection is empty or not.(¥Â©

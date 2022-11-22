@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增学校管理')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-school-add">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">学校ID：</label>
+                <div class="col-sm-8">
+                    <input name="id" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">学校名称：</label>
+                <div class="col-sm-8">
+                    <input name="schoolName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否公立：</label>
+                <div class="col-sm-8">
+                    <select name="isPublic" class="form-control m-b" th:with="type=${@dict.getType('is_public')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+           <!-- <div class="form-group">
+                <label class="col-sm-3 control-label">市部门：</label>
+                <div class="col-sm-8">
+                    <input name="branchDeptId" class="form-control" type="text">
+                </div>
+            </div>-->
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">区县部门：</label>
+                <div class="col-sm-8">
+                    <!--<input name="countyDeptId" class="form-control" type="text">-->
+                    <select name="countyDeptId" class="form-control m-b" >
+                        <option value="440">市辖区</option>
+                        <option value="428">鹤城区</option>
+                        <option value="430">沅陵县</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <select name="delFlag" class="form-control m-b" th:with="type=${@dict.getType('data_state')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <input name="remark" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/school"
+        $("#form-school-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-school-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

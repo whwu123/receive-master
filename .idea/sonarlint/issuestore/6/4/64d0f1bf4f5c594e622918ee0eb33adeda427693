@@ -1,0 +1,17 @@
+
+o
+java:S2293°"YReplace the type specification in this constructor call with the diamond operator ("<>").(ŒîÌ/
+l
+java:S1192¦"UDefine a constant instead of duplicating this literal "anon,captchaValidate" 3 times.(ˆÓÓÚ
+q
+java:S1488¤"ZImmediately return this expression instead of assigning it to the temporary variable "in".(£ÕÈ¯
+y
+java:S1488Ä"bImmediately return this expression instead of assigning it to the temporary variable "sessionDAO".(ĞÆÙö
+}
+java:S1488Î"fImmediately return this expression instead of assigning it to the temporary variable "sessionFactory".(ÎÖ‡­
+b
+java:S2184Ş"FCast one of the operands of this multiplication operation to a "long".(ĞöúÌøÿÿÿÿ
+F
+java:S2093 "*Change this "try" to a try-with-resources.(ç£êúÿÿÿÿ
+W	java:S125÷"<This block of commented-out lines of code should be removed.(â‚ÃÚûÿÿÿÿ
+R	java:S125¬"<This block of commented-out lines of code should be removed.(æóÎŠ

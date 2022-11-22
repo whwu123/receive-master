@@ -1,0 +1,4 @@
+
+r	java:S116"]Rename this field "OPERATE_DELAY_TIME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç˜¶Å
+7
+java:S1170"!Make this final field static too.(ç˜¶Å

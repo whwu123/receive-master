@@ -1,0 +1,11 @@
+
+t
+java:S2293#"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÔÈÚÑûÿÿÿÿ
+o
+java:S2293-"YReplace the type specification in this constructor call with the diamond operator ("<>").(îäè 
+f
+java:S1192<"PDefine a constant instead of duplicating this literal "ç”¨æˆ·ä¸å­˜åœ¨" 3 times.(è™ƒª
+`
+java:S1124#"EReorder the modifiers to comply with the Java Language Specification.(ÔÈÚÑûÿÿÿÿ
+t
+java:S1171$"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ

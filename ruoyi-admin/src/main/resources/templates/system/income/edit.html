@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改收入管理')" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-income-edit" th:object="${nIncome}">
+        <h4 class="form-header h4">收入管理信息</h4>
+        <input name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">名称：</label>
+            <div class="col-sm-8">
+                <input name="niTitle" th:field="*{niTitle}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">结余：</label>
+            <div class="col-sm-8">
+                <input name="niSurplus" th:field="*{niSurplus}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">状态：</label>
+            <div class="col-sm-8">
+                <div class="radio-box" th:each="dict : ${@dict.getType('data_state')}">
+                    <input type="radio" th:id="${'niStatus_' + dict.dictCode}" name="niStatus" th:value="${dict.dictValue}" th:field="*{niStatus}">
+                    <label th:for="${'niStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+            </div>
+        </div>
+        <h4 class="form-header h4">收入信息管理信息</h4>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-white btn-sm" onclick="addRow()"><i class="fa fa-plus"> 增加</i></button>
+                <button type="button" class="btn btn-white btn-sm" onclick="sub.delRow()"><i class="fa fa-minus"> 删除</i></button>
+                <div class="col-sm-12 select-table table-striped">
+                    <table id="bootstrap-table"></table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/income";
+    var nisStatusDatas = [[${@dict.getType('data_state')}]];
+    $("#form-income-edit").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-income-edit').serialize());
+        }
+    }
+
+    $(function() {
+        var options = {
+            data: [[${nIncome.nIncomeSourcesList}]],
+            pagination: false,
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            sidePagination: "client",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'index',
+                    align: 'center',
+                    title: "序号",
+                    formatter: function (value, row, index) {
+                        var columnIndex = $.common.sprintf("<input type='hidden' name='index' value='%s'>", $.table.serialNumber(index));
+                        return columnIndex + $.table.serialNumber(index);
+                    }
+                },
+                {
+                    field: 'nisName',
+                    align: 'center',
+                    title: '名称',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='nIncomeSourcesList[%s].nisName' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'nisMoney',
+                    align: 'center',
+                    title: '金额',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='nIncomeSourcesList[%s].nisMoney' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+               /* {
+                    field: 'nisType',
+                    align: 'center',
+                    title: '类型',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='nIncomeSourcesList[%s].nisType' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'nisStatus',
+                    align: 'center',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                        var name = $.common.sprintf("nIncomeSourcesList[%s].nisStatus", index);
+                        return $.common.dictToSelect(nisStatusDatas, value, name);
+                    }
+                },*/
+                {
+                    field: 'remark',
+                    align: 'center',
+                    title: '备注',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='nIncomeSourcesList[%s].remark' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var value = $.common.isNotEmpty(row.index) ? row.index : $.table.serialNumber(index);
+                        return '<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="sub.delRowByIndex(\'' + value + '\')"><i class="fa fa-remove"></i>删除</a>';
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    function addRow() {
+        var count = $("#" + table.options.id).bootstrapTable('getData').length;
+        var row = {
+            index: $.table.serialNumber(count),
+            createBy: "",
+            createTime: "",
+            updateBy: "",
+            updateTime: "",
+            nisName: "",
+            nisMoney: "",
+            nisType: "",
+            nisStatus: "",
+            remark: "",
+        }
+        sub.addRow(row);
+    }
+</script>
+</body>
+</html>
