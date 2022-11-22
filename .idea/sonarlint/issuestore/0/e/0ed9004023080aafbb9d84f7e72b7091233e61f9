@@ -1,11 +1,7 @@
 
 U
 java:S1118":Add a private constructor to hide the implicit public one.(Ô«‡úÿÿÿÿ
-Œ
-java:S1130"vRemove the declaration of thrown exception 'java.io.FileNotFoundException', as it cannot be thrown from method's body.(š¾ƒÔ
 <
 java:S1452"&Remove usage of generic wildcard type.(š¾ƒÔ
 <
 java:S1452"&Remove usage of generic wildcard type.(š¾ƒÔ
-o
-java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(Ë²èßüÿÿÿÿ

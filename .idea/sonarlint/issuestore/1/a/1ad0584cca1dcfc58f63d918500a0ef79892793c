@@ -1,9 +1,9 @@
 
 v
 java:S1488S"[Immediately return this expression instead of assigning it to the temporary variable "hex".(ù•Ùıÿÿÿÿ
-d
-java:S2259:"IA "NullPointerException" could be thrown; "getSysUser()" can return null.(Ìì‰Óûÿÿÿÿ
 _
 java:S2259?"IA "NullPointerException" could be thrown; "getSysUser()" can return null.(‡“î
+d
+java:S2259:"IA "NullPointerException" could be thrown; "getSysUser()" can return null.(Ìì‰Óûÿÿÿÿ
 U
 java:S1118":Add a private constructor to hide the implicit public one.(ŠÔ°úÿÿÿÿ

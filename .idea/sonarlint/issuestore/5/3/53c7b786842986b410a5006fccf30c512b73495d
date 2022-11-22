@@ -3,29 +3,3 @@ P
 java:S1118":Add a private constructor to hide the implicit public one.(…”÷
 m
 java:S3776#"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(èÑËúşÿÿÿÿ
-e
-java:S3252@"JUse static access with "org.apache.commons.lang3.StringUtils" for "split".(¸¹ÿÿÿÿÿ
-p
-java:S3252@"UUse static access with "org.apache.commons.lang3.StringUtils" for "substringBetween".(¸¹ÿÿÿÿÿ
-m
-java:S3252e"WUse static access with "org.apache.commons.lang3.StringUtils" for "endsWithIgnoreCase".(ºúã¤
-m
-java:S3252j"WUse static access with "org.apache.commons.lang3.StringUtils" for "endsWithIgnoreCase".(­úİ¡
-m
-java:S3252o"WUse static access with "org.apache.commons.lang3.StringUtils" for "endsWithIgnoreCase".(Öø¡ç
-m
-java:S3252p"WUse static access with "org.apache.commons.lang3.StringUtils" for "endsWithIgnoreCase".(ØÃã 
-m
-java:S3252u"WUse static access with "org.apache.commons.lang3.StringUtils" for "endsWithIgnoreCase".(Ì¡ÏÓ
-r
-java:S3252z"WUse static access with "org.apache.commons.lang3.StringUtils" for "endsWithIgnoreCase".(àÆ°Îÿÿÿÿÿ
-a
-java:S3252²"JUse static access with "org.apache.commons.lang3.StringUtils" for "split".(¡Öûê
-c
-java:S3252à"LUse static access with "org.apache.commons.lang3.StringUtils" for "indexOf".(Ì¨Üˆ
-k
-java:S3252â"TUse static access with "org.apache.commons.lang3.StringUtils" for "substringBefore".(‚Ïôë
-c
-java:S3252ò"LUse static access with "org.apache.commons.lang3.StringUtils" for "indexOf".(Ì¨Üˆ
-l
-java:S3252ô"UUse static access with "org.apache.commons.lang3.StringUtils" for "substringBetween".(º†Â‚

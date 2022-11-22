@@ -1,6 +1,4 @@
 
-a	java:S112ê"FDefine and throw a dedicated exception instead of using a generic one.(Ï’üŸûÿÿÿÿ
-\	java:S112ü"FDefine and throw a dedicated exception instead of using a generic one.(¿ò‘¬
 u
 java:S2293š"YReplace the type specification in this constructor call with the diamond operator ("<>").(»”Êøøÿÿÿÿ
 p
@@ -41,8 +39,6 @@ java:S3824–"HReplace this "Map.containsKey()" with a call to "Map.computeIfAbs
 n	java:S115c"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(®ëö+
 8
 java:S2386^"Make this member "protected".(ÅŞÅšûÿÿÿÿ
-a
-java:S3252ß"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(Ï™ß
 n
 java:S3776ê"RRefactor this method to reduce its Cognitive Complexity from 86 to the 15 allowed.(Ï’üŸûÿÿÿÿ
 U
@@ -51,22 +47,6 @@ Q
 java:S1117ğ":Rename "sheet" which hides the field declared at line 119.(Ä˜ÛŒ
 W
 java:S1117–";Rename "fields" which hides the field declared at line 134.(Ùùß€üÿÿÿÿ
-i
-java:S3252¹"MUse static access with "org.apache.commons.lang3.StringUtils" for "endsWith".(ó´Ùîùÿÿÿÿ
-k
-java:S3252»"TUse static access with "org.apache.commons.lang3.StringUtils" for "substringBefore".(Ùëö
-j
-java:S3252Ê"NUse static access with "org.apache.commons.lang3.StringUtils" for "isNumeric".(Û ûÿÿÿÿ
-e
-java:S3252Î"NUse static access with "org.apache.commons.lang3.StringUtils" for "isNumeric".(‡ÜŠŠ
-a
-java:S3252Ÿ"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(‹è¤‰
-a
-java:S3252º"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(€²èì
-f
-java:S3252Ö"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(Â‹ùåûÿÿÿÿ
-f
-java:S3252î"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(½ÎØ€úÿÿÿÿ
 F
 java:S2093"*Change this "try" to a try-with-resources.(ç£êúÿÿÿÿ
 E
@@ -77,14 +57,8 @@ P
 java:S1854·"9Remove this useless assignment to local variable "style".(ñŸçÿ
 R
 java:S1117°";Rename "styles" which hides the field declared at line 124.(åšÉô
-n
-java:S3252é"RUse static access with "org.apache.commons.lang3.StringUtils" for "startsWithAny".(¼ÔŒùÿÿÿÿ
 K
 java:S6035\"0Replace this alternation with a character class.(ğ€İ›üÿÿÿÿ
-L
-java:S2154ó"0Add an explicit cast to match types of operands.(¡òô¨øÿÿÿÿ
-i
-java:S3252ó"MUse static access with "org.apache.commons.lang3.StringUtils" for "contains".(¡òô¨øÿÿÿÿ
 B
 java:S1452†"&Remove usage of generic wildcard type.(‚¨½²øÿÿÿÿ
 P
@@ -93,18 +67,6 @@ F
 java:S1172£"*Remove this unused method parameter "row".(‹Ğ—ıÿÿÿÿ
 ,
 java:S3457ê"Not enough arguments.(­³ÙŠ
-g
-java:S3252£"PUse static access with "org.apache.commons.lang3.StringUtils" for "containsAny".(Š´‚…
-d
-java:S3252¶"MUse static access with "org.apache.commons.lang3.StringUtils" for "stripEnd".(´´
-g
-java:S3252È"PUse static access with "org.apache.commons.lang3.StringUtils" for "containsAny".(Š´‚…
-d
-java:S3252Û"MUse static access with "org.apache.commons.lang3.StringUtils" for "stripEnd".(´´
-X
-java:S3878„"ADisambiguate this call by either casting as "Class" or "Class[]".(ß±åÌ
-W
-java:S3457‰"AFormat specifiers should be used instead of string concatenation.(éüÇ
 D	java:S108Ÿ")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
 Q
 java:S1117€	":Rename "clazz" which hides the field declared at line 164.(şÑÜ

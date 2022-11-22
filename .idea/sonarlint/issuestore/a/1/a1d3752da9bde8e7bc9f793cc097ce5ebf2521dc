@@ -17,9 +17,3 @@ T
 java:S18541"9Remove this useless assignment to local variable "menus".(µ¹†Žýÿÿÿÿ
 P
 java:S1854†":Remove this useless assignment to local variable "ztrees".(Šþ€?
-A
-java:S1905Í"*Remove this unnecessary cast to "SysMenu".(·€ÄÓ
-A
-java:S1905õ"*Remove this unnecessary cast to "SysMenu".(ßª‘ÿ
-Z
-java:S1155ƒ">Use isEmpty() to check whether the collection is empty or not.(Ó¦Ý³ýÿÿÿÿ

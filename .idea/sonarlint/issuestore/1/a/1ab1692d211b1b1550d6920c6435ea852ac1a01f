@@ -3,9 +3,5 @@ u
 java:S2293–"YReplace the type specification in this constructor call with the diamond operator ("<>").(·Ì¯üÿÿÿÿ
 p
 java:S2293œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(®Ò’
-g
-java:S3252™"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(ÎÜÒÕşÿÿÿÿ
 ^
 java:S5361Ô"HReplace this call to "replaceAll()" by a call to the "replace()" method.(«’¸C
-ˆ
-java:S1130ë"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(˜Å§üÿÿÿÿ

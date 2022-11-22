@@ -1,13 +1,5 @@
 
-i
-java:S3252‘"MUse static access with "org.apache.commons.lang3.StringUtils" for "contains".(ÔÓşùÿÿÿÿ
-P
-java:S4719š"9Replace charset name argument with StandardCharsets.UTF_8(òãø
-P
-java:S4719Š"9Replace charset name argument with StandardCharsets.UTF_8(š­ş
 \
 java:S3252¡"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(ÂìœÍ
 a
 java:S3252õ"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(¡ãˆ•ıÿÿÿÿ
-b
-java:S3252"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(èÓµ¾

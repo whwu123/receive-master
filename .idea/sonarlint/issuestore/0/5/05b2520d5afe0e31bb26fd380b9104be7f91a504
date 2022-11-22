@@ -24,5 +24,3 @@ Y
 java:S1155N">Use isEmpty() to check whether the collection is empty or not.(Ä‚Ò¹ýÿÿÿÿ
 F
 java:S1905P"+Remove this unnecessary cast to "String[]".(ðÏ³äúÿÿÿÿ
-f
-java:S3252€"JUse static access with "org.apache.commons.lang3.StringUtils" for "split".(†æŸþÿÿÿÿÿ

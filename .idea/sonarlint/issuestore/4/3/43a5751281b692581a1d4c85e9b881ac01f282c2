@@ -3,5 +3,3 @@
 java:S2629m"$Invoke method(s) only conditionally.(†ªê¾þÿÿÿÿ
 P
 java:S1118":Add a private constructor to hide the implicit public one.(Ï—¯³
-d
-java:S3252{"NUse static access with "org.apache.commons.lang3.StringUtils" for "equalsAny".(ÙÇÔ¨

@@ -9,33 +9,17 @@ v
 java:S1149ì"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ô«Ã×
 P
 java:S1118":Add a private constructor to hide the implicit public one.(èº·š
-l
-java:S3252/"QUse static access with "org.apache.commons.lang3.StringUtils" for "uncapitalize".(†˜­“ıÿÿÿÿ
 [
 java:S3252J"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(ÂìœÍ
 [
 java:S3252R"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(ÂìœÍ
-g
-java:S3252q"QUse static access with "org.apache.commons.lang3.StringUtils" for "uncapitalize".(ô¤†¶
-f
-java:S3252s"QUse static access with "org.apache.commons.lang3.StringUtils" for "uncapitalize".(«ş„
 =
 java:S1075©"&Remove this hard-coded path-delimiter.(Ô˜ü
-c
-java:S3252©"LUse static access with "org.apache.commons.lang3.StringUtils" for "replace".(Ô˜ü
 <
 java:S1075ª"&Remove this hard-coded path-delimiter.(š²õG
 =
 java:S1075«"&Remove this hard-coded path-delimiter.(Ó§«Ô
 =
 java:S1075«"&Remove this hard-coded path-delimiter.(Ó§«Ô
-g
-java:S3252±"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(Ù­ìíıÿÿÿÿ
-a
-java:S3252Å"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(„›ÎÕ
-a
-java:S3252Ô"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(„›ÎÕ
-a
-java:S3252ã"JUse static access with "org.apache.commons.lang3.StringUtils" for "EMPTY".(„›ÎÕ
 \
 java:S3252ï"EUse static access with "com.alibaba.fastjson.JSON" for "parseObject".(ÂìœÍ

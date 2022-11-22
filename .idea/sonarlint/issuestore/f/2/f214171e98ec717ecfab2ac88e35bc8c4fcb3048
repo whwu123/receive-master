@@ -7,5 +7,3 @@ P
 java:S1118":Add a private constructor to hide the implicit public one.(ÚœìÙ
 ˆ
 java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(Á³¶¿üÿÿÿÿ
-ˆ
-java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(ã÷î•øÿÿÿÿ

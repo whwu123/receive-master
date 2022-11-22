@@ -7,7 +7,3 @@ p
 java:S2293•"YReplace the type specification in this constructor call with the diamond operator ("<>").(íž¡®
 D
 java:S1125‘"(Remove the unnecessary boolean literals.(š¿Ëÿøÿÿÿÿ
-Z
-java:S1155ó">Use isEmpty() to check whether the collection is empty or not.(©’Ú˜úÿÿÿÿ
-Z
-java:S1155‹">Use isEmpty() to check whether the collection is empty or not.(©’Ú˜úÿÿÿÿ

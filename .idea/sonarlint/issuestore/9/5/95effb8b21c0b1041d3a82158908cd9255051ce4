@@ -17,5 +17,3 @@ t
 java:S1171"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
 c	java:S100i"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€ƒêÊ
 h	java:S100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìµÖÙøÿÿÿÿ
-o
-java:S3252"SUse static access with "org.apache.commons.lang3.StringUtils" for "defaultIfBlank".(ú›ºÂıÿÿÿÿ

@@ -1,17 +1,7 @@
 
 U
 java:S1118":Add a private constructor to hide the implicit public one.(•à‚ıÿÿÿÿ
-A
-java:S1168-"+Return an empty collection instead of null.(¥¹ï
 h
 java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(²œ¥„
-k
-java:S3252U"PUse static access with "org.apache.commons.lang3.StringUtils" for "containsAny".(ùÇÏ¼ÿÿÿÿÿ
-c
-java:S3252m"MUse static access with "org.apache.commons.lang3.StringUtils" for "stripEnd".(´´
 m
 java:S3776x"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ñ³ÒÊùÿÿÿÿ
-e
-java:S3252}"PUse static access with "org.apache.commons.lang3.StringUtils" for "containsAny".(¼„«{
-d
-java:S3252•"MUse static access with "org.apache.commons.lang3.StringUtils" for "stripEnd".(´´

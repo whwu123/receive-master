@@ -9,8 +9,6 @@ y
 java:S1488Ä"bImmediately return this expression instead of assigning it to the temporary variable "sessionDAO".(ĞÆÙö
 }
 java:S1488Î"fImmediately return this expression instead of assigning it to the temporary variable "sessionFactory".(ÎÖ‡­
-b
-java:S2184Ş"FCast one of the operands of this multiplication operation to a "long".(ĞöúÌøÿÿÿÿ
 F
 java:S2093 "*Change this "try" to a try-with-resources.(ç£êúÿÿÿÿ
 W	java:S125÷"<This block of commented-out lines of code should be removed.(â‚ÃÚûÿÿÿÿ

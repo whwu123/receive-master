@@ -38,5 +38,3 @@ H
 java:S2692î"10 is a valid index, but is ignored by this check.(Çò”¢
 C
 java:S1125ó"'Remove the unnecessary boolean literal.(»ëÒ·ùÿÿÿÿ
-h
-java:S3252…"LUse static access with "org.apache.commons.lang3.StringUtils" for "isBlank".(çëŸŠÿÿÿÿÿ

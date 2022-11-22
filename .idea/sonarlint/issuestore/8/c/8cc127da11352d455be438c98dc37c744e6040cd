@@ -7,15 +7,7 @@ t
 java:S1488;"^Immediately return this expression instead of assigning it to the temporary variable "ztrees".(Œ§¢‹
 t
 java:S1488U"^Immediately return this expression instead of assigning it to the temporary variable "ztrees".(Œ§¢‹
-@
-java:S1905N"*Remove this unnecessary cast to "SysDept".(ŽÊÕ€
-e
-java:S3252P"JUse static access with "org.apache.commons.lang3.StringUtils" for "split".(†è‘öüÿÿÿÿ
 O
 java:S1854c":Remove this useless assignment to local variable "ztrees".(Šþ€?
 D
 java:S1125³"(Remove the unnecessary boolean literals.(ðºãÅýÿÿÿÿ
-b
-java:S3252ê"KUse static access with "org.apache.commons.lang3.StringUtils" for "equals".(ˆ€ØÈ
-Z
-java:S1155Œ">Use isEmpty() to check whether the collection is empty or not.(ô§Ùºýÿÿÿÿ

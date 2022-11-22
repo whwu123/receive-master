@@ -26,5 +26,3 @@ java:S1171'"YMove the contents of this initializer to a standard constructor or
 T	java:S106¤"9Replace this use of System.out or System.err by a logger.(üúùÿÿÿÿ
 n
 java:S3776ˆ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(¸±ıûÿÿÿÿ
-U
-java:S1155Š">Use isEmpty() to check whether the collection is empty or not.(¥Â©

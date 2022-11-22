@@ -24,8 +24,6 @@ java:S2093["*Change this "try" to a try-with-resources.(ç£êúÿÿÿÿ
 U	java:S899w";Do something with the "boolean" value returned by "delete".(²Œ­ûÿÿÿÿ
 i
 java:S4042w"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(²Œ­ûÿÿÿÿ
-i
-java:S3252‘"MUse static access with "org.apache.commons.lang3.StringUtils" for "contains".(´«…§şÿÿÿÿ
 X
 java:S1126—"AReplace this if-then-else statement by a single return statement.(ãùóİ
 U
