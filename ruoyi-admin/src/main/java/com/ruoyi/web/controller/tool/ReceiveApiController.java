@@ -2,10 +2,17 @@ package com.ruoyi.web.controller.tool;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.ShiroUtils;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.framework.shiro.service.SysPasswordService;
+import com.ruoyi.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,90 +26,66 @@ import java.util.Map;
 @RestController
 @RequestMapping("/receive/api/")
 public class ReceiveApiController extends BaseController {
+    @Autowired
+    private SysPasswordService passwordService;
+    @Autowired
+    private ISysUserService userService;
 
-    private final static Map<Integer, UserEntity2> users = new LinkedHashMap<Integer, UserEntity2>();
-    {
-        users.put(1, new UserEntity2(1, "admin", "admin123", "15888888888"));
-        users.put(2, new UserEntity2(2, "ry", "admin123", "15666666666"));
+    @ApiOperation("注册用户")
+    @GetMapping("/registerUser")
+    public R<String> registerUser(String loginName,String userName,String email,String phonenumber,
+                                  String sex, String password,Long deptId,String createBy) {
+        SysUser user = new SysUser();
+        if(StringUtils.isNotNull(loginName)){
+            user.setLoginName(loginName);
+        }else{
+            return R.fail("登录名称必填");
+        }
+
+        if(StringUtils.isNotNull(userName)){
+            user.setUserName(userName);
+        }else{
+            return R.fail("用户姓名必填");
+        }
+
+        if(StringUtils.isNotNull(password)){
+            user.setSalt(ShiroUtils.randomSalt());
+            user.setPassword(passwordService.encryptPassword(user.getLoginName(), password, user.getSalt()));
+        }else{
+            return R.fail("登录密码必填");
+        }
+
+        if(StringUtils.isNotNull(createBy)){
+            user.setCreateBy(createBy);
+        }else{
+            return R.fail("创建者名称必填");
+        }
+
+        if(StringUtils.isNotNull(deptId)){
+            user.setDeptId(deptId);
+        }else{
+            return R.fail("部门ID必填");
+        }
+
+        if(StringUtils.isNotNull(email)){
+            user.setEmail(email);
+        }
+        if(StringUtils.isNotNull(phonenumber)){
+            user.setPhonenumber(phonenumber);
+        }
+
+        if(StringUtils.isNotNull(sex)){
+            user.setSex(sex);
+        }else{
+            user.setSex("0");
+        }
+        Long[] roleId = {107L};
+        user.setRoleIds(roleId);
+        userService.insertUser(user);
+
+        return R.ok("请用该账号和密码进行登录");
     }
 
-    @ApiOperation("获取用户列表")
-    @GetMapping("/list")
-    public R<List<UserEntity2>> userList()
-    {
-        List<UserEntity2> userList = new ArrayList<UserEntity2>(users.values());
-        return R.ok(userList);
-    }
 
-
-}
-
-@ApiModel(value = "UserEntity2", description = "用户实体")
-class UserEntity2
-{
-    @ApiModelProperty("用户ID")
-    private Integer userId;
-
-    @ApiModelProperty("用户名称")
-    private String username;
-
-    @ApiModelProperty("用户密码")
-    private String password;
-
-    @ApiModelProperty("用户手机")
-    private String mobile;
-
-    public UserEntity2()
-    {
-
-    }
-
-    public UserEntity2(Integer userId, String username, String password, String mobile)
-    {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.mobile = mobile;
-    }
-
-    public Integer getUserId()
-    {
-        return userId;
-    }
-
-    public void setUserId(Integer userId)
-    {
-        this.userId = userId;
-    }
-
-    public String getUsername()
-    {
-        return username;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getMobile()
-    {
-        return mobile;
-    }
-
-    public void setMobile(String mobile)
-    {
-        this.mobile = mobile;
-    }
 }
 
