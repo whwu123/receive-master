@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RhdOperationPageMapper">
+    
+    <resultMap type="RhdOperationPage" id="RhdOperationPageResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="extend1"    column="extend1"    />
+        <result property="extend2"    column="extend2"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="smsContent"    column="sms_content"    />
+        <result property="verificationCode"    column="verification_code"    />
+        <result property="sendStatus"    column="send_status"    />
+        <result property="phoneOperator"    column="phone_operator"    />
+        <result property="phoneAttribution"    column="phone_attribution"    />
+    </resultMap>
+
+    <sql id="selectRhdOperationPageVo">
+        select id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, project_id, project_name, phone_number, sms_content, verification_code, send_status, phone_operator, phone_attribution from rhd_operation_page
+    </sql>
+
+    <select id="selectRhdOperationPageList" parameterType="RhdOperationPage" resultMap="RhdOperationPageResult">
+        <include refid="selectRhdOperationPageVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
+            <if test="extend2 != null  and extend2 != ''"> and extend2 = #{extend2}</if>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name = #{projectName}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="smsContent != null  and smsContent != ''"> and sms_content = #{smsContent}</if>
+            <if test="verificationCode != null  and verificationCode != ''"> and verification_code = #{verificationCode}</if>
+            <if test="sendStatus != null  and sendStatus != ''"> and send_status = #{sendStatus}</if>
+            <if test="phoneOperator != null  and phoneOperator != ''"> and phone_operator = #{phoneOperator}</if>
+            <if test="phoneAttribution != null  and phoneAttribution != ''"> and phone_attribution = #{phoneAttribution}</if>
+        </where>
+    </select>
+    
+    <select id="selectRhdOperationPageById" parameterType="Long" resultMap="RhdOperationPageResult">
+        <include refid="selectRhdOperationPageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRhdOperationPage" parameterType="RhdOperationPage" useGeneratedKeys="true" keyProperty="id">
+        insert into rhd_operation_page
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="extend1 != null">extend1,</if>
+            <if test="extend2 != null">extend2,</if>
+            <if test="projectId != null">project_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="smsContent != null">sms_content,</if>
+            <if test="verificationCode != null">verification_code,</if>
+            <if test="sendStatus != null">send_status,</if>
+            <if test="phoneOperator != null">phone_operator,</if>
+            <if test="phoneAttribution != null">phone_attribution,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="extend1 != null">#{extend1},</if>
+            <if test="extend2 != null">#{extend2},</if>
+            <if test="projectId != null">#{projectId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="smsContent != null">#{smsContent},</if>
+            <if test="verificationCode != null">#{verificationCode},</if>
+            <if test="sendStatus != null">#{sendStatus},</if>
+            <if test="phoneOperator != null">#{phoneOperator},</if>
+            <if test="phoneAttribution != null">#{phoneAttribution},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhdOperationPage" parameterType="RhdOperationPage">
+        update rhd_operation_page
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="extend1 != null">extend1 = #{extend1},</if>
+            <if test="extend2 != null">extend2 = #{extend2},</if>
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="smsContent != null">sms_content = #{smsContent},</if>
+            <if test="verificationCode != null">verification_code = #{verificationCode},</if>
+            <if test="sendStatus != null">send_status = #{sendStatus},</if>
+            <if test="phoneOperator != null">phone_operator = #{phoneOperator},</if>
+            <if test="phoneAttribution != null">phone_attribution = #{phoneAttribution},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRhdOperationPageById" parameterType="Long">
+        delete from rhd_operation_page where id = #{id}
+    </delete>
+
+    <delete id="deleteRhdOperationPageByIds" parameterType="String">
+        delete from rhd_operation_page where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

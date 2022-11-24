@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.tool;
 
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -38,7 +39,11 @@ public class ReceiveApiController extends BaseController {
                                   String sex, String password,Long deptId,String createBy) {
         SysUser user = new SysUser();
         if(StringUtils.isNotNull(loginName)){
-            user.setLoginName(loginName);
+            if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(loginName))){
+                return R.fail("新增用户'" + loginName + "'失败，登录账号已存在");
+            }else{
+                user.setLoginName(loginName);
+            }
         }else{
             return R.fail("登录名称必填");
         }
@@ -83,7 +88,6 @@ public class ReceiveApiController extends BaseController {
         Long[] roleId = {107L};
         user.setRoleIds(roleId);
         userService.insertUser(user);
-
         return R.ok("请用该账号和密码进行登录");
     }
 
