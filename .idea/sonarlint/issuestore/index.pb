@@ -404,8 +404,6 @@ Pruoyi-system/src/main/java/com/ruoyi/system/service/impl/NExpendServiceImpl.jav
 Oruoyi-system/src/main/java/com/ruoyi/system/service/impl/SchoolServiceImpl.java,c\6\c6dec18fb39305d749575354d402bd195d2a4505
 >
 sql/ruoyi.html,3\a\3a97b26c34c0122f2c997f916f107cfa7d3e4048
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 Œ
@@ -454,8 +452,6 @@ Pruoyi-admin/src/main/java/com/ruoyi/web/controller/system/SysMenuController.jav
 Rruoyi-admin/src/main/java/com/ruoyi/web/controller/system/SysNoticeController.java,9\c\9c6509fee4641cfdbbb1cfb8f6da3aa82d56e0c3
 €
 Pruoyi-admin/src/main/java/com/ruoyi/web/controller/system/SysRoleController.java,b\e\bea98256560cbae6699941b3dbee4168a549e2e4
-C
-ruoyi-admin/pom.xml,f\0\f06d4560fbe5a32dbb7d90624868a56cd009dffb
 u
 Eruoyi-common/src/main/java/com/ruoyi/common/annotation/DataScope.java,1\8\185743a47151d59ef6e15804c377e5238241e2f2
 v
