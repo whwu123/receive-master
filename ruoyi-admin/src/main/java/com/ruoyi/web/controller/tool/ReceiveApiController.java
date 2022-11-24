@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ public class ReceiveApiController extends BaseController {
     private ISysUserService userService;
 
     @ApiOperation("注册用户")
-    @GetMapping("/registerUser")
+    @PostMapping("/registerUser")
     public R<String> registerUser(String loginName,String userName,String email,String phonenumber,
                                   String sex, String password,Long deptId,String createBy) {
         SysUser user = new SysUser();
