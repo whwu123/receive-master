@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改查询')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-ProjectList-edit" th:object="${rhdProjectList}">
+            <input name="projectId" th:field="*{projectId}" type="hidden">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">扩展字段1：</label>
+                <div class="col-sm-8">
+                    <textarea name="extend1" class="form-control">[[*{extend1}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">扩展字段2：</label>
+                <div class="col-sm-8">
+                    <textarea name="extend2" class="form-control">[[*{extend2}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">项目名称：</label>
+                <div class="col-sm-8">
+                    <textarea name="projectName" class="form-control">[[*{projectName}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">价格：</label>
+                <div class="col-sm-8">
+                    <input name="projectPrice" th:field="*{projectPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">号段：</label>
+                <div class="col-sm-8">
+                    <input name="themRoughly" th:field="*{themRoughly}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">供卡数量：</label>
+                <div class="col-sm-8">
+                    <input name="cardsSupplied" th:field="*{cardsSupplied}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">对接状态：</label>
+                <div class="col-sm-8">
+                    <select name="dockingStatus" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">公开专属：</label>
+                <div class="col-sm-8">
+                    <input name="openExclusive" th:field="*{openExclusive}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">指定专属：</label>
+                <div class="col-sm-8">
+                    <input name="appointExclusive" th:field="*{appointExclusive}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">我的专属：</label>
+                <div class="col-sm-8">
+                    <input name="myExclusive" th:field="*{myExclusive}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/ProjectList";
+        $("#form-ProjectList-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-ProjectList-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

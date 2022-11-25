@@ -103,8 +103,6 @@ q
 Aruoyi-common/src/main/java/com/ruoyi/common/utils/CacheUtils.java,c\5\c5a91c2ffcf6bac8ddb3b05bc3aabec1024ec75c
 t
 Druoyi-common/src/main/java/com/ruoyi/common/utils/ExceptionUtil.java,3\6\361ca7bb114fb706af97d409929439fb5fbb7859
-p
-@ruoyi-common/src/main/java/com/ruoyi/common/utils/DateUtils.java,e\5\e5be095f616ad53969256a01027e31ea7e484762
 r
 Bruoyi-common/src/main/java/com/ruoyi/common/utils/CookieUtils.java,e\9\e97ec5e021a643e57d3edf83c603aedb0f85de50
 p
@@ -280,8 +278,6 @@ y
 Iruoyi-system/src/main/java/com/ruoyi/system/mapper/SysDictDataMapper.java,0\6\06830ce88bd4f9aacac6f56ce350a383cb77202e
 y
 Iruoyi-system/src/main/java/com/ruoyi/system/mapper/SysUserPostMapper.java,9\2\924fe7b39229fc0a270cc41a69c7f0406c3e0e6c
-u
-Eruoyi-system/src/main/java/com/ruoyi/system/mapper/SysUserMapper.java,e\1\e1081f3891989b2825a6912a128a6317ab31f45c
 {
 Kruoyi-system/src/main/java/com/ruoyi/system/mapper/SysUserOnlineMapper.java,d\6\d6fa21c727b5b0d97e1aa051d197e38d0c2dda9f
 u
@@ -318,8 +314,6 @@ y
 Iruoyi-system/src/main/java/com/ruoyi/system/mapper/SysRoleMenuMapper.java,4\2\42df792fa59a58870f20b92e1875c28cb84189d4
 y
 Iruoyi-system/src/main/java/com/ruoyi/system/mapper/HbdSalesmanMapper.java,f\5\f555d44913a78c73c443c68127da640f8d2dda50
-x
-Hruoyi-system/src/main/java/com/ruoyi/system/service/ISysUserService.java,1\3\1376c67337713fa196a841a2977167726cd8c4e9
 x
 Hruoyi-system/src/main/java/com/ruoyi/system/service/INExpendService.java,c\b\cbd542171eb9c1416565d6609e7fab44108676b1
 |
@@ -360,8 +354,6 @@ Kruoyi-system/src/main/java/com/ruoyi/system/service/ISysOperLogService.java,2\
 Wruoyi-system/src/main/java/com/ruoyi/system/service/IInsuranceCompanyPersonService.java,a\f\afd929ab5bfc7773d9da8580348a90797109f745
 |
 Lruoyi-system/src/main/java/com/ruoyi/system/service/IHbdSalesmanService.java,d\3\d309291c8b213d99d2d3680b9bed00b73d276b1b
-Ä
-Pruoyi-system/src/main/java/com/ruoyi/system/service/impl/SysUserServiceImpl.java,7\0\7088c1b290ee1fe17c2b2b3408482c6e9e396f81
 Ä
 Pruoyi-system/src/main/java/com/ruoyi/system/service/impl/SysMenuServiceImpl.java,a\1\a1d3752da9bde8e7bc9f793cc097ce5ebf2521dc
 Ñ
@@ -484,8 +476,6 @@ x
 Hruoyi-common/src/main/java/com/ruoyi/common/constant/ShiroConstants.java,e\f\efca6658435fc969d11881e2a4f4f42606288714
 w
 Gruoyi-common/src/main/java/com/ruoyi/common/constant/UserConstants.java,2\a\2a38dcfa9463c7066363c6fbc93706a5eccffa9f
-
-Oruoyi-common/src/main/java/com/ruoyi/common/core/controller/BaseController.java,9\b\9bb4c86c5ad8e187b10be96c9981d68a0c0df7b3
 {
 Kruoyi-common/src/main/java/com/ruoyi/common/core/domain/entity/SysDept.java,2\f\2f10c60e99dd4b07b1fb905ff01b551cdf3203cb
 
@@ -572,3 +562,13 @@ g
 7ruoyi-admin/src/main/java/com/ruoyi/web/JasyptTest.java,4\e\4e8cb54e8559ac3bfcf847763aeda98d2200f685
 C
 ruoyi-admin/pom.xml,f\0\f06d4560fbe5a32dbb7d90624868a56cd009dffb
+Ä
+Pruoyi-admin/src/main/java/com/ruoyi/web/controller/system/SysUserController.java,5\3\539db43137ad6ad151e4a1048c18a9e18e22a1bc
+x
+Hruoyi-system/src/main/java/com/ruoyi/system/domain/RhdOperationPage.java,2\0\20777acc4b9fd4a45dc8cc1f71c41d13622a552a
+~
+Nruoyi-system/src/main/java/com/ruoyi/system/mapper/RhdOperationPageMapper.java,c\0\c099ae841760b4a97e5d7dd3bcb73082b55ce8b1
+Å
+Qruoyi-system/src/main/java/com/ruoyi/system/service/IRhdOperationPageService.java,5\b\5ba296bbe461fee7fa3e7bc38c5f7a15f8e2c95c
+â
+Yruoyi-admin/src/main/java/com/ruoyi/web/controller/system/RhdOperationPageController.java,0\a\0a157eeb698148eacb4d2eb4905b6ef92d8b10d3

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RhdProjectListMapper">
+    
+    <resultMap type="RhdProjectList" id="RhdProjectListResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="extend1"    column="extend1"    />
+        <result property="extend2"    column="extend2"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectType"    column="project_type"    />
+        <result property="projectPrice"    column="project_price"    />
+        <result property="themRoughly"    column="them_roughly"    />
+        <result property="cardsSupplied"    column="cards_supplied"    />
+        <result property="dockingStatus"    column="docking_status"    />
+        <result property="openExclusive"    column="open_exclusive"    />
+        <result property="appointExclusive"    column="appoint_exclusive"    />
+        <result property="myExclusive"    column="my_exclusive"    />
+    </resultMap>
+
+    <sql id="selectRhdProjectListVo">
+        select project_id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, project_name, project_type, project_price, them_roughly, cards_supplied, docking_status, open_exclusive, appoint_exclusive, my_exclusive from rhd_project_list
+    </sql>
+
+    <select id="selectRhdProjectListList" parameterType="RhdProjectList" resultMap="RhdProjectListResult">
+        <include refid="selectRhdProjectListVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
+            <if test="extend2 != null  and extend2 != ''"> and extend2 = #{extend2}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="projectType != null  and projectType != ''"> and project_type = #{projectType}</if>
+            <if test="projectPrice != null "> and project_price = #{projectPrice}</if>
+            <if test="themRoughly != null  and themRoughly != ''"> and them_roughly = #{themRoughly}</if>
+            <if test="cardsSupplied != null "> and cards_supplied = #{cardsSupplied}</if>
+            <if test="dockingStatus != null  and dockingStatus != ''"> and docking_status = #{dockingStatus}</if>
+            <if test="openExclusive != null  and openExclusive != ''"> and open_exclusive = #{openExclusive}</if>
+            <if test="appointExclusive != null  and appointExclusive != ''"> and appoint_exclusive = #{appointExclusive}</if>
+            <if test="myExclusive != null  and myExclusive != ''"> and my_exclusive = #{myExclusive}</if>
+        </where>
+    </select>
+    
+    <select id="selectRhdProjectListByProjectId" parameterType="Long" resultMap="RhdProjectListResult">
+        <include refid="selectRhdProjectListVo"/>
+        where project_id = #{projectId}
+    </select>
+        
+    <insert id="insertRhdProjectList" parameterType="RhdProjectList">
+        insert into rhd_project_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="extend1 != null">extend1,</if>
+            <if test="extend2 != null">extend2,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="projectType != null">project_type,</if>
+            <if test="projectPrice != null">project_price,</if>
+            <if test="themRoughly != null">them_roughly,</if>
+            <if test="cardsSupplied != null">cards_supplied,</if>
+            <if test="dockingStatus != null">docking_status,</if>
+            <if test="openExclusive != null">open_exclusive,</if>
+            <if test="appointExclusive != null">appoint_exclusive,</if>
+            <if test="myExclusive != null">my_exclusive,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="extend1 != null">#{extend1},</if>
+            <if test="extend2 != null">#{extend2},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="projectType != null">#{projectType},</if>
+            <if test="projectPrice != null">#{projectPrice},</if>
+            <if test="themRoughly != null">#{themRoughly},</if>
+            <if test="cardsSupplied != null">#{cardsSupplied},</if>
+            <if test="dockingStatus != null">#{dockingStatus},</if>
+            <if test="openExclusive != null">#{openExclusive},</if>
+            <if test="appointExclusive != null">#{appointExclusive},</if>
+            <if test="myExclusive != null">#{myExclusive},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhdProjectList" parameterType="RhdProjectList">
+        update rhd_project_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="extend1 != null">extend1 = #{extend1},</if>
+            <if test="extend2 != null">extend2 = #{extend2},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="projectType != null">project_type = #{projectType},</if>
+            <if test="projectPrice != null">project_price = #{projectPrice},</if>
+            <if test="themRoughly != null">them_roughly = #{themRoughly},</if>
+            <if test="cardsSupplied != null">cards_supplied = #{cardsSupplied},</if>
+            <if test="dockingStatus != null">docking_status = #{dockingStatus},</if>
+            <if test="openExclusive != null">open_exclusive = #{openExclusive},</if>
+            <if test="appointExclusive != null">appoint_exclusive = #{appointExclusive},</if>
+            <if test="myExclusive != null">my_exclusive = #{myExclusive},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteRhdProjectListByProjectId" parameterType="Long">
+        delete from rhd_project_list where project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteRhdProjectListByProjectIds" parameterType="String">
+        delete from rhd_project_list where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -4,9 +4,12 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.shiro.service.SysPasswordService;
+import com.ruoyi.system.domain.RhdProjectList;
+import com.ruoyi.system.service.IRhdProjectListService;
 import com.ruoyi.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -19,10 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Api("接收开发平台接口")
 @RestController
@@ -32,6 +33,8 @@ public class ReceiveApiController extends BaseController {
     private SysPasswordService passwordService;
     @Autowired
     private ISysUserService userService;
+    @Autowired
+    private IRhdProjectListService rhdProjectListService;
 
     @ApiOperation("注册用户")
     @PostMapping("/registerUser")
@@ -88,9 +91,63 @@ public class ReceiveApiController extends BaseController {
         Long[] roleId = {107L};
         user.setRoleIds(roleId);
         userService.insertUser(user);
-        return R.ok("请用该账号和密码进行登录");
+        return R.ok("Please use this account and password to log in");
     }
 
+    @ApiOperation("新增项目")
+    @PostMapping("/addProject")
+    public R<String> addProject(String projectName,String projectType,String projectPrice,String themRoughly,
+                                  Long cardsSupplied,String dockingStatus,String openExclusive, String appointExclusive,
+                                String myExclusive,String createBy) {
+        RhdProjectList rhdProjectList = new RhdProjectList();
+        if(StringUtils.isNotNull(projectName)){
+            rhdProjectList.setProjectName(projectName);
+        }else{
+            return R.fail("项目名称必填");
+        }
+        if(StringUtils.isNotNull(projectType)){
+            rhdProjectList.setProjectType(projectType);
+        }else{
+            return R.fail("项目类型必填");
+        }
+        if(StringUtils.isNotNull(projectPrice)){
+            rhdProjectList.setProjectPrice(BigDecimal.valueOf(Long.valueOf(projectPrice)));
+        }else{
+            return R.fail("项目价格必填");
+        }
+        if(StringUtils.isNotNull(themRoughly)){
+            rhdProjectList.setThemRoughly(themRoughly);
+        }else{
+            return R.fail("项目号段必填");
+        }
+        if(StringUtils.isNotNull(cardsSupplied)){
+            rhdProjectList.setCardsSupplied(cardsSupplied);
+        }else{
+            return R.fail("供卡数量必填");
+        }
+        if(StringUtils.isNotNull(dockingStatus)){
+            rhdProjectList.setDockingStatus(dockingStatus);
+        }else{
+            return R.fail("对接状态必填");
+        }
+        if(StringUtils.isNotNull(openExclusive)){
+            rhdProjectList.setOpenExclusive(openExclusive);
+        }
+        if(StringUtils.isNotNull(appointExclusive)){
+            rhdProjectList.setAppointExclusive(appointExclusive);
+        }
+        if(StringUtils.isNotNull(myExclusive)){
+            rhdProjectList.setMyExclusive(myExclusive);
+        }
+        if(StringUtils.isNotNull(createBy)){
+            rhdProjectList.setCreateBy(createBy);
+            rhdProjectList.setCreateTime(DateUtils.getNowDate());
+        }else{
+            return R.fail("创建者名称必填");
+        }
+        rhdProjectListService.insertRhdProjectList(rhdProjectList);
+        return R.ok("addProjectSuccess");
+    }
 
 }
 
