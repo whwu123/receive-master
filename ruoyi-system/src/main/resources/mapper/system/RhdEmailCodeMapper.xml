@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RhdEmailCodeMapper">
+    
+    <resultMap type="RhdEmailCode" id="RhdEmailCodeResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="extend1"    column="extend1"    />
+        <result property="extend2"    column="extend2"    />
+        <result property="emailAddress"    column="email_address"    />
+        <result property="emailCode"    column="email_code"    />
+    </resultMap>
+
+    <sql id="selectRhdEmailCodeVo">
+        select id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, email_address, email_code from rhd_email_code
+    </sql>
+
+    <select id="selectRhdEmailCodeList" parameterType="RhdEmailCode" resultMap="RhdEmailCodeResult">
+        <include refid="selectRhdEmailCodeVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
+            <if test="extend2 != null  and extend2 != ''"> and extend2 = #{extend2}</if>
+            <if test="emailAddress != null  and emailAddress != ''"> and email_address = #{emailAddress}</if>
+            <if test="emailCode != null  and emailCode != ''"> and email_code = #{emailCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectRhdEmailCodeById" parameterType="Long" resultMap="RhdEmailCodeResult">
+        <include refid="selectRhdEmailCodeVo"/>
+        where id = #{id}
+    </select>
+    <select id="checkRhdEmailCode"  parameterType="RhdEmailCode" resultMap="RhdEmailCodeResult">
+        <include refid="selectRhdEmailCodeVo"/>
+        <where>
+            <if test="emailAddress != null  and emailAddress != ''"> and email_address = #{emailAddress}</if>
+            <if test="emailCode != null  and emailCode != ''"> and email_code = #{emailCode}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+
+    </select>
+
+    <insert id="insertRhdEmailCode" parameterType="RhdEmailCode" useGeneratedKeys="true" keyProperty="id">
+        insert into rhd_email_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="extend1 != null">extend1,</if>
+            <if test="extend2 != null">extend2,</if>
+            <if test="emailAddress != null">email_address,</if>
+            <if test="emailCode != null">email_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="extend1 != null">#{extend1},</if>
+            <if test="extend2 != null">#{extend2},</if>
+            <if test="emailAddress != null">#{emailAddress},</if>
+            <if test="emailCode != null">#{emailCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhdEmailCode" parameterType="RhdEmailCode">
+        update rhd_email_code
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="extend1 != null">extend1 = #{extend1},</if>
+            <if test="extend2 != null">extend2 = #{extend2},</if>
+            <if test="emailAddress != null">email_address = #{emailAddress},</if>
+            <if test="emailCode != null">email_code = #{emailCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRhdEmailCodeById" parameterType="Long">
+        delete from rhd_email_code where id = #{id}
+    </delete>
+
+    <delete id="deleteRhdEmailCodeByIds" parameterType="String">
+        delete from rhd_email_code where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
