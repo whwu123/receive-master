@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('专属项目列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>对接码：</label>
+                                <input type="text" name="dockingCode"/>
+                            </li>
+                            <li>
+                                <label>是否公开：</label>
+                                <select name="isOpen">
+                                    <option value="">所有</option>
+                                    <option value="1">是</option>
+                                    <option value="2">否</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>卡商价格：</label>
+                                <input type="text" name="exclusivePrice"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('data_state')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:exclusiveProject:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:exclusiveProject:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:exclusiveProject:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:exclusiveProject:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:exclusiveProject:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:exclusiveProject:remove')}]];
+        var statusDatas = [[${@dict.getType('data_state')}]];
+        var prefix = ctx + "system/exclusiveProject";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "专属项目",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'exclusiveId',
+                    title: '主键ID',
+                    visible: false
+                },
+                {
+                    field: 'dockingCode',
+                    title: '对接码'
+                },
+                {
+                    field: 'exclusiveName',
+                    title: '专属项目名称'
+                },
+                {
+                    field: 'exclusivePrice',
+                    title: '卡商价格'
+                },
+                {
+                    field: 'isOpen',
+                    title: '是否公开',
+                    formatter: function(value, row, index) {
+                        if(row.isOpen == '1'){
+                            return "是";
+                        }else if(row.isOpen == '2'){
+                            return "否";
+                        }
+                    }
+                },
+                {
+                    field: 'cardAmount',
+                    title: '供卡数量'
+                },
+
+                {
+                    field: 'accessUser',
+                    title: '接入用户'
+                },
+                    {
+                        field: 'status',
+                        title: '状态',
+                        formatter: function(value, row, index) {
+                            return $.table.selectDictLabel(statusDatas, value);
+                        }
+                    },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.exclusiveId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.exclusiveId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

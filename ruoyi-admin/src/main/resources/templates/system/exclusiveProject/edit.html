@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改专属项目')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-exclusiveProject-edit" th:object="${rhdExclusiveProject}">
+            <input name="exclusiveId" th:field="*{exclusiveId}" type="hidden">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">专属项目名称：</label>
+                <div class="col-sm-8">
+                    <input name="exclusiveName" class="form-control" type="text" th:field="*{exclusiveName}"/>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">卡商价格：</label>
+                <div class="col-sm-8">
+                    <input name="exclusivePrice" th:field="*{exclusivePrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否公开：</label>
+                <div class="col-sm-8">
+                    <select name="isOpen"  class="form-control m-b">
+                        <option value="1" th:selected="*{isOpen eq '1'} ">是</option>
+                        <option value="2" th:selected="*{isOpen eq '2'} ">否</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">供卡数量：</label>
+                <div class="col-sm-8">
+                    <input name="cardAmount" th:field="*{cardAmount}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">对接码：</label>
+                <div class="col-sm-8">
+                    <input name="dockingCode" th:field="*{dockingCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">接入用户：</label>
+                <div class="col-sm-8">
+                    <input name="accessUser" th:field="*{accessUser}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
+                <div class="col-sm-8">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('data_state')}">
+                        <input type="radio" th:id="${'status_' + dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
+                        <label th:for="${'status_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/exclusiveProject";
+        $("#form-exclusiveProject-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-exclusiveProject-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

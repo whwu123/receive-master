@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RhdLackCardProjectMapper">
+    
+    <resultMap type="RhdLackCardProject" id="RhdLackCardProjectResult">
+        <result property="lackId"    column="lack_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="extend1"    column="extend1"    />
+        <result property="extend2"    column="extend2"    />
+        <result property="lackName"    column="lack_name"    />
+        <result property="advisedPrice"    column="advised_price"    />
+        <result property="numberSegment"    column="number_segment"    />
+        <result property="quantityDemanded"    column="quantity_demanded"    />
+    </resultMap>
+
+    <sql id="selectRhdLackCardProjectVo">
+        select lack_id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, lack_name, advised_price, number_segment, quantity_demanded from rhd_lack_card_project
+    </sql>
+
+    <select id="selectRhdLackCardProjectList" parameterType="RhdLackCardProject" resultMap="RhdLackCardProjectResult">
+        <include refid="selectRhdLackCardProjectVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
+            <if test="extend2 != null  and extend2 != ''"> and extend2 = #{extend2}</if>
+            <if test="lackName != null  and lackName != ''"> and lack_name like concat('%', #{lackName}, '%')</if>
+            <if test="advisedPrice != null "> and advised_price = #{advisedPrice}</if>
+            <if test="numberSegment != null  and numberSegment != ''"> and number_segment = #{numberSegment}</if>
+            <if test="quantityDemanded != null "> and quantity_demanded = #{quantityDemanded}</if>
+        </where>
+    </select>
+    
+    <select id="selectRhdLackCardProjectByLackId" parameterType="Long" resultMap="RhdLackCardProjectResult">
+        <include refid="selectRhdLackCardProjectVo"/>
+        where lack_id = #{lackId}
+    </select>
+        
+    <insert id="insertRhdLackCardProject" parameterType="RhdLackCardProject" useGeneratedKeys="true" keyProperty="lackId">
+        insert into rhd_lack_card_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="extend1 != null">extend1,</if>
+            <if test="extend2 != null">extend2,</if>
+            <if test="lackName != null">lack_name,</if>
+            <if test="advisedPrice != null">advised_price,</if>
+            <if test="numberSegment != null">number_segment,</if>
+            <if test="quantityDemanded != null">quantity_demanded,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="extend1 != null">#{extend1},</if>
+            <if test="extend2 != null">#{extend2},</if>
+            <if test="lackName != null">#{lackName},</if>
+            <if test="advisedPrice != null">#{advisedPrice},</if>
+            <if test="numberSegment != null">#{numberSegment},</if>
+            <if test="quantityDemanded != null">#{quantityDemanded},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhdLackCardProject" parameterType="RhdLackCardProject">
+        update rhd_lack_card_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="extend1 != null">extend1 = #{extend1},</if>
+            <if test="extend2 != null">extend2 = #{extend2},</if>
+            <if test="lackName != null">lack_name = #{lackName},</if>
+            <if test="advisedPrice != null">advised_price = #{advisedPrice},</if>
+            <if test="numberSegment != null">number_segment = #{numberSegment},</if>
+            <if test="quantityDemanded != null">quantity_demanded = #{quantityDemanded},</if>
+        </trim>
+        where lack_id = #{lackId}
+    </update>
+
+    <delete id="deleteRhdLackCardProjectByLackId" parameterType="Long">
+        delete from rhd_lack_card_project where lack_id = #{lackId}
+    </delete>
+
+    <delete id="deleteRhdLackCardProjectByLackIds" parameterType="String">
+        delete from rhd_lack_card_project where lack_id in 
+        <foreach item="lackId" collection="array" open="(" separator="," close=")">
+            #{lackId}
+        </foreach>
+    </delete>
+
+</mapper>
