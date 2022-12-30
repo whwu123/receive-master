@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RhdCardsListMapper">
+    
+    <resultMap type="RhdCardsList" id="RhdCardsListResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="extend1"    column="extend1"    />
+        <result property="extend2"    column="extend2"    />
+        <result property="deviceCodeStr"    column="device_code_str"    />
+        <result property="versions"    column="versions"    />
+        <result property="portNumber"    column="port_number"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="operators"    column="operators"    />
+    </resultMap>
+
+    <sql id="selectRhdCardsListVo">
+        select id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, device_code_str, versions, port_number, phone_number, operators from rhd_cards_list
+    </sql>
+
+    <select id="selectRhdCardsListList" parameterType="RhdCardsList" resultMap="RhdCardsListResult">
+        <include refid="selectRhdCardsListVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
+            <if test="extend2 != null  and extend2 != ''"> and extend2 = #{extend2}</if>
+            <if test="deviceCodeStr != null  and deviceCodeStr != ''"> and device_code_str = #{deviceCodeStr}</if>
+            <if test="portNumber != null  and portNumber != ''"> and port_number = #{portNumber}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="operators != null  and operators != ''"> and operators = #{operators}</if>
+
+        </where>
+    </select>
+    
+    <select id="selectRhdCardsListById" parameterType="Long" resultMap="RhdCardsListResult">
+        <include refid="selectRhdCardsListVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRhdCardsList" parameterType="RhdCardsList" useGeneratedKeys="true" keyProperty="id">
+        insert into rhd_cards_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="extend1 != null">extend1,</if>
+            <if test="extend2 != null">extend2,</if>
+            <if test="deviceCodeStr != null">device_code_str,</if>
+            <if test="versions != null">versions,</if>
+            <if test="portNumber != null">port_number,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="operators != null">operators,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="extend1 != null">#{extend1},</if>
+            <if test="extend2 != null">#{extend2},</if>
+            <if test="deviceCodeStr != null">#{deviceCodeStr},</if>
+            <if test="versions != null">#{versions},</if>
+            <if test="portNumber != null">#{portNumber},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="operators != null">#{operators},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhdCardsList" parameterType="RhdCardsList">
+        update rhd_cards_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="extend1 != null">extend1 = #{extend1},</if>
+            <if test="extend2 != null">extend2 = #{extend2},</if>
+            <if test="deviceCodeStr != null">device_code_str = #{deviceCodeStr},</if>
+            <if test="versions != null">versions = #{versions},</if>
+            <if test="portNumber != null">port_number = #{portNumber},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="operators != null">operators = #{operators},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRhdCardsListById" parameterType="Long">
+        delete from rhd_cards_list where id = #{id}
+    </delete>
+
+    <delete id="deleteRhdCardsListByIds" parameterType="String">
+        delete from rhd_cards_list where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

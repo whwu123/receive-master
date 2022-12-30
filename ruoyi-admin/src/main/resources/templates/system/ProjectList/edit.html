@@ -8,71 +8,31 @@
         <form class="form-horizontal m" id="form-ProjectList-edit" th:object="${rhdProjectList}">
             <input name="projectId" th:field="*{projectId}" type="hidden">
             <div class="form-group">
-                <label class="col-sm-3 control-label">备注：</label>
-                <div class="col-sm-8">
-                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">扩展字段1：</label>
-                <div class="col-sm-8">
-                    <textarea name="extend1" class="form-control">[[*{extend1}]]</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">扩展字段2：</label>
-                <div class="col-sm-8">
-                    <textarea name="extend2" class="form-control">[[*{extend2}]]</textarea>
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="col-sm-3 control-label">项目名称：</label>
                 <div class="col-sm-8">
-                    <textarea name="projectName" class="form-control">[[*{projectName}]]</textarea>
+                    <input name="projectName" class="form-control" th:field="*{projectName}" />
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">价格：</label>
+                <label class="col-sm-3 control-label">卡商价格：</label>
                 <div class="col-sm-8">
                     <input name="projectPrice" th:field="*{projectPrice}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">号段：</label>
-                <div class="col-sm-8">
-                    <input name="themRoughly" th:field="*{themRoughly}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">供卡数量：</label>
-                <div class="col-sm-8">
-                    <input name="cardsSupplied" th:field="*{cardsSupplied}" class="form-control" type="text">
-                </div>
-            </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">对接状态：</label>
+                <label class="col-sm-3 control-label">是否屏蔽：</label>
                 <div class="col-sm-8">
-                    <select name="dockingStatus" class="form-control m-b" th:with="type=${@dict.getType('sys_yes_no')}">
-                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+
+                    <select name="extend1" class="form-control m-b">
+                        <option value="1" th:selected="*{extend1 eq '1'} ">是</option>
+                        <option value="2" th:selected="*{extend1 eq '2'}">否</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">公开专属：</label>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
-                    <input name="openExclusive" th:field="*{openExclusive}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">指定专属：</label>
-                <div class="col-sm-8">
-                    <input name="appointExclusive" th:field="*{appointExclusive}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">我的专属：</label>
-                <div class="col-sm-8">
-                    <input name="myExclusive" th:field="*{myExclusive}" class="form-control" type="text">
+                    <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
                 </div>
             </div>
         </form>

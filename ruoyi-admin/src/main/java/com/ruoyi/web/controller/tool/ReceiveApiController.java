@@ -9,17 +9,21 @@ import com.ruoyi.common.utils.RandGen;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.shiro.service.SysPasswordService;
+import com.ruoyi.system.domain.RhdCardsList;
+import com.ruoyi.system.domain.RhdDeviceCode;
 import com.ruoyi.system.domain.RhdEmailCode;
 import com.ruoyi.system.domain.RhdProjectList;
-import com.ruoyi.system.service.IRhdEmailCodeService;
-import com.ruoyi.system.service.IRhdProjectListService;
-import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service.*;
 import com.ruoyi.system.service.impl.ImailServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.apache.catalina.User;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,18 +47,31 @@ public class ReceiveApiController extends BaseController {
     private ImailServiceImpl imailService;
     @Autowired
     private IRhdEmailCodeService iRhdEmailCodeService;
+    @Autowired
+    private IRhdDeviceCodeService deviceCodeService;
+    @Autowired
+    private IRhdCardsListService cardsListService;
 
     private final static String ksd = "卡商端";
     private final static Long deptId = 446L;
 
     @ApiOperation("获取邮箱验证码")
     @GetMapping("/getEmailCode")
-    public R<String> getEmailCode(String Email) {
+    public R<String> getEmailCode(String Email,String Type) {
         if(StringUtils.isNotNull(Email)){
-            //给邮箱发送验证且保存到数据库
-            String subject = "注册验证码";
             String contentCode = RandGen.codeGen();
-            imailService.sendHtmlMail(Email,subject,"您的注册验证码为："+contentCode);
+            //给邮箱发送验证且保存到数据库
+            String subject = "";
+            String emailContent = "";
+            if(Integer.parseInt(Type) ==  1){
+                subject = "注册验证码";
+                emailContent = "您的注册验证码为："+contentCode;
+            }else if(Integer.parseInt(Type) == 2){
+                subject ="找回密码验证码";
+                emailContent = "您的找回密码验证码为："+contentCode;
+            }
+
+            imailService.sendHtmlMail(Email,subject,emailContent);
             //保存到数据库
             RhdEmailCode rhdEmailCode = new RhdEmailCode();
             rhdEmailCode.setEmailCode(contentCode);
@@ -75,7 +92,7 @@ public class ReceiveApiController extends BaseController {
         SysUser user = new SysUser();
         if(StringUtils.isNotNull(userName)){
             if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(userName))){
-                return R.fail("新增用户'" + userName + "'失败，登录账号已存在");
+                return R.fail("该用户已存在，请修改用户名");
             }else{
                 user.setLoginName(userName);
             }
@@ -133,13 +150,117 @@ public class ReceiveApiController extends BaseController {
                         return R.ok("密码重置成功！Please use this account and password to log in");
                     }
                 }else{
-                    return R.fail("登录密码必填");
+                    return R.fail("密码必填");
                 }
             }else {
                 return R.fail("邮箱验证码校验失败");
             }
         }
         return R.ok("Please use this account and password to log in");
+    }
+
+    @ApiOperation("用户登录")
+    @PostMapping("/userLogin")
+    public R<UsernamePasswordToken> userLogin(String userName,String pwd) {
+        if(StringUtils.isNotNull(userName) && StringUtils.isNotNull(pwd) ){
+            UsernamePasswordToken token = new UsernamePasswordToken(userName, pwd, false);
+            Subject subject = SecurityUtils.getSubject();
+            try {
+                subject.login(token);
+                return R.ok(token);
+            }
+            catch (AuthenticationException e) {
+                String msg = "用户或密码错误";
+                if (StringUtils.isNotEmpty(e.getMessage())) {
+                    msg = e.getMessage();
+                }
+                return R.fail(msg);
+            }
+        }else {
+            return R.fail("登录用户名和密码必填");
+        }
+    }
+
+    @ApiOperation("获取用户信息")
+    @GetMapping("/getUserData")
+    public R<SysUser> getUserData(String loginName) {
+        if(StringUtils.isNotNull(loginName)){
+            SysUser user =  userService.selectUserByLoginName(loginName);
+            if(user!=null){
+                return R.ok(user);
+            }else{
+                return R.fail("查询不到该用户的信息");
+            }
+        }else {
+            return R.fail("登录用户名必填");
+        }
+    }
+
+    @ApiOperation("设备信息上报")
+    @PostMapping("/deviceReport")
+    public R<String> deviceReport(String onlineCardNumber,String localCards,String deviceCodeStr,String versions) {
+        RhdDeviceCode rhdDeviceCode = new RhdDeviceCode();
+        if(StringUtils.isNotNull(onlineCardNumber)){
+            rhdDeviceCode.setOnlineCardNumber(Long.valueOf(onlineCardNumber));
+        }else{
+            return R.fail("在线卡数必填");
+        }
+        if(StringUtils.isNotNull(localCards)){
+            rhdDeviceCode.setLocalCards(Long.valueOf(localCards));
+        }else{
+            return R.fail("本机卡数必填");
+        }
+        if(StringUtils.isNotNull(deviceCodeStr)){
+            rhdDeviceCode.setDeviceCodeStr(deviceCodeStr);
+        }else{
+            return R.fail("设备码必填");
+        }
+        if(StringUtils.isNotNull(versions)){
+            rhdDeviceCode.setVersions(versions);
+        }else{
+            return R.fail("版本号必填");
+        }
+        rhdDeviceCode.setCreateBy(ksd);
+        rhdDeviceCode.setCreateTime(new Date());
+        rhdDeviceCode.setStatus("0");
+        int result =  deviceCodeService.insertRhdDeviceCode(rhdDeviceCode);
+        if(result>0){
+            return R.ok("上报数据成功");
+        }else{
+            return R.fail("上报数据失败");
+        }
+    }
+
+    @ApiOperation("卡号数据上报")
+    @PostMapping("/cardsNumberReport")
+    public R<String> cardsNumberReport(String deviceCodeStr,String phoneNumber,String operators) {
+        RhdCardsList card = new RhdCardsList();
+        if(StringUtils.isNotNull(deviceCodeStr)){
+            card.setDeviceCodeStr(deviceCodeStr);
+        }else{
+            return R.fail("设备码必填");
+        }
+        if(StringUtils.isNotNull(phoneNumber)){
+           card.setPhoneNumber(phoneNumber);
+        }else{
+            return R.fail("手机号码必填");
+        }
+        if(StringUtils.isNotNull(operators)){
+            card.setOperators(operators);
+        }else{
+            return R.fail("运营商必填");
+        }
+
+
+        card.setCreateBy(ksd);
+        card.setCreateTime(new Date());
+        card.setStatus("0");
+        int result =  cardsListService.insertRhdCardsList(card);
+        if(result>0){
+            return R.ok("上报数据成功");
+        }else{
+            return R.fail("上报数据失败");
+        }
     }
 
     @ApiOperation("新增项目")

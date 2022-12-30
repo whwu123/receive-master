@@ -10,41 +10,12 @@
             <form id="formId">
                 <div class="select-list">
                     <ul>
-                        <!--<li>
-                            <label>项目类型：</label>
-                            <input type="text" name="projectType"/>
-                        </li>
+
                         <li>
-                            <label>价格：</label>
-                            <input type="text" name="projectPrice"/>
+                            <label>项目名称：</label>
+                            <input type="text" name="projectName"/>
                         </li>
-                        <li>
-                            <label>号段：</label>
-                            <input type="text" name="themRoughly"/>
-                        </li>
-                        <li>
-                            <label>供卡数量：</label>
-                            <input type="text" name="cardsSupplied"/>
-                        </li>-->
-                        <li>
-                            <label>对接状态：</label>
-                            <select name="dockingStatus" th:with="type=${@dict.getType('sys_yes_no')}">
-                                <option value="">所有</option>
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                            </select>
-                        </li>
-                        <li>
-                            <label>公开专属：</label>
-                            <input type="text" name="openExclusive"/>
-                        </li>
-                        <li>
-                            <label>指定专属：</label>
-                            <input type="text" name="appointExclusive"/>
-                        </li>
-                        <li>
-                            <label>我的专属：</label>
-                            <input type="text" name="myExclusive"/>
-                        </li>
+
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -93,34 +64,26 @@
             },
                 {
                     field: 'projectId',
-                    title: '项目ID',
-                    visible: false
+                    title: '项目ID'
+
                 },
                 {
                     field: 'projectName',
                     title: '项目名称'
                 },
                 {
-                    field: 'projectType',
-                    title: '项目类型'
-                },
-                {
                     field: 'projectPrice',
-                    title: '价格'
+                    title: '卡商价格'
                 },
                 {
-                    field: 'themRoughly',
-                    title: '号段'
-                },
-                {
-                    field: 'cardsSupplied',
-                    title: '供卡数量'
-                },
-                {
-                    field: 'dockingStatus',
-                    title: '对接状态',
+                    field: 'extend1',
+                    title: '是否屏蔽',
                     formatter: function(value, row, index) {
-                        return $.table.selectDictLabel(dockingStatusDatas, value);
+                        if(row.extend1 == '1'){
+                            return "是";
+                        }else if(row.extend1 == '2'){
+                            return "否";
+                        }
                     }
                 },
                 {

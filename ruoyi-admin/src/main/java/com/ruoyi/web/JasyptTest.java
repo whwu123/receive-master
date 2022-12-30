@@ -33,7 +33,7 @@ public class JasyptTest {
     @Test
     public void jasyptTest() {
         // 加密
-       // System.out.println(stringEncryptor.encrypt("root"));    // JSrINYe4IBotHndGjX1hnmY3mtPNUJlXjP12cx1+pHqUz2FNXGPu3Frnajh3QCXg
+       System.out.println(stringEncryptor.encrypt("StackOverflow&62$1"));    // JSrINYe4IBotHndGjX1hnmY3mtPNUJlXjP12cx1+pHqUz2FNXGPu3Frnajh3QCXg
         // 解密
        // System.out.println(stringEncryptor.decrypt("CAOHmC7h8GlSh8TYDh5obxvq1iiQIsj3JRCh1xLgM5L4BYP/L+BZgdLtmuKfBHJC"));    // root
 
