@@ -67,6 +67,8 @@
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
             modalName: "项目",
+            sortName: "createTime",
+            sortOrder: "desc",
             columns: [{
                 checkbox: true
             },
@@ -93,6 +95,11 @@
                             return "否";
                         }
                     }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
                 },
                 {
                     title: '操作',

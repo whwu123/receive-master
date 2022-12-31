@@ -57,6 +57,8 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "设备列表",
+                sortName: "createTime",
+                sortOrder: "desc",
                 columns: [{
                     checkbox: true
                 },
@@ -87,6 +89,11 @@
                     formatter: function(value, row, index) {
                         return $.table.selectDictLabel(statusDatas, value);
                     }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
                 },
                 {
                     title: '操作',

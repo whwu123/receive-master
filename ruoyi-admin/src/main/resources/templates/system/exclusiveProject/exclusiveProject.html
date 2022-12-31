@@ -76,6 +76,8 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "专属项目",
+                sortName: "createTime",
+                sortOrder: "desc",
                 columns: [{
                     checkbox: true
                 },
@@ -116,13 +118,18 @@
                     field: 'accessUser',
                     title: '接入用户'
                 },
-                    {
-                        field: 'status',
-                        title: '状态',
-                        formatter: function(value, row, index) {
-                            return $.table.selectDictLabel(statusDatas, value);
-                        }
-                    },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(statusDatas, value);
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true
+                },
                 {
                     title: '操作',
                     align: 'center',
