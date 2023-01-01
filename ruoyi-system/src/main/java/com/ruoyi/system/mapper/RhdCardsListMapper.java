@@ -58,4 +58,12 @@ public interface RhdCardsListMapper
      * @return 结果
      */
     public int deleteRhdCardsListByIds(String[] ids);
+
+    /**
+     * 批量删除cardsList
+     *
+     * @param ids 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int deleteRhdCardsListByDeviceCodeStr(String deviceCodeStr);
 }

@@ -112,5 +112,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+    <delete id="deleteRhdCardsListByDeviceCodeStr">
+        delete from rhd_cards_list where device_code_str = #{deviceCodeStr}
+    </delete>
 
 </mapper>

@@ -94,4 +94,9 @@ public class RhdCardsListServiceImpl implements IRhdCardsListService
     {
         return rhdCardsListMapper.deleteRhdCardsListById(id);
     }
+
+    @Override
+    public int deleteRhdCardsListByDeviceCodeStr(String deviceCodeStr) {
+        return rhdCardsListMapper.deleteRhdCardsListByDeviceCodeStr(deviceCodeStr);
+    }
 }

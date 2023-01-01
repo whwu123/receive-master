@@ -2,6 +2,7 @@ package com.ruoyi.web;
 
 
 import com.ruoyi.common.utils.RandGen;
+import com.ruoyi.common.utils.TokenTools;
 import com.ruoyi.system.service.impl.ImailServiceImpl;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
@@ -10,10 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpRequest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,14 +34,15 @@ public class JasyptTest {
      * 加密解密测试
      */
     @Test
-    public void jasyptTest() {
+    public void jasyptTest(HttpServletRequest request) {
+
         // 加密
-       System.out.println(stringEncryptor.encrypt("StackOverflow&62$1"));    // JSrINYe4IBotHndGjX1hnmY3mtPNUJlXjP12cx1+pHqUz2FNXGPu3Frnajh3QCXg
+       //System.out.println(stringEncryptor.encrypt("StackOverflow&62$1"));    // JSrINYe4IBotHndGjX1hnmY3mtPNUJlXjP12cx1+pHqUz2FNXGPu3Frnajh3QCXg
         // 解密
        // System.out.println(stringEncryptor.decrypt("CAOHmC7h8GlSh8TYDh5obxvq1iiQIsj3JRCh1xLgM5L4BYP/L+BZgdLtmuKfBHJC"));    // root
 
-        String code = RandGen.codeGen();
-        logger.info("code = " + code);
+        //String code = RandGen.codeGen();
+        logger.info("token = " );
     }
 
     /**

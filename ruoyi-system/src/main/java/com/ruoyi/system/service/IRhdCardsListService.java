@@ -58,4 +58,7 @@ public interface IRhdCardsListService
      * @return 结果
      */
     public int deleteRhdCardsListById(Long id);
+
+
+    public int deleteRhdCardsListByDeviceCodeStr(String deviceCodeStr);
 }
