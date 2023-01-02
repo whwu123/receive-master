@@ -31,19 +31,29 @@
                     <input name="projectName" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label class="col-sm-3 control-label">项目类型：</label>
                 <div class="col-sm-8">
                     <input name="projectType" class="form-control" type="text">
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">    
-                <label class="col-sm-3 control-label">价格：</label>
+                <label class="col-sm-3 control-label">卡商价格：</label>
                 <div class="col-sm-8">
                     <input name="projectPrice" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否屏蔽：</label>
+                <div class="col-sm-8">
+                    <select name="extend1" class="form-control m-b">
+                        <option value="1"  >是</option>
+                        <option value="2"  >否</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--<div class="form-group">
                 <label class="col-sm-3 control-label">号段：</label>
                 <div class="col-sm-8">
                     <input name="themRoughly" class="form-control" type="text">
@@ -62,29 +72,20 @@
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                     </select>
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
                     <textarea name="remark" class="form-control"></textarea>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">公开专属：</label>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">数据状态：</label>
                 <div class="col-sm-8">
-                    <input name="openExclusive" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">指定专属：</label>
-                <div class="col-sm-8">
-                    <input name="appointExclusive" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">我的专属：</label>
-                <div class="col-sm-8">
-                    <input name="myExclusive" class="form-control" type="text">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('data_state')}">
+                        <input type="radio" th:id="${'status_' + dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'status_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
                 </div>
             </div>
         </form>

@@ -57,6 +57,7 @@
     var editFlag = [[${@permission.hasPermi('system:ProjectList:edit')}]];
     var removeFlag = [[${@permission.hasPermi('system:ProjectList:remove')}]];
     var dockingStatusDatas = [[${@dict.getType('sys_yes_no')}]];
+    var statusDatas = [[${@dict.getType('data_state')}]];
     var prefix = ctx + "system/ProjectList";
 
     $(function() {
@@ -94,6 +95,13 @@
                         }else if(row.extend1 == '2'){
                             return "否";
                         }
+                    }
+                },
+                {
+                    field: 'status',
+                    title: '数据状态',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(statusDatas, value);
                     }
                 },
                 {

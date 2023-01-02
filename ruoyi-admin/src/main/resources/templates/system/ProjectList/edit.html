@@ -35,6 +35,15 @@
                     <textarea name="remark" class="form-control">[[*{remark}]]</textarea>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">数据状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('data_state')}">
+                        <input type="radio" th:id="${'status_' + dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
+                        <label th:for="${'status_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />

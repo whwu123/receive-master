@@ -8,10 +8,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.json.SfJsonEntity;
 import com.ruoyi.common.utils.*;
 import com.ruoyi.framework.shiro.service.SysPasswordService;
-import com.ruoyi.system.domain.RhdCardsList;
-import com.ruoyi.system.domain.RhdDeviceCode;
-import com.ruoyi.system.domain.RhdEmailCode;
-import com.ruoyi.system.domain.RhdProjectList;
+import com.ruoyi.system.domain.*;
 import com.ruoyi.system.service.*;
 import com.ruoyi.system.service.impl.ImailServiceImpl;
 import io.swagger.annotations.Api;
@@ -51,6 +48,8 @@ public class ReceiveApiController extends BaseController {
     private IRhdDeviceCodeService deviceCodeService;
     @Autowired
     private IRhdCardsListService cardsListService;
+    @Autowired
+    private IRhdLackCardProjectService rhdLackCardProjectService;
 
     private final static String ksd = "卡商端";
     private final static Long deptId = 446L;
@@ -350,6 +349,36 @@ public class ReceiveApiController extends BaseController {
         rhdProjectListService.insertRhdProjectList(rhdProjectList);
         return R.ok("addProjectSuccess");
     }
+
+    @ApiOperation("获取平台项目")
+    @PostMapping("/getProjectList")
+    public R<List<RhdProjectList>> getProjectList(String type,String accessToken){
+        boolean b = TokenTools.verify(accessToken);
+        if(b){
+            RhdProjectList rhdProjectList = new RhdProjectList();
+            rhdProjectList.setStatus("0");
+            rhdProjectList.setExtend1(type);
+            List<RhdProjectList> proList = rhdProjectListService.selectRhdProjectListList(rhdProjectList);
+            return R.ok(proList);
+        }else{
+            return R.fail("accessToken验证失败");
+        }
+    }
+
+    @ApiOperation("获取缺卡项目")
+    @PostMapping("/getLackProjectList")
+    public R<List<RhdLackCardProject>> getLackProjectList(String accessToken){
+        boolean b = TokenTools.verify(accessToken);
+        if(b){
+            RhdLackCardProject rhdLackCardProject = new RhdLackCardProject();
+            rhdLackCardProject.setStatus("0");
+            List<RhdLackCardProject> lackProList = rhdLackCardProjectService.selectRhdLackCardProjectList(rhdLackCardProject);
+            return R.ok(lackProList);
+        }else{
+            return R.fail("accessToken验证失败");
+        }
+    }
+
 
 
     @ApiOperation("获取AccessToken信息")

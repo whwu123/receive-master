@@ -52,6 +52,11 @@ public class SysLoginController extends BaseController
         return "login";
     }
 
+    @GetMapping("/webSocketTest")
+    public String webSocketTest() {
+        return "webSocketTest";
+    }
+
     @PostMapping("/login")
     @ResponseBody
     public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)

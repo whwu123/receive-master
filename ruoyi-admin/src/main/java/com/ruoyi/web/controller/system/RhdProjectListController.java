@@ -87,6 +87,7 @@ public class RhdProjectListController extends BaseController
     public AjaxResult addSave(RhdProjectList rhdProjectList)
     {
         rhdProjectList.setCreateBy(getLoginName());
+        rhdProjectList.setStatus("0");
         return toAjax(rhdProjectListService.insertRhdProjectList(rhdProjectList));
     }
 
