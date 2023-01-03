@@ -12,10 +12,7 @@ import com.ruoyi.system.domain.*;
 import com.ruoyi.system.service.*;
 import com.ruoyi.system.service.impl.ImailServiceImpl;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import org.apache.catalina.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -50,6 +47,8 @@ public class ReceiveApiController extends BaseController {
     private IRhdCardsListService cardsListService;
     @Autowired
     private IRhdLackCardProjectService rhdLackCardProjectService;
+    @Autowired
+    private IRhdMessageDataService messageDataService;
 
     private final static String ksd = "卡商端";
     private final static Long deptId = 446L;
@@ -295,6 +294,48 @@ public class ReceiveApiController extends BaseController {
         }
     }
 
+    @ApiOperation("信息数据上报")
+    @PostMapping("/messageDataReport")
+    public R<String> messageDataReport(String projectId,String projectName,String phoneNumber,String messageContent,String accessToken){
+        boolean b = TokenTools.verify(accessToken);
+        int result = 0;
+        if(b){
+            RhdMessageData messageData = new RhdMessageData();
+            messageData.setCreateBy(ksd);
+            messageData.setCreateTime(new Date());
+            messageData.setStatus("0");
+            if(StringUtils.isNotNull(projectId)){
+                messageData.setProjectId(Long.valueOf(projectId));
+            }else{
+                return R.fail("项目ID必填");
+            }
+            if(StringUtils.isNotNull(projectName)){
+                messageData.setProjectName(projectName);
+            }else{
+                return R.fail("项目名称必填");
+            }
+            if(StringUtils.isNotNull(phoneNumber)){
+                messageData.setPhoneNumber(phoneNumber);
+            }else{
+                return R.fail("手机号必填");
+            }
+            if(StringUtils.isNotNull(messageContent)){
+                messageData.setMessageContent(messageContent);
+            }else{
+                return R.fail("信息内容必填");
+            }
+            result = messageDataService.insertRhdMessageData(messageData);
+
+        }else{
+            return R.fail("accessToken验证失败");
+        }
+        if(result>0){
+            return R.ok("上报数据成功");
+        }else{
+            return R.fail("上报数据失败");
+        }
+    }
+
     @ApiOperation("新增项目")
     @PostMapping("/addProject")
     public R<String> addProject(String projectName,String projectType,String projectPrice,String themRoughly,
@@ -378,8 +419,6 @@ public class ReceiveApiController extends BaseController {
             return R.fail("accessToken验证失败");
         }
     }
-
-
 
     @ApiOperation("获取AccessToken信息")
     @GetMapping("/getAccessToken")
