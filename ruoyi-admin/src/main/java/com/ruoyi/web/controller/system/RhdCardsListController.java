@@ -86,6 +86,7 @@ public class RhdCardsListController extends BaseController
     @ResponseBody
     public AjaxResult addSave(RhdCardsList rhdCardsList)
     {
+        rhdCardsList.setCreateBy(getLoginName());
         return toAjax(rhdCardsListService.insertRhdCardsList(rhdCardsList));
     }
 

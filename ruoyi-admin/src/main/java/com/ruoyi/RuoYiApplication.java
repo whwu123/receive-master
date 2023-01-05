@@ -12,7 +12,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author ruoyi
  */
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
-public class RuoYiApplication implements CommandLineRunner {
+//public class RuoYiApplication implements CommandLineRunner {
+public class RuoYiApplication {
     public static void main(String[] args)
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
@@ -29,7 +30,7 @@ public class RuoYiApplication implements CommandLineRunner {
                 " ''-'   `'-'    `-..-'              ");
     }
 
-    @Override
+   /* @Override
     public void run(String... args) throws Exception {
         new Thread(()->{
             try {
@@ -38,5 +39,5 @@ public class RuoYiApplication implements CommandLineRunner {
                 e.printStackTrace();
             }
         }).start();
-    }
+    }*/
 }

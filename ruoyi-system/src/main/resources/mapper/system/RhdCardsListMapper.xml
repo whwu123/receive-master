@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectRhdCardsListList" parameterType="RhdCardsList" resultMap="RhdCardsListResult">
         <include refid="selectRhdCardsListVo"/>
-        <where>  
+        <where>
             <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
             <if test="extend2 != null  and extend2 != ''"> and extend2 = #{extend2}</if>
@@ -36,7 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="portNumber != null  and portNumber != ''"> and port_number = #{portNumber}</if>
             <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
             <if test="operators != null  and operators != ''"> and operators = #{operators}</if>
-
         </where>
     </select>
     
@@ -44,7 +43,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectRhdCardsListVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectPhoneNumberCount" parameterType="RhdCardsList" resultMap="RhdCardsListResult">
+        <include refid="selectRhdCardsListVo"/>
+        <where>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="extend1 != null  and extend1 != ''"> and extend1 = #{extend1}</if>
+        </where>
+        ORDER BY create_time desc limit #{params.size}
+
+    </select>
+
     <insert id="insertRhdCardsList" parameterType="RhdCardsList" useGeneratedKeys="true" keyProperty="id">
         insert into rhd_cards_list
         <trim prefix="(" suffix=")" suffixOverrides=",">

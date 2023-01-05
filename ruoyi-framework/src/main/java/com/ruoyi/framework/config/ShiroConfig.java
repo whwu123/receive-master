@@ -295,8 +295,10 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         // HBD前端页面
         filterChainDefinitionMap.put("/hbd/**", "anon,captchaValidate");
-        // HBD前端页面
+        // 收发平台卡商端接口
         filterChainDefinitionMap.put("/receive/api/**", "anon,captchaValidate");
+        // 收发平台用户端接口
+        filterChainDefinitionMap.put("/userSide/api/**", "anon,captchaValidate");
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表

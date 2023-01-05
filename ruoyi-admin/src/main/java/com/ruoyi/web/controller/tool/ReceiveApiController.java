@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 
-@Api("接收开发平台接口")
+@Api("接收开发平台卡商端接口")
 @RestController
 @RequestMapping("/receive/api/")
 public class ReceiveApiController extends BaseController {
@@ -48,10 +48,12 @@ public class ReceiveApiController extends BaseController {
     @Autowired
     private IRhdLackCardProjectService rhdLackCardProjectService;
     @Autowired
+    private IRhdExclusiveProjectService exclusiveProjectService;
+    @Autowired
     private IRhdMessageDataService messageDataService;
 
     private final static String ksd = "卡商端";
-    private final static Long deptId = 446L;
+    private final static Long deptId = 445L;
 
     @ApiOperation("获取邮箱验证码")
     @GetMapping("/getEmailCode")
@@ -191,8 +193,6 @@ public class ReceiveApiController extends BaseController {
         }else {
             return R.fail("登录用户名和密码必填");
         }
-
-
     }
 
     @ApiOperation("获取用户信息")
@@ -336,59 +336,37 @@ public class ReceiveApiController extends BaseController {
         }
     }
 
-    @ApiOperation("新增项目")
-    @PostMapping("/addProject")
-    public R<String> addProject(String projectName,String projectType,String projectPrice,String themRoughly,
-                                  Long cardsSupplied,String dockingStatus,String openExclusive, String appointExclusive,
-                                String myExclusive,String createBy) {
-        RhdProjectList rhdProjectList = new RhdProjectList();
-        if(StringUtils.isNotNull(projectName)){
-            rhdProjectList.setProjectName(projectName);
+    @ApiOperation("创建专属")
+    @PostMapping("/addExclusiveProject")
+    public R<String> addExclusiveProject(String projectName,String projectKey,String projectPrice,String accessToken) {
+        RhdExclusiveProject exclusiveProject = new RhdExclusiveProject();
+        boolean b = TokenTools.verify(accessToken);
+        if(b){
+            if(StringUtils.isNotNull(projectName)){
+                exclusiveProject.setExclusiveName(projectName);
+            }else{
+                return R.fail("项目名称必填");
+            }
+            if(StringUtils.isNotNull(projectKey)){
+                exclusiveProject.setExtend1(projectKey);
+            }else{
+                return R.fail("关键词必填");
+            }
+            if(StringUtils.isNotNull(projectPrice)){
+                exclusiveProject.setExclusivePrice(BigDecimal.valueOf(Long.valueOf(projectPrice)));
+            }else{
+                return R.fail("项目价格必填");
+            }
+            // 1 公共，2公开
+            exclusiveProject.setIsOpen("2");
+            //0 正常 ，1 删除
+            exclusiveProject.setStatus("0");
+            exclusiveProjectService.insertRhdExclusiveProject(exclusiveProject);
+            return R.ok("addExclusiveProjectSuccess");
         }else{
-            return R.fail("项目名称必填");
+            return R.fail("accessToken验证失败");
         }
-        if(StringUtils.isNotNull(projectType)){
-            rhdProjectList.setProjectType(projectType);
-        }else{
-            return R.fail("项目类型必填");
-        }
-        if(StringUtils.isNotNull(projectPrice)){
-            rhdProjectList.setProjectPrice(BigDecimal.valueOf(Long.valueOf(projectPrice)));
-        }else{
-            return R.fail("项目价格必填");
-        }
-        if(StringUtils.isNotNull(themRoughly)){
-            rhdProjectList.setThemRoughly(themRoughly);
-        }else{
-            return R.fail("项目号段必填");
-        }
-        if(StringUtils.isNotNull(cardsSupplied)){
-            rhdProjectList.setCardsSupplied(cardsSupplied);
-        }else{
-            return R.fail("供卡数量必填");
-        }
-        if(StringUtils.isNotNull(dockingStatus)){
-            rhdProjectList.setDockingStatus(dockingStatus);
-        }else{
-            return R.fail("对接状态必填");
-        }
-        if(StringUtils.isNotNull(openExclusive)){
-            rhdProjectList.setOpenExclusive(openExclusive);
-        }
-        if(StringUtils.isNotNull(appointExclusive)){
-            rhdProjectList.setAppointExclusive(appointExclusive);
-        }
-        if(StringUtils.isNotNull(myExclusive)){
-            rhdProjectList.setMyExclusive(myExclusive);
-        }
-        if(StringUtils.isNotNull(createBy)){
-            rhdProjectList.setCreateBy(createBy);
-            rhdProjectList.setCreateTime(DateUtils.getNowDate());
-        }else{
-            return R.fail("创建者名称必填");
-        }
-        rhdProjectListService.insertRhdProjectList(rhdProjectList);
-        return R.ok("addProjectSuccess");
+
     }
 
     @ApiOperation("获取平台项目")

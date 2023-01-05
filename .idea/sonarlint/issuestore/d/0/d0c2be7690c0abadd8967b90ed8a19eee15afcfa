@@ -13,10 +13,10 @@ p
 java:S2293Ú"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ê‹­Ó
 b
 java:S1192¦"FDefine a constant instead of duplicating this literal "<br/>" 4 times.(ÆŞ²€üÿÿÿÿ
-h
-java:S1192)"MDefine a constant instead of duplicating this literal "15666666666" 25 times.(ç§ÿøÿÿÿÿ
 f
 java:S1192("KDefine a constant instead of duplicating this literal "ry@qq.com" 26 times.(…§É·şÿÿÿÿ
+h
+java:S1192)"MDefine a constant instead of duplicating this literal "15666666666" 25 times.(ç§ÿøÿÿÿÿ
 F
 java:S5411¨"*Use the primitive boolean expression here.(Š§é¦ùÿÿÿÿ
 `
@@ -26,3 +26,5 @@ java:S1171'"YMove the contents of this initializer to a standard constructor or
 T	java:S106¤"9Replace this use of System.out or System.err by a logger.(üúùÿÿÿÿ
 n
 java:S3776ˆ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(¸±ıûÿÿÿÿ
+\
+java:S1155Š">Use isEmpty() to check whether the collection is empty or not.(¥Â©8¤–¥Ô×0

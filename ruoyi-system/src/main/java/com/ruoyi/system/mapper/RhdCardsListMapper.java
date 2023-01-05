@@ -66,4 +66,10 @@ public interface RhdCardsListMapper
      * @return 结果
      */
     public int deleteRhdCardsListByDeviceCodeStr(String deviceCodeStr);
+
+
+    /**
+     * 根据项目名称和数量提取手机号
+     */
+    public List<RhdCardsList> selectPhoneNumberCount(RhdCardsList rhdCardsList);
 }

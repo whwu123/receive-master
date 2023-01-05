@@ -13,3 +13,7 @@ l
 java:S3008"VRename this field "SQL_PATTERN" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À¬îö
 P
 java:S1118":Add a private constructor to hide the implicit public one.(ïµû
+l
+java:S32524"JUse static access with "org.apache.commons.lang3.StringUtils" for "split".(Íÿßóùÿÿÿÿ8ÕÆ–Ô×0
+x
+java:S32527"VUse static access with "org.apache.commons.lang3.StringUtils" for "indexOfIgnoreCase".(©ŸÓ†úÿÿÿÿ8ÖÆ–Ô×0

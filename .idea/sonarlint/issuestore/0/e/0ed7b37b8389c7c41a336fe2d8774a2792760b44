@@ -1,8 +1,8 @@
 
-c
-java:S1192"HDefine a constant instead of duplicating this literal "unknown" 7 times.(ğÁÂìıÿÿÿÿ
 `
 java:S11921"JDefine a constant instead of duplicating this literal "127.0.0.1" 3 times.(Äì“Å
+c
+java:S1192"HDefine a constant instead of duplicating this literal "unknown" 7 times.(ğÁÂìıÿÿÿÿ
 a
 java:S1301a"KReplace this "switch" statement by "if" statements to increase readability.(è¦­‚
 e
@@ -38,3 +38,5 @@ H
 java:S2692î"10 is a valid index, but is ignored by this check.(Çò”¢
 C
 java:S1125ó"'Remove the unnecessary boolean literal.(»ëÒ·ùÿÿÿÿ
+o
+java:S3252…"LUse static access with "org.apache.commons.lang3.StringUtils" for "isBlank".(çëŸŠÿÿÿÿÿ8Û™Ô×0
