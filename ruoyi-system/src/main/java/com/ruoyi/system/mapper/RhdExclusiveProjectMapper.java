@@ -58,4 +58,9 @@ public interface RhdExclusiveProjectMapper
      * @return 结果
      */
     public int deleteRhdExclusiveProjectByExclusiveIds(String[] exclusiveIds);
+
+    /**
+     * 根据设备码和项目ID查询专属项目
+     */
+    public RhdExclusiveProject getByDeviceCodeAndProjectId(RhdExclusiveProject rhdExclusiveProject);
 }

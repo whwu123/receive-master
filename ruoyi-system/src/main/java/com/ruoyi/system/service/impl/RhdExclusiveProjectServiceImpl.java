@@ -94,4 +94,9 @@ public class RhdExclusiveProjectServiceImpl implements IRhdExclusiveProjectServi
     {
         return rhdExclusiveProjectMapper.deleteRhdExclusiveProjectByExclusiveId(exclusiveId);
     }
+
+    @Override
+    public RhdExclusiveProject getByDeviceCodeAndProjectId(RhdExclusiveProject rhdExclusiveProject) {
+        return rhdExclusiveProjectMapper.getByDeviceCodeAndProjectId(rhdExclusiveProject);
+    }
 }

@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.PhoneNumbers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.RhdCardsListMapper;
@@ -101,7 +102,7 @@ public class RhdCardsListServiceImpl implements IRhdCardsListService
     }
 
     @Override
-    public List<RhdCardsList> selectPhoneNumberCount(RhdCardsList rhdCardsList) {
+    public List<PhoneNumbers> selectPhoneNumberCount(RhdCardsList rhdCardsList) {
         return rhdCardsListMapper.selectPhoneNumberCount(rhdCardsList);
     }
 }

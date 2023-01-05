@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.PhoneNumbers;
 import com.ruoyi.system.domain.RhdCardsList;
 
 /**
@@ -65,5 +67,5 @@ public interface IRhdCardsListService
     /**
      * 根据项目名称和数量提取手机号
      */
-    public List<RhdCardsList> selectPhoneNumberCount(RhdCardsList rhdCardsList);
+    public List<PhoneNumbers> selectPhoneNumberCount(RhdCardsList rhdCardsList);
 }

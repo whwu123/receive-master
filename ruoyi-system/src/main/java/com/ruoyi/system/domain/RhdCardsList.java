@@ -52,7 +52,27 @@ public class RhdCardsList extends BaseEntity
     @Excel(name = "运营商")
     private String operators;
 
-    public void setId(Long id) 
+    private Long projectId;
+
+    private String projectName;
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

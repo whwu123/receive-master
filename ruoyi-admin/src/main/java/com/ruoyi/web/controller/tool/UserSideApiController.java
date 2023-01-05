@@ -222,18 +222,27 @@ public class UserSideApiController extends BaseController {
 
     @ApiOperation("提取手机号码")
     @PostMapping("/getPhoneNumber")
-    public R<List<RhdCardsList>> getPhoneNumber(String projectId,String extractCount,String accessToken){
+    public R<List<PhoneNumbers>> getPhoneNumber(String projectId,String extractCount,String accessToken){
         boolean b = TokenTools.verify(accessToken);
         if(b){
             if(StringUtils.isNotNull(projectId) && StringUtils.isNotNull(extractCount)){
                 RhdCardsList cardsList = new RhdCardsList();
-                cardsList.setExtend1(projectId);
+                cardsList.setProjectId(Long.valueOf(projectId));
                 Map<String,Object> map = new HashMap();
-                map.put("size",Integer.parseInt(extractCount));
+                if(Integer.parseInt(extractCount) > 0 ){
+                    if(Integer.parseInt(extractCount) >= 80 ){
+                        map.put("size",80);
+                    }else{
+                        map.put("size",Integer.parseInt(extractCount));
+                    }
+
+                }else{
+                    map.put("size",0);
+                }
                 cardsList.setParams(map);
                 cardsList.setStatus("0");
-                List<RhdCardsList> cardsLists = cardsListService.selectPhoneNumberCount(cardsList);
-                return R.ok(cardsLists);
+                List<PhoneNumbers> phoneNumbers = cardsListService.selectPhoneNumberCount(cardsList);
+                return R.ok(phoneNumbers);
             }else{
                 return R.fail("项目ID或者提取数量必填");
             }

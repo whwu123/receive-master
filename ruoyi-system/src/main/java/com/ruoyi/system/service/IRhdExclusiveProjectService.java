@@ -58,4 +58,9 @@ public interface IRhdExclusiveProjectService
      * @return 结果
      */
     public int deleteRhdExclusiveProjectByExclusiveId(Long exclusiveId);
+
+    /**
+     * 根据设备码和项目ID查询专属项目
+     */
+    public RhdExclusiveProject getByDeviceCodeAndProjectId(RhdExclusiveProject rhdExclusiveProject);
 }

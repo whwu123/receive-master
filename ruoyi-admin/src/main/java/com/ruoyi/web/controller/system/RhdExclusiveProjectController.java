@@ -86,6 +86,7 @@ public class RhdExclusiveProjectController extends BaseController
     @ResponseBody
     public AjaxResult addSave(RhdExclusiveProject rhdExclusiveProject)
     {
+        rhdExclusiveProject.setCreateBy(getLoginName());
         return toAjax(rhdExclusiveProjectService.insertRhdExclusiveProject(rhdExclusiveProject));
     }
 

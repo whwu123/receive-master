@@ -21,10 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cardAmount"    column="card_amount"    />
         <result property="dockingCode"    column="docking_code"    />
         <result property="accessUser"    column="access_user"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="projectId"    column="project_id"    />
     </resultMap>
 
     <sql id="selectRhdExclusiveProjectVo">
-        select exclusive_id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, exclusive_name, exclusive_price, is_open, card_amount, docking_code, access_user from rhd_exclusive_project
+        select exclusive_id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, exclusive_name, exclusive_price, is_open, card_amount, docking_code, access_user,device_code,project_id from rhd_exclusive_project
     </sql>
 
     <select id="selectRhdExclusiveProjectList" parameterType="RhdExclusiveProject" resultMap="RhdExclusiveProjectResult">
@@ -35,6 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="exclusivePrice != null "> and exclusive_price = #{exclusivePrice}</if>
             <if test="isOpen != null  and isOpen != ''"> and is_open = #{isOpen}</if>
             <if test="dockingCode != null  and dockingCode != ''"> and docking_code = #{dockingCode}</if>
+            <if test="deviceCode != null  and deviceCode != ''"> and device_code = #{deviceCode}</if>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
         </where>
     </select>
     
@@ -42,7 +46,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectRhdExclusiveProjectVo"/>
         where exclusive_id = #{exclusiveId}
     </select>
-        
+    <select id="getByDeviceCodeAndProjectId" resultMap="RhdExclusiveProjectResult" parameterType="RhdExclusiveProject">
+        <include refid="selectRhdExclusiveProjectVo"/>
+        <where>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="isOpen != null  and isOpen != ''"> and is_open = #{isOpen}</if>
+            <if test="deviceCode != null  and deviceCode != ''"> and device_code = #{deviceCode}</if>
+            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+        </where>
+    </select>
+
     <insert id="insertRhdExclusiveProject" parameterType="RhdExclusiveProject" useGeneratedKeys="true" keyProperty="exclusiveId">
         insert into rhd_exclusive_project
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -61,6 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cardAmount != null">card_amount,</if>
             <if test="dockingCode != null">docking_code,</if>
             <if test="accessUser != null">access_user,</if>
+            <if test="deviceCode != null">device_code,</if>
+            <if test="projectId != null">project_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="createBy != null">#{createBy},</if>
@@ -78,6 +93,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cardAmount != null">#{cardAmount},</if>
             <if test="dockingCode != null">#{dockingCode},</if>
             <if test="accessUser != null">#{accessUser},</if>
+            <if test="deviceCode != null">#{deviceCode},</if>
+            <if test="projectId != null">#{projectId},</if>
          </trim>
     </insert>
 
@@ -99,6 +116,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cardAmount != null">card_amount = #{cardAmount},</if>
             <if test="dockingCode != null">docking_code = #{dockingCode},</if>
             <if test="accessUser != null">access_user = #{accessUser},</if>
+            <if test="deviceCode != null">device_code = #{deviceCode},</if>
+            <if test="projectId != null">project_id = #{projectId},</if>
         </trim>
         where exclusive_id = #{exclusiveId}
     </update>

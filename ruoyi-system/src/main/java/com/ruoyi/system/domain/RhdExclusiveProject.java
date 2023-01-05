@@ -40,7 +40,9 @@ public class RhdExclusiveProject extends BaseEntity
     @Excel(name = "卡商价格")
     private BigDecimal exclusivePrice;
 
-    /** 是否公开 */
+    /** 是否公开
+     * 1 公开，2 不公开
+     * */
     @Excel(name = "是否公开")
     private String isOpen;
 
@@ -56,7 +58,27 @@ public class RhdExclusiveProject extends BaseEntity
     @Excel(name = "接入用户")
     private String accessUser;
 
-    public void setExclusiveId(Long exclusiveId) 
+    private String deviceCode;
+
+    private Long projectId;
+
+    public String getDeviceCode() {
+        return deviceCode;
+    }
+
+    public void setDeviceCode(String deviceCode) {
+        this.deviceCode = deviceCode;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public void setExclusiveId(Long exclusiveId)
     {
         this.exclusiveId = exclusiveId;
     }

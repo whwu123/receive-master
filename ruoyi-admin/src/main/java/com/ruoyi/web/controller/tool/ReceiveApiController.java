@@ -57,118 +57,102 @@ public class ReceiveApiController extends BaseController {
 
     @ApiOperation("获取邮箱验证码")
     @GetMapping("/getEmailCode")
-    public R<String> getEmailCode(String Email,String Type,String accessToken) {
-        boolean b = TokenTools.verify(accessToken);
-        if(b){
-            if(StringUtils.isNotNull(Email)){
-                String contentCode = RandGen.codeGen();
-                //给邮箱发送验证且保存到数据库
-                String subject = "";
-                String emailContent = "";
-                if(Integer.parseInt(Type) ==  1){
-                    subject = "注册验证码";
-                    emailContent = "您的注册验证码为："+contentCode;
-                }else if(Integer.parseInt(Type) == 2){
-                    subject ="找回密码验证码";
-                    emailContent = "您的找回密码验证码为："+contentCode;
-                }
-                imailService.sendHtmlMail(Email,subject,emailContent);
-                //保存到数据库
-                RhdEmailCode rhdEmailCode = new RhdEmailCode();
-                rhdEmailCode.setEmailCode(contentCode);
-                rhdEmailCode.setEmailAddress(Email);
-                rhdEmailCode.setDelFlag("0");
-                rhdEmailCode.setStatus("0");
-                rhdEmailCode.setCreateBy(ksd);
-                iRhdEmailCodeService.insertRhdEmailCode(rhdEmailCode);
-            }else{
-                return R.fail("邮箱地址必填");
+    public R<String> getEmailCode(String Email,String Type) {
+        if(StringUtils.isNotNull(Email)){
+            String contentCode = RandGen.codeGen();
+            //给邮箱发送验证且保存到数据库
+            String subject = "";
+            String emailContent = "";
+            if(Integer.parseInt(Type) ==  1){
+                subject = "注册验证码";
+                emailContent = "您的注册验证码为："+contentCode;
+            }else if(Integer.parseInt(Type) == 2){
+                subject ="找回密码验证码";
+                emailContent = "您的找回密码验证码为："+contentCode;
             }
+            imailService.sendHtmlMail(Email,subject,emailContent);
+            //保存到数据库
+            RhdEmailCode rhdEmailCode = new RhdEmailCode();
+            rhdEmailCode.setEmailCode(contentCode);
+            rhdEmailCode.setEmailAddress(Email);
+            rhdEmailCode.setDelFlag("0");
+            rhdEmailCode.setStatus("0");
+            rhdEmailCode.setCreateBy(ksd);
+            iRhdEmailCodeService.insertRhdEmailCode(rhdEmailCode);
         }else{
-            return R.fail("accessToken验证失败");
+            return R.fail("邮箱地址必填");
         }
         return R.ok("Email Send Success");
     }
 
     @ApiOperation("注册用户")
     @PostMapping("/registerUser")
-    public R<String> registerUser(String userName,String email,String pwd,String code,String accessToken) {
+    public R<String> registerUser(String userName,String email,String pwd,String code) {
         SysUser user = new SysUser();
-        boolean b = TokenTools.verify(accessToken);
-        if(b){
-            if(StringUtils.isNotNull(userName)){
-                if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(userName))){
-                    return R.fail("该用户已存在，请修改用户名");
-                }else{
-                    user.setLoginName(userName);
-                }
+        if(StringUtils.isNotNull(userName)){
+            if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(userName))){
+                return R.fail("该用户已存在，请修改用户名");
             }else{
-                return R.fail("登录名称必填");
+                user.setLoginName(userName);
             }
-            if(StringUtils.isNotNull(userName)){
-                user.setUserName(userName);
-            }else{
-                return R.fail("用户姓名必填");
+        }else{
+            return R.fail("登录名称必填");
+        }
+        if(StringUtils.isNotNull(userName)){
+            user.setUserName(userName);
+        }else{
+            return R.fail("用户姓名必填");
+        }
+        if(StringUtils.isNotNull(pwd)){
+            user.setSalt(ShiroUtils.randomSalt());
+            user.setPassword(passwordService.encryptPassword(user.getLoginName(), pwd, user.getSalt()));
+        }else{
+            return R.fail("登录密码必填");
+        }
+        user.setCreateBy(ksd);
+        user.setDeptId(deptId);
+        user.setSex("0");
+        Long[] roleId = {107L};
+        user.setRoleIds(roleId);
+        if(StringUtils.isNotNull(email) && StringUtils.isNotNull(code)){
+            user.setEmail(email);
+            RhdEmailCode result = iRhdEmailCodeService.checkRhdEmailCode(email,code);
+            if(result != null ){
+                userService.insertUser(user);
+                result.setStatus("1");
+                iRhdEmailCodeService.updateRhdEmailCode(result);
+            }else {
+                return R.fail("邮箱验证码校验失败");
             }
-            if(StringUtils.isNotNull(pwd)){
-                user.setSalt(ShiroUtils.randomSalt());
-                user.setPassword(passwordService.encryptPassword(user.getLoginName(), pwd, user.getSalt()));
-            }else{
-                return R.fail("登录密码必填");
-            }
-            user.setCreateBy(ksd);
-            user.setDeptId(deptId);
-            user.setSex("0");
-            Long[] roleId = {107L};
-            user.setRoleIds(roleId);
-            if(StringUtils.isNotNull(email) && StringUtils.isNotNull(code)){
-                user.setEmail(email);
-                RhdEmailCode result = iRhdEmailCodeService.checkRhdEmailCode(email,code);
-                if(result != null ){
-                    userService.insertUser(user);
-                    result.setStatus("1");
-                    iRhdEmailCodeService.updateRhdEmailCode(result);
-                }else {
-                    return R.fail("邮箱验证码校验失败");
-                }
-            }
-        }else {
-            return R.fail("accessToken验证失败");
         }
         return R.ok("Please use this account and password to log in");
     }
 
     @ApiOperation("修改用户密码")
     @PostMapping("/updateUserPwd")
-    public R<String> updateUserPwd(String email,String code,String pwd,String userName,String accessToken) {
+    public R<String> updateUserPwd(String email,String code,String pwd,String userName) {
         SysUser sysUser = null;
-        boolean b = TokenTools.verify(accessToken);
-        if(b){
-            if(StringUtils.isNotNull(userName)){
-                sysUser = userService.selectUserByLoginName(userName);
-            }
-            if(StringUtils.isNotNull(email) && StringUtils.isNotNull(code)){
-                RhdEmailCode result = iRhdEmailCodeService.checkRhdEmailCode(email,code);
-                if(result != null ){
-                    if(StringUtils.isNotNull(pwd)){
-                        sysUser.setSalt(ShiroUtils.randomSalt());
-                        sysUser.setPassword(passwordService.encryptPassword(sysUser.getLoginName(), pwd, sysUser.getSalt()));
-                        if (userService.resetUserPwd(sysUser) > 0) {
-                            result.setStatus("1");
-                            iRhdEmailCodeService.updateRhdEmailCode(result);
-                            return R.ok("密码重置成功！Please use this account and password to log in");
-                        }
-                    }else{
-                        return R.fail("密码必填");
-                    }
-                }else {
-                    return R.fail("邮箱验证码校验失败");
-                }
-            }
-        }else {
-            return R.fail("accessToken验证失败");
+        if(StringUtils.isNotNull(userName)){
+            sysUser = userService.selectUserByLoginName(userName);
         }
-
+        if(StringUtils.isNotNull(email) && StringUtils.isNotNull(code)){
+            RhdEmailCode result = iRhdEmailCodeService.checkRhdEmailCode(email,code);
+            if(result != null ){
+                if(StringUtils.isNotNull(pwd)){
+                    sysUser.setSalt(ShiroUtils.randomSalt());
+                    sysUser.setPassword(passwordService.encryptPassword(sysUser.getLoginName(), pwd, sysUser.getSalt()));
+                    if (userService.resetUserPwd(sysUser) > 0) {
+                        result.setStatus("1");
+                        iRhdEmailCodeService.updateRhdEmailCode(result);
+                        return R.ok("密码重置成功！Please use this account and password to log in");
+                    }
+                }else{
+                    return R.fail("密码必填");
+                }
+            }else {
+                return R.fail("邮箱验证码校验失败");
+            }
+        }
         return R.ok("Please use this account and password to log in");
     }
 
@@ -254,8 +238,9 @@ public class ReceiveApiController extends BaseController {
 
     @ApiOperation("卡号数据上报")
     @PostMapping("/cardsNumberReport")
-    public R<String> cardsNumberReport(String deviceCodeStr,String phones,String accessToken) {
+    public R<String> cardsNumberReport(String deviceCodeStr,String projectId,String phones,String accessToken) {
         boolean b = TokenTools.verify(accessToken);
+        String projectName = "";
         int result = 0;
         if(b){
             if(StringUtils.isNotNull(deviceCodeStr)){
@@ -263,6 +248,12 @@ public class ReceiveApiController extends BaseController {
                 cardsListService.deleteRhdCardsListByDeviceCodeStr(deviceCodeStr);
             }else{
                 return R.fail("设备码必填");
+            }
+            if(StringUtils.isNotNull(projectId)){
+                //根据设备码进行数据删除
+                projectName = rhdProjectListService.selectRhdProjectListByProjectId(Long.valueOf(projectId)).getProjectName();
+            }else{
+                return R.fail("项目ID必填");
             }
             if(StringUtils.isNotNull(phones)){
                 List<SfJsonEntity> list = JSONArray.parseArray(phones, SfJsonEntity.class); //json字符串直接转为List<java>对象
@@ -278,6 +269,8 @@ public class ReceiveApiController extends BaseController {
                     card.setCreateBy(ksd);
                     card.setCreateTime(new Date());
                     card.setStatus("0");
+                    card.setProjectId(Long.valueOf(projectId));
+                    card.setProjectName(projectName);
                     result +=  cardsListService.insertRhdCardsList(card);
                 }
             }else{
@@ -336,37 +329,62 @@ public class ReceiveApiController extends BaseController {
         }
     }
 
-    @ApiOperation("创建专属")
+    @ApiOperation("加入专属项目")
     @PostMapping("/addExclusiveProject")
-    public R<String> addExclusiveProject(String projectName,String projectKey,String projectPrice,String accessToken) {
+    public R<String> addExclusiveProject(String projectId,String deviceCode,String isOpen,String accessToken) {
         RhdExclusiveProject exclusiveProject = new RhdExclusiveProject();
         boolean b = TokenTools.verify(accessToken);
+        String exclusiveName = "";
         if(b){
-            if(StringUtils.isNotNull(projectName)){
-                exclusiveProject.setExclusiveName(projectName);
+            if(StringUtils.isNotNull(projectId)){
+                exclusiveName = rhdProjectListService.selectRhdProjectListByProjectId(Long.valueOf(projectId)).getProjectName();
+                exclusiveProject.setExclusiveName(exclusiveName);
+                exclusiveProject.setProjectId(Long.valueOf(projectId));
             }else{
-                return R.fail("项目名称必填");
+                return R.fail("项目ID必填");
             }
-            if(StringUtils.isNotNull(projectKey)){
-                exclusiveProject.setExtend1(projectKey);
+            if(StringUtils.isNotNull(deviceCode)){
+                exclusiveProject.setDeviceCode(deviceCode);
             }else{
-                return R.fail("关键词必填");
+                return R.fail("设备码必填");
             }
-            if(StringUtils.isNotNull(projectPrice)){
-                exclusiveProject.setExclusivePrice(BigDecimal.valueOf(Long.valueOf(projectPrice)));
+            if(StringUtils.isNotNull(isOpen)){
+                // 1 公开，2 不公开
+                exclusiveProject.setIsOpen(isOpen);
             }else{
-                return R.fail("项目价格必填");
+                exclusiveProject.setIsOpen("2");
             }
-            // 1 公共，2公开
-            exclusiveProject.setIsOpen("2");
             //0 正常 ，1 删除
             exclusiveProject.setStatus("0");
+            exclusiveProject.setCreateBy(ksd);
             exclusiveProjectService.insertRhdExclusiveProject(exclusiveProject);
             return R.ok("addExclusiveProjectSuccess");
         }else{
             return R.fail("accessToken验证失败");
         }
+    }
 
+    @ApiOperation("移除专属项目")
+    @PostMapping("/removeExclusiveProject")
+    public R<String> removeExclusiveProject(String projectId,String deviceCode,String accessToken) {
+        RhdExclusiveProject exclusiveProject = new RhdExclusiveProject();
+        boolean b = TokenTools.verify(accessToken);
+        if(b){
+            if(StringUtils.isNotNull(projectId) && StringUtils.isNotNull(deviceCode)){
+                exclusiveProject.setProjectId(Long.valueOf(projectId));
+                exclusiveProject.setDeviceCode(deviceCode);
+                exclusiveProject.setStatus("0");
+                RhdExclusiveProject nowExclusiveProject = exclusiveProjectService.getByDeviceCodeAndProjectId(exclusiveProject);
+                if(nowExclusiveProject!=null){
+                    exclusiveProjectService.deleteRhdExclusiveProjectByExclusiveId(nowExclusiveProject.getExclusiveId());
+                }
+            }else{
+                return R.fail("项目ID和设备码必填");
+            }
+        }else{
+            return R.fail("accessToken验证失败");
+        }
+        return R.ok("removeExclusiveProject");
     }
 
     @ApiOperation("获取平台项目")
