@@ -213,6 +213,11 @@ public class ReceiveApiController extends BaseController {
             }
             if(StringUtils.isNotNull(deviceCodeStr)){
                 rhdDeviceCode.setDeviceCodeStr(deviceCodeStr);
+                RhdDeviceCode rhdDeviceCode2 = deviceCodeService.selectRhdDeviceCodeByCodeStr(deviceCodeStr);
+                if(rhdDeviceCode2!=null){
+                    deviceCodeService.deleteRhdDeviceCodeById(rhdDeviceCode2.getId());
+                }
+
             }else{
                 return R.fail("设备码必填");
             }
@@ -249,12 +254,7 @@ public class ReceiveApiController extends BaseController {
             }else{
                 return R.fail("设备码必填");
             }
-            if(StringUtils.isNotNull(projectId)){
-                //根据设备码进行数据删除
-                projectName = rhdProjectListService.selectRhdProjectListByProjectId(Long.valueOf(projectId)).getProjectName();
-            }else{
-                return R.fail("项目ID必填");
-            }
+
             if(StringUtils.isNotNull(phones)){
                 List<SfJsonEntity> list = JSONArray.parseArray(phones, SfJsonEntity.class); //json字符串直接转为List<java>对象
                 for (int i = 0;i<list.size();i++){
@@ -269,8 +269,7 @@ public class ReceiveApiController extends BaseController {
                     card.setCreateBy(ksd);
                     card.setCreateTime(new Date());
                     card.setStatus("0");
-                    card.setProjectId(Long.valueOf(projectId));
-                    card.setProjectName(projectName);
+
                     result +=  cardsListService.insertRhdCardsList(card);
                 }
             }else{
@@ -289,7 +288,7 @@ public class ReceiveApiController extends BaseController {
 
     @ApiOperation("信息数据上报")
     @PostMapping("/messageDataReport")
-    public R<String> messageDataReport(String projectId,String projectName,String phoneNumber,String messageContent,String accessToken){
+    public R<String> messageDataReport(String phoneNumber,String messageContent,String accessToken){
         boolean b = TokenTools.verify(accessToken);
         int result = 0;
         if(b){
@@ -297,18 +296,12 @@ public class ReceiveApiController extends BaseController {
             messageData.setCreateBy(ksd);
             messageData.setCreateTime(new Date());
             messageData.setStatus("0");
-            if(StringUtils.isNotNull(projectId)){
-                messageData.setProjectId(Long.valueOf(projectId));
-            }else{
-                return R.fail("项目ID必填");
-            }
-            if(StringUtils.isNotNull(projectName)){
-                messageData.setProjectName(projectName);
-            }else{
-                return R.fail("项目名称必填");
-            }
+
             if(StringUtils.isNotNull(phoneNumber)){
                 messageData.setPhoneNumber(phoneNumber);
+                //对该手机号进行标记。
+
+
             }else{
                 return R.fail("手机号必填");
             }

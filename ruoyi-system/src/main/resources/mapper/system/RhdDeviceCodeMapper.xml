@@ -40,7 +40,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectRhdDeviceCodeVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectRhdDeviceCodeByCodeStr" resultType="com.ruoyi.system.domain.RhdDeviceCode">
+        <include refid="selectRhdDeviceCodeVo"/>
+        where device_code_str = #{deviceCodeStr}
+
+    </select>
+
     <insert id="insertRhdDeviceCode" parameterType="RhdDeviceCode" useGeneratedKeys="true" keyProperty="id">
         insert into rhd_device_code
         <trim prefix="(" suffix=")" suffixOverrides=",">

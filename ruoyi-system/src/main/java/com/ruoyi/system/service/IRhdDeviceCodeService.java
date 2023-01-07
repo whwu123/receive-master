@@ -19,6 +19,8 @@ public interface IRhdDeviceCodeService
      */
     public RhdDeviceCode selectRhdDeviceCodeById(Long id);
 
+    public RhdDeviceCode selectRhdDeviceCodeByCodeStr(String deviceCodeStr);
+
     /**
      * 查询设备列表列表
      * 

@@ -33,6 +33,11 @@ public class RhdDeviceCodeServiceImpl implements IRhdDeviceCodeService
         return rhdDeviceCodeMapper.selectRhdDeviceCodeById(id);
     }
 
+    @Override
+    public RhdDeviceCode selectRhdDeviceCodeByCodeStr(String deviceCodeStr) {
+        return rhdDeviceCodeMapper.selectRhdDeviceCodeByCodeStr(deviceCodeStr);
+    }
+
     /**
      * 查询设备列表列表
      * 
