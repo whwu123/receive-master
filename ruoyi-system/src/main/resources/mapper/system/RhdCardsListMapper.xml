@@ -78,6 +78,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
+
+    <select id="getProjectByPhoneNumber"  resultMap="phoneNumbersData">
+        SELECT
+            cl.id AS id,
+            cl.`status` AS STATUS,
+            cl.phone_number AS phone_number,
+            cl.operators AS operators,
+            cl.create_time AS create_time,
+            ep.exclusive_name AS project_name,
+            ep.project_id AS project_id
+        FROM
+            `rhd_cards_list` AS cl
+             INNER JOIN rhd_exclusive_project AS ep ON cl.device_code_str = ep.device_code
+        WHERE
+            cl.`status` = '0'
+          AND cl.phone_number = #{phoneNumber}
+
+    </select>
+    <select id="selectRhdCardsListByPhoneNumber" resultType="com.ruoyi.system.domain.RhdCardsList">
+        <include refid="selectRhdCardsListVo"/>
+        where phone_number = #{phoneNumber}
+
+    </select>
+
     <insert id="insertRhdCardsList" parameterType="RhdCardsList" useGeneratedKeys="true" keyProperty="id">
         insert into rhd_cards_list
         <trim prefix="(" suffix=")" suffixOverrides=",">

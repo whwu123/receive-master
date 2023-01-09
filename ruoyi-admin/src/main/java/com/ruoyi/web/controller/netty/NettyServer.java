@@ -7,6 +7,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+import java.nio.charset.Charset;
+
 /**
  * netty服务器，主要用于与客户端通讯
  */
@@ -38,9 +40,9 @@ public class NettyServer {
                             //获取到pipeline
                             ChannelPipeline pipeline = ch.pipeline();
                             //向pipeline加入解码器
-                            pipeline.addLast("decoder", new StringDecoder());
+                            pipeline.addLast("decoder", new StringDecoder(Charset.forName("GBK")));
                             //向pipeline加入编码器
-                            pipeline.addLast("encoder", new StringEncoder());
+                            pipeline.addLast("encoder", new StringEncoder(Charset.forName("GBK")));
                             //加入自己的业务处理handler
                             pipeline.addLast(new NettyServerHandler());
 

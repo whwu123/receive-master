@@ -8,6 +8,18 @@
         <form class="form-horizontal m" id="form-exclusiveProject-edit" th:object="${rhdExclusiveProject}">
             <input name="exclusiveId" th:field="*{exclusiveId}" type="hidden">
             <div class="form-group">
+                <label class="col-sm-3 control-label">对接码：</label>
+                <div class="col-sm-8">
+                    <input name="dockingCode" class="form-control" type="text" th:field="*{dockingCode}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">关键字Key：</label>
+                <div class="col-sm-8">
+                    <input name="extend1" class="form-control" type="text" th:field="*{extend1}"/>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">设备码：</label>
                 <div class="col-sm-8">
                     <input name="deviceCode" class="form-control" type="text" th:field="*{deviceCode}"/>

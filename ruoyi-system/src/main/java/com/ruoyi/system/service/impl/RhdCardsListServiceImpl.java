@@ -34,6 +34,11 @@ public class RhdCardsListServiceImpl implements IRhdCardsListService
         return rhdCardsListMapper.selectRhdCardsListById(id);
     }
 
+    @Override
+    public RhdCardsList selectRhdCardsListByPhoneNumber(String phoneNumber) {
+        return rhdCardsListMapper.selectRhdCardsListByPhoneNumber(phoneNumber);
+    }
+
     /**
      * 查询cardsList列表
      * 
@@ -104,5 +109,10 @@ public class RhdCardsListServiceImpl implements IRhdCardsListService
     @Override
     public List<PhoneNumbers> selectPhoneNumberCount(RhdCardsList rhdCardsList) {
         return rhdCardsListMapper.selectPhoneNumberCount(rhdCardsList);
+    }
+
+    @Override
+    public PhoneNumbers getProjectByPhoneNumber(String phoneNumber) {
+        return rhdCardsListMapper.getProjectByPhoneNumber(phoneNumber);
     }
 }

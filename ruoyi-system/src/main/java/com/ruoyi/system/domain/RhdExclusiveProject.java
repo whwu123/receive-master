@@ -26,7 +26,7 @@ public class RhdExclusiveProject extends BaseEntity
     @Excel(name = "状态")
     private String status;
 
-    /** 扩展字段1 */
+    /** 关键字keyStr 用于短信 */
     private String extend1;
 
     /** 扩展字段2 */

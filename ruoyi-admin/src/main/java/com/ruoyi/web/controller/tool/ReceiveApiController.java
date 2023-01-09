@@ -7,10 +7,16 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.json.SfJsonEntity;
 import com.ruoyi.common.utils.*;
+import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.framework.shiro.service.SysPasswordService;
 import com.ruoyi.system.domain.*;
 import com.ruoyi.system.service.*;
 import com.ruoyi.system.service.impl.ImailServiceImpl;
+import com.ruoyi.web.controller.netty.ChannelMap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -18,14 +24,12 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Api("接收开发平台卡商端接口")
 @RestController
@@ -290,6 +294,8 @@ public class ReceiveApiController extends BaseController {
     @PostMapping("/messageDataReport")
     public R<String> messageDataReport(String phoneNumber,String messageContent,String accessToken){
         boolean b = TokenTools.verify(accessToken);
+        PhoneNumbers phoneNumbers = null;
+        RhdCardsList cardsList = null;
         int result = 0;
         if(b){
             RhdMessageData messageData = new RhdMessageData();
@@ -299,17 +305,34 @@ public class ReceiveApiController extends BaseController {
 
             if(StringUtils.isNotNull(phoneNumber)){
                 messageData.setPhoneNumber(phoneNumber);
+                phoneNumbers = cardsListService.getProjectByPhoneNumber(phoneNumber);
                 //对该手机号进行标记。
-
-
+                cardsList = cardsListService.selectRhdCardsListByPhoneNumber(phoneNumber);
+                if(cardsList!=null){
+                    cardsList.setStatus("1");
+                }
             }else{
                 return R.fail("手机号必填");
             }
+
             if(StringUtils.isNotNull(messageContent)){
-                messageData.setMessageContent(messageContent);
+                //判断短信内容是否包含项目名称
+                boolean resultFlag = messageContent.contains(phoneNumbers.getProjectName());
+                if(resultFlag){
+                    //包含就处理
+                    cardsList.setProjectName(phoneNumbers.getProjectName());
+                    cardsList.setProjectId(phoneNumbers.getProjectId());
+
+                    messageData.setProjectName(phoneNumbers.getProjectName());
+                    messageData.setProjectId(phoneNumbers.getProjectId());
+                    messageData.setMessageContent(messageContent);
+                }else{
+                    return R.fail("信息内容与手机号对应的项目不符");
+                }
             }else{
                 return R.fail("信息内容必填");
             }
+            cardsListService.updateRhdCardsList(cardsList);
             result = messageDataService.insertRhdMessageData(messageData);
 
         }else{
@@ -319,6 +342,46 @@ public class ReceiveApiController extends BaseController {
             return R.ok("上报数据成功");
         }else{
             return R.fail("上报数据失败");
+        }
+    }
+
+    @ApiOperation("创建专属项目")
+    @PostMapping("/createExclusiveProject")
+    public R<String> createExclusiveProject(String projectName,String keyStr,String price,String isOpen,String accessToken) {
+        RhdExclusiveProject exclusiveProject = new RhdExclusiveProject();
+        boolean b = TokenTools.verify(accessToken);
+
+        if(b){
+            if(StringUtils.isNotNull(projectName)){
+                exclusiveProject.setExclusiveName(projectName);
+            }else{
+                return R.fail("项目名称必填");
+            }
+            if(StringUtils.isNotNull(keyStr)){
+                exclusiveProject.setExtend1(keyStr);
+            }else{
+                return R.fail("关键字必填");
+            }
+            if(StringUtils.isNotNull(price)){
+                exclusiveProject.setExclusivePrice(BigDecimal.valueOf(Long.valueOf(price)));
+            }
+            if(StringUtils.isNotNull(isOpen)){
+                // 1 公开，2 不公开
+                exclusiveProject.setIsOpen(isOpen);
+            }else{
+                exclusiveProject.setIsOpen("2");
+            }
+            //生成对接码
+            String  dockingCode = IdUtils.fastSimpleUUID();
+            exclusiveProject.setDockingCode(dockingCode);
+            //0 正常 ，1 删除
+            exclusiveProject.setStatus("0");
+            exclusiveProject.setCreateBy(ksd);
+            exclusiveProject.setRemark("卡商创建的专属项目");
+            exclusiveProjectService.insertRhdExclusiveProject(exclusiveProject);
+            return R.ok("dockingCode:"+dockingCode);
+        }else{
+            return R.fail("accessToken验证失败");
         }
     }
 
@@ -350,6 +413,7 @@ public class ReceiveApiController extends BaseController {
             //0 正常 ，1 删除
             exclusiveProject.setStatus("0");
             exclusiveProject.setCreateBy(ksd);
+            exclusiveProject.setRemark("卡商加入的专属项目");
             exclusiveProjectService.insertRhdExclusiveProject(exclusiveProject);
             return R.ok("addExclusiveProjectSuccess");
         }else{
@@ -448,5 +512,33 @@ public class ReceiveApiController extends BaseController {
         return R.ok("accessToken合法");
     }
 
+    @GetMapping("/configFrame")
+    public R<String> configFrame(@RequestParam(name = "sim") String sim) {
+        // 16进制 指令
+
+        String receiveStr = "返回信息给客户端进行测试...";
+
+        ConcurrentHashMap<String, Channel> channelHashMap = ChannelMap.getChannelHashMap();
+        Channel channel = channelHashMap.get(sim);
+
+        // 判断是否活跃
+        if(channel==null || !channel.isActive()){
+            ChannelMap.getChannelHashMap().remove(sim);
+            return R.fail("连接已经中断");
+        }
+
+        channel.writeAndFlush(receiveStr).addListener((ChannelFutureListener) future -> {
+            StringBuilder sb = new StringBuilder();
+            if(!StringUtils.isEmpty(sim)){
+                sb.append("【").append(sim).append("】");
+            }
+            if (future.isSuccess()) {
+                System.out.println(sb.toString()+"回写成功"+receiveStr);
+            } else {
+                System.out.println(sb.toString()+"回写失败"+receiveStr);
+            }
+        });
+        return R.ok();
+    }
 }
 

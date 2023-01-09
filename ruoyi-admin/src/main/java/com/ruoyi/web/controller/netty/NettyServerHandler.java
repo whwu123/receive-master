@@ -1,16 +1,23 @@
 package com.ruoyi.web.controller.netty;
 
-import com.alibaba.fastjson.JSON;
+import com.ruoyi.common.utils.uuid.IdUtils;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 @Slf4j
-public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
+public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     //定义一个channle 组，管理所有的channel
     //GlobalEventExecutor.INSTANCE) 是全局的事件执行器，是一个单例
@@ -26,6 +33,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
         Channel channel = ctx.channel();
         System.err.println("有新的客户端与服务器发生连接。客户端地址：" + channel.remoteAddress());
         channelGroup.add(channel);
+
     }
 
     /**
@@ -58,12 +66,21 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
      * 读取到客户端发来的数据数据
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, String msg) {
-        //获取到当前channel
-        Channel channel = ctx.channel();
-        //响应给客户端的数据
-        ctx.writeAndFlush("server back data:"+msg);
-        System.err.println("有客户端发来的数据。地址：" + channel.remoteAddress() + " 内容：" + msg);
+    public void channelRead(ChannelHandlerContext ctx, Object msg)  throws Exception {
+        System.out.println(msg);
+        ctx.writeAndFlush(msg);
+        String uuid = IdUtils.simpleUUID();
+        System.out.println(uuid);
+        // 保存当前连接
+        ChannelMap.addChannel(uuid,ctx.channel());
+    }
+
+
+    private ByteBuf getSendByteBuf(String message) throws UnsupportedEncodingException {
+        byte[] req = message.getBytes("UTF-8");
+        ByteBuf pingMessage = Unpooled.buffer();
+        pingMessage.writeBytes(req);
+        return pingMessage;
     }
     /**
      * 当我们读取完成数据的时候触发的监听
@@ -86,4 +103,6 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
         //关闭通道
         ctx.close();
     }
+
+
 }

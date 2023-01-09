@@ -21,6 +21,8 @@ public interface IRhdCardsListService
      */
     public RhdCardsList selectRhdCardsListById(Long id);
 
+    public RhdCardsList selectRhdCardsListByPhoneNumber(String phoneNumber);
+
     /**
      * 查询cardsList列表
      * 
@@ -68,4 +70,8 @@ public interface IRhdCardsListService
      * 根据项目名称和数量提取手机号
      */
     public List<PhoneNumbers> selectPhoneNumberCount(RhdCardsList rhdCardsList);
+    /**
+     * 根据手机号获取项目名称和ID
+     */
+    public PhoneNumbers getProjectByPhoneNumber(String phoneNumber);
 }
