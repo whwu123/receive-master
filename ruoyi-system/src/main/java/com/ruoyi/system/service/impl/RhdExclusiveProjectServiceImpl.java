@@ -96,7 +96,7 @@ public class RhdExclusiveProjectServiceImpl implements IRhdExclusiveProjectServi
     }
 
     @Override
-    public RhdExclusiveProject getByDeviceCodeAndProjectId(RhdExclusiveProject rhdExclusiveProject) {
-        return rhdExclusiveProjectMapper.getByDeviceCodeAndProjectId(rhdExclusiveProject);
+    public RhdExclusiveProject selectExculsieProject(RhdExclusiveProject rhdExclusiveProject) {
+        return rhdExclusiveProjectMapper.selectExculsieProject(rhdExclusiveProject);
     }
 }

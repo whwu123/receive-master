@@ -60,7 +60,7 @@ public interface IRhdExclusiveProjectService
     public int deleteRhdExclusiveProjectByExclusiveId(Long exclusiveId);
 
     /**
-     * 根据设备码和项目ID查询专属项目
+     * 根据对象查询内容
      */
-    public RhdExclusiveProject getByDeviceCodeAndProjectId(RhdExclusiveProject rhdExclusiveProject);
+    public RhdExclusiveProject selectExculsieProject(RhdExclusiveProject rhdExclusiveProject);
 }

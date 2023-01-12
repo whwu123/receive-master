@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('发短信')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="col-sm-12 search-collapse" style="display: block;">
+        <form id="formId">
+            <div class="select-list">
+                <ul>
+                    <li>
+                        <label>发信串口：</label>
+                        <input type="number" id="comSerial" placeholder="COM口 只填数字"/>
+                    </li>
+                    <li>
+                        <label>目标号码：</label>
+                        <input type="text" id="recvPhone" placeholder="接收短信的手机号" maxlength="11"/>
+                    </li>
+                    <li>
+                        <label>发送内容：</label>
+                        <input type="text" id="sendMsg" placeholder="发送短信的内容"/>
+                    </li>
+                    <li>
+                        <a class="btn btn-primary btn-rounded btn-sm" onclick="sendMessage();"><i class="fa fa-mail-forward"></i>&nbsp;发送指令</a>
+                        <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <input type="hidden" name="exclusiveName" id="exclusiveName" th:value="${newRhdExclusiveProject.exclusiveName}" />
+        <input type="hidden" name="dockingCode" id="dockingCode" th:value="${newRhdExclusiveProject.dockingCode}" />
+        <input type="hidden" name="extend1" id="extend1" th:value="${newRhdExclusiveProject.extend1}" />
+        <input type="hidden" name="deviceCode" id="deviceCode" th:value="${newRhdExclusiveProject.deviceCode}" />
+            <table id="bootstrap-table" class="table table-bordered">
+                <caption>
+                    【<span th:text="${newRhdExclusiveProject.exclusiveName}"></span>】发送短信列表
+                </caption>
+                <thead>
+                <tr>
+                    <th>创建时间</th>
+                    <th>COM串口</th>
+                    <th>目标号码</th>
+                    <th>短信内容</th>
+                    <th>目标状态</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    function sendMessage() {
+       var deviceCode = $("#deviceCode").val();
+       var dockingCode = $("#dockingCode").val();
+       var comSerial = $("#comSerial").val();
+       var recvPhone = $("#recvPhone").val();
+       var sendMsg = $("#sendMsg").val();
+
+       if(comSerial == "" || comSerial == null){
+           $.modal.alertError("串口号必填");
+           return false;
+       }
+       var regex = /^(13[0-9]{9})|(15[0-9]{9})|(17[0-9]{9})|(18[0-9]{9})|(19[0-9]{9})$/;
+        if (!recvPhone.match(regex)) {
+            $.modal.alertError("请输入正确的手机号码！");
+            return false;
+        }
+
+        if(sendMsg == "" || sendMsg == null){
+            $.modal.alertError("短信内容不能为空");
+            return false;
+        }
+
+        $.ajax({
+            url: "/rhd/web/sendMessageData",
+            type: 'post',
+            data: {
+                'deviceCode':deviceCode,
+                'dockingCode':dockingCode,
+                'comSerial':comSerial,
+                'recvPhone':recvPhone,
+                'sendMsg':sendMsg
+            },
+            dataType:"json",
+            success: function (data) {
+                console.info(data);
+            },
+            error: function () {}
+        })
+
+    }
+
+
+    /*xunhuan()
+    function xunhuan(){
+        $.ajax({
+            url: "/rhd/web/getMessageData?keys="+keys,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                    console.info(data);
+            },
+            error: function () {}
+        })
+        setTimeout(function(){
+            xunhuan()
+        },15000);
+    };*/
+
+</script>
+</body>
+</html>

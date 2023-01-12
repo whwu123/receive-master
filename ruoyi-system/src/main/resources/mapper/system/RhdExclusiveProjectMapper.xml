@@ -46,13 +46,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectRhdExclusiveProjectVo"/>
         where exclusive_id = #{exclusiveId}
     </select>
-    <select id="getByDeviceCodeAndProjectId" resultMap="RhdExclusiveProjectResult" parameterType="RhdExclusiveProject">
+    <select id="selectExculsieProject" resultMap="RhdExclusiveProjectResult" parameterType="RhdExclusiveProject">
         <include refid="selectRhdExclusiveProjectVo"/>
         <where>
             <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="isOpen != null  and isOpen != ''"> and is_open = #{isOpen}</if>
             <if test="deviceCode != null  and deviceCode != ''"> and device_code = #{deviceCode}</if>
             <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="dockingCode != null  and dockingCode != ''"> and docking_code = #{dockingCode}</if>
         </where>
     </select>
 

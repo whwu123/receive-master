@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RhdSendLogMapper">
+    
+    <resultMap type="RhdSendLog" id="RhdSendLogResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="extend1"    column="extend1"    />
+        <result property="extend2"    column="extend2"    />
+        <result property="sendStatus"    column="send_status"    />
+        <result property="comSerial"    column="com_serial"    />
+        <result property="sendMsg"    column="send_msg"    />
+        <result property="recvPhone"    column="recv_phone"    />
+    </resultMap>
+
+    <sql id="selectRhdSendLogVo">
+        select id, create_by, create_time, update_by, update_time, remark, del_flag, status, extend1, extend2, send_status, com_serial, send_msg, recv_phone from rhd_send_log
+    </sql>
+
+    <select id="selectRhdSendLogList" parameterType="RhdSendLog" resultMap="RhdSendLogResult">
+        <include refid="selectRhdSendLogVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="sendStatus != null  and sendStatus != ''"> and send_status = #{sendStatus}</if>
+            <if test="comSerial != null  and comSerial != ''"> and com_serial = #{comSerial}</if>
+            <if test="recvPhone != null  and recvPhone != ''"> and recv_phone = #{recvPhone}</if>
+        </where>
+    </select>
+    
+    <select id="selectRhdSendLogById" parameterType="Long" resultMap="RhdSendLogResult">
+        <include refid="selectRhdSendLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRhdSendLog" parameterType="RhdSendLog" useGeneratedKeys="true" keyProperty="id">
+        insert into rhd_send_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="status != null">status,</if>
+            <if test="extend1 != null">extend1,</if>
+            <if test="extend2 != null">extend2,</if>
+            <if test="sendStatus != null">send_status,</if>
+            <if test="comSerial != null">com_serial,</if>
+            <if test="sendMsg != null">send_msg,</if>
+            <if test="recvPhone != null">recv_phone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="extend1 != null">#{extend1},</if>
+            <if test="extend2 != null">#{extend2},</if>
+            <if test="sendStatus != null">#{sendStatus},</if>
+            <if test="comSerial != null">#{comSerial},</if>
+            <if test="sendMsg != null">#{sendMsg},</if>
+            <if test="recvPhone != null">#{recvPhone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRhdSendLog" parameterType="RhdSendLog">
+        update rhd_send_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="extend1 != null">extend1 = #{extend1},</if>
+            <if test="extend2 != null">extend2 = #{extend2},</if>
+            <if test="sendStatus != null">send_status = #{sendStatus},</if>
+            <if test="comSerial != null">com_serial = #{comSerial},</if>
+            <if test="sendMsg != null">send_msg = #{sendMsg},</if>
+            <if test="recvPhone != null">recv_phone = #{recvPhone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRhdSendLogById" parameterType="Long">
+        delete from rhd_send_log where id = #{id}
+    </delete>
+
+    <delete id="deleteRhdSendLogByIds" parameterType="String">
+        delete from rhd_send_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

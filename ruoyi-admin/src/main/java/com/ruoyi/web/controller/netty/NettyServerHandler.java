@@ -1,23 +1,29 @@
 package com.ruoyi.web.controller.netty;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.utils.uuid.IdUtils;
+import com.ruoyi.system.domain.RhdUserinfoNetty;
+import com.ruoyi.system.service.IRhdUserinfoNettyService;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 @Slf4j
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+
+
+    private static IRhdUserinfoNettyService userinfoNettyService;
+
+    static {
+        userinfoNettyService = SpringUtil.getBean(IRhdUserinfoNettyService.class);
+    }
 
     //定义一个channle 组，管理所有的channel
     //GlobalEventExecutor.INSTANCE) 是全局的事件执行器，是一个单例
@@ -67,12 +73,30 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)  throws Exception {
-        System.out.println(msg);
-        ctx.writeAndFlush(msg);
-        String uuid = IdUtils.simpleUUID();
-        System.out.println(uuid);
-        // 保存当前连接
-        ChannelMap.addChannel(uuid,ctx.channel());
+        JSONObject jsonObject = JSONObject.parseObject(msg.toString());
+        String cmdStr = jsonObject.getString("cmd");
+        if(cmdStr.equals("userInfo")){
+            //进行用户信息长连接的插入
+            JSONObject userinfoNettyObject = jsonObject.getJSONObject("data");
+            String loginName = userinfoNettyObject.getString("loginName");
+            String deviceCodeStr = userinfoNettyObject.getString("deviceCodeStr");
+            if(deviceCodeStr!=null && !deviceCodeStr.isEmpty()){
+                //按照设备码进行原来的数据删除
+                userinfoNettyService.deleteRhdUserinfoNettyByDeviceCode(deviceCodeStr);
+                String nettyId = IdUtils.simpleUUID();
+                RhdUserinfoNetty rhdUserinfoNetty = new RhdUserinfoNetty();
+                rhdUserinfoNetty.setNettyId(nettyId);
+                rhdUserinfoNetty.setDeviceCode(deviceCodeStr);
+                rhdUserinfoNetty.setLoginName(loginName);
+                rhdUserinfoNetty.setStatus("0");
+                userinfoNettyService.insertRhdUserinfoNetty(rhdUserinfoNetty);
+                // 保存当前连接
+                ChannelMap.addChannel(nettyId,ctx.channel());
+            }
+
+        }
+        ctx.writeAndFlush(msg.toString());
+
     }
 
 

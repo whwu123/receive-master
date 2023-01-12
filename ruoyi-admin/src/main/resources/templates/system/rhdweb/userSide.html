@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('收短信')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <input type="hidden" name="exclusiveName" id="exclusiveName" th:value="${newRhdExclusiveProject.exclusiveName}" />
+        <input type="hidden" name="dockingCode" id="dockingCode" th:value="${newRhdExclusiveProject.dockingCode}" />
+        <input type="hidden" name="extend1" id="extend1" th:value="${newRhdExclusiveProject.extend1}" />
+
+
+            <table id="bootstrap-table" class="table table-bordered">
+                <caption>
+                    【<span th:text="${newRhdExclusiveProject.exclusiveName}"></span>】收短信
+                </caption>
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>COM串口</th>
+                    <th>手机号</th>
+                    <th>短信内容</th>
+                    <th>来自</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var keys = $("#extend1").val();
+    xunhuan()
+    function xunhuan(){
+        $.ajax({
+            url: "/rhd/web/getMessageData?keys="+keys,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                    console.info(data);
+            },
+            error: function () {}
+        })
+        setTimeout(function(){
+            xunhuan()
+        },15000);
+    };
+
+</script>
+</body>
+</html>

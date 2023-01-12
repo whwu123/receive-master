@@ -293,8 +293,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
-        // HBD前端页面
-        filterChainDefinitionMap.put("/hbd/**", "anon,captchaValidate");
+        // rhd前端页面
+        filterChainDefinitionMap.put("/rhd/**", "anon,captchaValidate");
         // 收发平台卡商端接口
         filterChainDefinitionMap.put("/receive/api/**", "anon,captchaValidate");
         // 收发平台用户端接口

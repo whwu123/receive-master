@@ -347,7 +347,7 @@ public class ReceiveApiController extends BaseController {
 
     @ApiOperation("创建专属项目")
     @PostMapping("/createExclusiveProject")
-    public R<String> createExclusiveProject(String projectName,String keyStr,String price,String isOpen,String accessToken) {
+    public R<String> createExclusiveProject(String projectName,String deviceCode,String keyStr,String price,String isOpen,String accessToken) {
         RhdExclusiveProject exclusiveProject = new RhdExclusiveProject();
         boolean b = TokenTools.verify(accessToken);
 
@@ -361,6 +361,11 @@ public class ReceiveApiController extends BaseController {
                 exclusiveProject.setExtend1(keyStr);
             }else{
                 return R.fail("关键字必填");
+            }
+            if(StringUtils.isNotNull(deviceCode)){
+                exclusiveProject.setDeviceCode(deviceCode);
+            }else{
+                return R.fail("设备码必填");
             }
             if(StringUtils.isNotNull(price)){
                 exclusiveProject.setExclusivePrice(BigDecimal.valueOf(Long.valueOf(price)));
@@ -379,7 +384,7 @@ public class ReceiveApiController extends BaseController {
             exclusiveProject.setCreateBy(ksd);
             exclusiveProject.setRemark("卡商创建的专属项目");
             exclusiveProjectService.insertRhdExclusiveProject(exclusiveProject);
-            return R.ok("dockingCode:"+dockingCode);
+            return R.ok("返回的对接码是:"+dockingCode);
         }else{
             return R.fail("accessToken验证失败");
         }
@@ -431,7 +436,7 @@ public class ReceiveApiController extends BaseController {
                 exclusiveProject.setProjectId(Long.valueOf(projectId));
                 exclusiveProject.setDeviceCode(deviceCode);
                 exclusiveProject.setStatus("0");
-                RhdExclusiveProject nowExclusiveProject = exclusiveProjectService.getByDeviceCodeAndProjectId(exclusiveProject);
+                RhdExclusiveProject nowExclusiveProject = exclusiveProjectService.selectExculsieProject(exclusiveProject);
                 if(nowExclusiveProject!=null){
                     exclusiveProjectService.deleteRhdExclusiveProjectByExclusiveId(nowExclusiveProject.getExclusiveId());
                 }
@@ -515,18 +520,14 @@ public class ReceiveApiController extends BaseController {
     @GetMapping("/configFrame")
     public R<String> configFrame(@RequestParam(name = "sim") String sim) {
         // 16进制 指令
-
         String receiveStr = "返回信息给客户端进行测试...";
-
         ConcurrentHashMap<String, Channel> channelHashMap = ChannelMap.getChannelHashMap();
         Channel channel = channelHashMap.get(sim);
-
         // 判断是否活跃
         if(channel==null || !channel.isActive()){
             ChannelMap.getChannelHashMap().remove(sim);
             return R.fail("连接已经中断");
         }
-
         channel.writeAndFlush(receiveStr).addListener((ChannelFutureListener) future -> {
             StringBuilder sb = new StringBuilder();
             if(!StringUtils.isEmpty(sim)){
