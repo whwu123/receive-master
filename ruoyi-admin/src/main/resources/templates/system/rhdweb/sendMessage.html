@@ -47,7 +47,7 @@
                     <th>目标状态</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="sendMessageLogTb">
 
                 </tbody>
             </table>
@@ -56,13 +56,13 @@
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    function sendMessage() {
-       var deviceCode = $("#deviceCode").val();
-       var dockingCode = $("#dockingCode").val();
-       var comSerial = $("#comSerial").val();
-       var recvPhone = $("#recvPhone").val();
-       var sendMsg = $("#sendMsg").val();
 
+    function sendMessage() {
+        var deviceCode = $("#deviceCode").val();
+        var dockingCode = $("#dockingCode").val();
+        var comSerial = $("#comSerial").val();
+        var recvPhone = $("#recvPhone").val();
+        var sendMsg = $("#sendMsg").val();
        if(comSerial == "" || comSerial == null){
            $.modal.alertError("串口号必填");
            return false;
@@ -90,7 +90,13 @@
             },
             dataType:"json",
             success: function (data) {
-                console.info(data);
+               if(data.code == 0){
+                   $.modal.alertSuccess("指令发送成功");
+                   initData();
+               }else{
+                   $.modal.alertError("指令发送失败："+data.msg);
+               }
+
             },
             error: function () {}
         })
@@ -98,21 +104,42 @@
     }
 
 
-    /*xunhuan()
-    function xunhuan(){
+    initData()
+    function initData(){
+        var dockingCode = $("#dockingCode").val();
         $.ajax({
-            url: "/rhd/web/getMessageData?keys="+keys,
+            url: "/rhd/web/getMessageLogData?dockingCode="+dockingCode,
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                    console.info(data);
+                   if(data.code == 0){
+                       if(data.data != null && data.data !=""){
+                           $("#sendMessageLogTb").html("");
+                           var html = "";
+                           var logData = data.data;
+                           for(var i=0;i<logData.length;i++){
+                               html += "<tr>";
+                               html += "<td>"+data.data[i].createTime+"</td>";
+                               html += "<td>"+data.data[i].comSerial+"</td>";
+                               html += "<td>"+data.data[i].recvPhone+"</td>";
+                               html += "<td>"+data.data[i].sendMsg+"</td>";
+                               if(data.data[i].sendStatus == 0 ){
+                                   html += "<td ><span class='badge badge-success'>发送成功</span></td>";
+                               }else if(data.data[i].sendStatus == 1){
+                                   html += "<td ><span class='badge badge-danger'>发送失败</span></td>";
+                               }
+                               html += "</tr>";
+                           }
+                           $("#sendMessageLogTb").html(html);
+                       }
+                   }
             },
             error: function () {}
-        })
-        setTimeout(function(){
+        }
+        /*setTimeout(function(){
             xunhuan()
-        },15000);
-    };*/
+        },5000*/);
+    };
 
 </script>
 </body>

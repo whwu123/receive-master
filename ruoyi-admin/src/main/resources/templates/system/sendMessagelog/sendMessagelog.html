@@ -11,6 +11,10 @@
                     <div class="select-list">
                         <ul>
                             <li>
+                                <label>对接码：</label>
+                                <input type="text" name="extend1"/>
+                            </li>
+                            <li>
                                 COM串口：
                                 <input type="text" name="comSerial"/>
                             </li>
@@ -76,6 +80,8 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "发信管理",
+                sortName: "createTime",
+                sortOrder: "desc",
                 columns: [{
                     checkbox: true
                 },
@@ -84,8 +90,10 @@
                     title: '主键ID',
                     visible: false
                 },
-
-
+                {
+                    field: 'extend1',
+                    title: '对接码'
+                },
                 {
                     field: 'comSerial',
                     title: 'COM串口'

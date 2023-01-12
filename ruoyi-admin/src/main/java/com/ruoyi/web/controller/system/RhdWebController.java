@@ -5,8 +5,10 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.HbdSalesman;
 import com.ruoyi.system.domain.RhdExclusiveProject;
+import com.ruoyi.system.domain.RhdSendLog;
 import com.ruoyi.system.domain.RhdUserinfoNetty;
 import com.ruoyi.system.service.IRhdExclusiveProjectService;
+import com.ruoyi.system.service.IRhdSendLogService;
 import com.ruoyi.system.service.IRhdUserinfoNettyService;
 import com.ruoyi.web.controller.netty.ChannelMap;
 import io.netty.channel.Channel;
@@ -31,6 +33,8 @@ public class RhdWebController {
     private IRhdExclusiveProjectService exclusiveProjectService;
     @Autowired
     private IRhdUserinfoNettyService userinfoNettyService;
+    @Autowired
+    private IRhdSendLogService sendLogService;
 
     @GetMapping("/userSide")
     public String userSide(ModelMap mmap,String dockingCode) {
@@ -68,15 +72,32 @@ public class RhdWebController {
 
     }
 
-    @GetMapping( "/getMessageData")
+    @GetMapping( "/getMessageLogData")
     @ResponseBody
-    public R<String> getMessageData(String keys) {
-        return R.ok(keys);
+    public R<List<RhdSendLog>> getMessageLogData(String dockingCode) {
+        List<RhdSendLog> rhdSendLogList = null;
+        if(StringUtils.isNotNull(dockingCode)){
+            //通过对接码拿到发送日志的数据
+            RhdSendLog rhdSendLog = new RhdSendLog();
+            rhdSendLog.setExtend1(dockingCode);
+            rhdSendLog.setStatus("0");
+            rhdSendLogList = sendLogService.selectRhdSendLogList(rhdSendLog);
+        }else{
+            return R.fail("对接码必填");
+        }
+        return R.ok(rhdSendLogList);
     }
 
     @PostMapping( "/sendMessageData")
     @ResponseBody
-    public R<String> sendMessageData(String comSerial,String sendMsg,String recvPhone,String deviceCode) {
+    public R<String> sendMessageData(String comSerial,String sendMsg,String recvPhone,String deviceCode,String dockingCode) throws  Exception{
+        RhdSendLog rhdSendLog = new RhdSendLog();
+        //把发送的信息存入数据库中
+        rhdSendLog.setComSerial(comSerial);
+        rhdSendLog.setSendMsg(sendMsg);
+        rhdSendLog.setRecvPhone(recvPhone);
+        rhdSendLog.setExtend1(dockingCode);
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("cmd","sendSms");
         JSONObject jsonObjectData = new JSONObject();
@@ -90,31 +111,44 @@ public class RhdWebController {
         RhdUserinfoNetty userinfoNetty = userinfoNettyService.selectRhdUserinfoNettyByDeviceCode(deviceCode);
         if(userinfoNetty != null){
             String nettyId = userinfoNetty.getNettyId();
-            ConcurrentHashMap<String, Channel> channelHashMap = ChannelMap.getChannelHashMap();
-            Channel channel = channelHashMap.get(nettyId);
-            // 判断是否活跃
-            if(channel==null || !channel.isActive()){
-                ChannelMap.getChannelHashMap().remove(nettyId);
-                return R.fail("连接已经中断");
+            if(nettyId != null ){
+                ConcurrentHashMap<String, Channel> channelHashMap = ChannelMap.getChannelHashMap();
+                try{
+                    Channel channel = channelHashMap.get(nettyId);
+                    // 判断是否活跃
+                    if(channel==null || !channel.isActive()){
+                        ChannelMap.getChannelHashMap().remove(nettyId);
+                        return R.fail("连接已经中断");
+                    }
+                    channel.writeAndFlush(receiveStr).addListener((ChannelFutureListener) future -> {
+                        StringBuilder sb = new StringBuilder();
+                        if(!StringUtils.isEmpty(nettyId)){
+                            sb.append("【").append(nettyId).append("】");
+                        }
+                        if (future.isSuccess()) {
+                            System.out.println(sb.toString()+"回写成功"+receiveStr);
+                            rhdSendLog.setStatus("0");
+                            rhdSendLog.setSendStatus("0");
+                        } else {
+                            System.out.println(sb.toString()+"回写失败"+receiveStr);
+                            rhdSendLog.setStatus("1");
+                            rhdSendLog.setSendStatus("1");
+                        }
+                        sendLogService.insertRhdSendLog(rhdSendLog);
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return R.fail("卡商端未启动");
+                }
+            }else{
+                return R.fail("卡商端未启动");
             }
-            channel.writeAndFlush(receiveStr).addListener((ChannelFutureListener) future -> {
-                StringBuilder sb = new StringBuilder();
-                if(!StringUtils.isEmpty(nettyId)){
-                    sb.append("【").append(nettyId).append("】");
-                }
-                if (future.isSuccess()) {
-                    System.out.println(sb.toString()+"回写成功"+receiveStr);
-                    //把发送的信息存入数据库中
 
-
-
-                } else {
-                    System.out.println(sb.toString()+"回写失败"+receiveStr);
-                }
-            });
         }else{
-            return R.ok("长连接ID获取失败");
+            return R.fail("卡商端未启动");
         }
         return R.ok(receiveStr);
     }
+
+
 }
